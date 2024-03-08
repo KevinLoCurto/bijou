@@ -17,31 +17,6 @@ c.fillRect(
     canvas.height
 )
 
-const image = new Image()
-image.src = '/assets/world/map.png'
-
-const linusDown = new Image()
-linusDown.src = '/characters/players/linus/linusDown.png'
-
-const linusUp = new Image()
-linusUp.src = '/characters/players/linus/linusUp.png'
-
-const linusLeft = new Image()
-linusLeft.src = '/characters/players/linus/linusLeft.png'
-
-const linusRight = new Image()
-linusRight.src = '/characters/players/linus/linusRight.png'
-
-const adminTableInitial = new Image()
-adminTableInitial.src = '/assets/interactables/adminTableInitial.png'
-const adminTableHighlighted = new Image()
-adminTableHighlighted.src = '/assets/interactables/adminTableHighlighted.png'
-const adminTableInteracted = new Image()
-adminTableInteracted.src = '/assets/interactables/adminTableInteracted.png'
-
-const testAdmin = new Image()
-testAdmin.src = '/assets/interactables/testAdmin.png'
-
 const linus = new Sprite({
     position: {
         x: canvas.width / 2 - 192 / 4 / 2,
@@ -80,17 +55,68 @@ const adminTable = new Interactable({
     },
 })
 
-// const gong = new Interactable({
-//     position: {
-//         x: 0,
-//         y: 0
-//     },
-//     image: gong,
-//     sprites: {
-//         init: gongInitial,
-//         high: gongHighlighted
-//     }
-// })
+const plcTable1 = new Interactable({
+    position: {
+        x: 150,
+        y: 1000
+    },
+    image: plcTable1Initial,
+    sprites: {
+        init: plcTable1Initial,
+        high: plcTable1Highlighted,
+        inter: plcTable1Interacted
+    }
+})
+
+const plcTable2 = new Interactable({
+    position: {
+        x: 150,
+        y: 720
+    },
+    image: plcTable2Initial,
+    sprites: {
+        init: plcTable2Initial,
+        high: plcTable2Highlighted,
+        inter: plcTable2Interacted
+    }
+})
+
+const cups = new Interactable({
+    position: {
+        x: -930,
+        y: 0
+    },
+    image: cupsInitial,
+    sprites: {
+        init: cupsInitial,
+        high: cupsHighlighted,
+        inter: cupsInteracted
+    }
+})
+
+const adminBell = new Interactable({
+    position: {
+        x: -250,
+        y: 0
+    },
+    image: adminBellInitial,
+    sprites: {
+        init: adminBellInitial,
+        high: adminBellHighlighted,
+    }
+})
+
+const gong = new Interactable({
+    position: {
+        x: 470,
+        y: 200
+    },
+    image: gongInitial,
+    sprites: {
+        init: gongInitial,
+        high: gongHighlighted
+    }
+})
 
 const keys = {
     w: {
@@ -138,9 +164,6 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
     )
 }
 
-const interactables = [adminTable]
-const movables = [background, ...boundaries, ...interactables]
-
 let gameTime = 0
 let timerInterval
 
@@ -162,44 +185,95 @@ function stopTimer() {
     clearInterval(timerInterval)
 }
 
-function spawnPlayer() {
-    document.getElementById('game-screen').style.display = 'block'
-    document.getElementById('main-menu').style.display = 'none'
-    document.getElementById('testimage').style.display = 'none'
-}
-function openInstructions() {
-    document.getElementById('main-menu').style.display = 'none'
-    document.getElementById('testimage').style.display = 'none'
-    document.getElementById('instruction-screen').style.display = 'block'
-    document.getElementById('back').style.display = 'block'
-}
-function closeInstructions() {
-    document.getElementById('main-menu').style.display = 'block'
-    document.getElementById('testimage').style.display = 'block'
-    document.getElementById('back').style.display = 'none'
-}
-function restartGame() {
-    document.getElementById('main-menu').style.display = 'block'
-    document.getElementById('testimage').style.display = 'block'
-    document.getElementById('end-screen').style.display = 'none'
+// function spawnPlayer() {
+//     document.getElementById('game-screen').style.display = 'block'
+//     document.getElementById('timer').style.display = 'block'
+//     document.getElementById('main-menu').style.display = 'none'
+//     document.getElementById('testimage').style.display = 'none'
+// }
+// function openInstructions() {
+//     document.getElementById('main-menu').style.display = 'none'
+//     document.getElementById('testimage').style.display = 'none'
+//     document.getElementById('instruction-screen').style.display = 'block'
+//     document.getElementById('back').style.display = 'block'
+// }
+// function closeInstructions() {
+//     document.getElementById('main-menu').style.display = 'block'
+//     document.getElementById('testimage').style.display = 'block'
+//     document.getElementById('back').style.display = 'none'
+// }
+// function restartGame() {
+//     document.getElementById('main-menu').style.display = 'block'
+//     document.getElementById('testimage').style.display = 'block'
+//     document.getElementById('end-screen').style.display = 'none'
+// }
+
+// document.getElementById('start-game').addEventListener('click', () => {
+//     spawnPlayer()
+// }) 
+// document.getElementById('instructions').addEventListener('click', () => {
+//     openInstructions()
+// })
+// document.getElementById('back').addEventListener('click', () => {
+//     closeInstructions()
+// })
+// document.getElementById('restart').addEventListener('click', () => {
+//     restartGame()
+// })
+
+const interactables = [adminTable, plcTable1, plcTable2, cups, adminBell, gong]
+const movables = [background, ...boundaries, ...interactables]
+
+let objectState = {
+    adminTable: {
+        highlighted: false,
+        interacted: false
+    }, plcTable1: {
+        highlighted: false,
+        interacted: false
+    }, plcTable2: {
+        highlighted: false,
+        interacted: false
+    }, cups: {
+        highlighted: false,
+        interacted: false
+    }, adminBell: {
+        highlighted: false
+    }, gong: {
+        highlighted: false,
+        timerStarted: false,
+        timerStopped: false
+    }
 }
 
-document.getElementById('start-game').addEventListener('click', () => {
-    spawnPlayer()
-}) 
-document.getElementById('instructions').addEventListener('click', () => {
-    openInstructions()
-})
-document.getElementById('back').addEventListener('click', () => {
-    closeInstructions()
-})
-document.getElementById('restart').addEventListener('click', () => {
-    restartGame()
-})
+const imageConstants = [
+    linusDown, linusLeft, linusRight, linusUp, 
+    image,
+    adminTableInitial, adminTableHighlighted, adminTableInteracted,
+    plcTable1Initial, plcTable1Highlighted, plcTable1Interacted,
+    plcTable2Initial, plcTable2Highlighted, plcTable2Interacted,
+    cupsInitial, cupsHighlighted, cupsInteracted,
+    adminBellInitial, adminBellHighlighted,
+    gongInitial, gongHighlighted,
+]
 
-function drawAllInteractables() {
-    adminTable.draw()
+let imagesLoaded = 0
+
+function loadImage(imageConstant) {
+    const image = new Image()
+    image.onload = function() {
+        if (imagesLoaded < imageConstants.length) {
+            loadImage(imageConstants[imagesLoaded])
+            imagesLoaded++
+        } else {
+            animate()
+            imagesLoaded = 0
+        }
+    }
+    image.src = imageConstant.src
 }
+
+loadImage(imageConstants[0])
 
 function animate() {
     window.requestAnimationFrame(animate)
@@ -208,26 +282,21 @@ function animate() {
         boundaries.draw()
     })
     linus.draw()
-    drawAllInteractables()
+    interactables.forEach(interactable => {
+        interactable.draw()
+    })
 
-    const distance = calculateDistance(linus, adminTable)
+    const adminTableDistance = calculateFourtableVerticalDistance(linus, adminTable)
+    const plcTable1Distance = calculateFourtableVerticalDistance(linus, plcTable1)
+    const plcTable2Distance = calculateFourtableVerticalDistance(linus, plcTable2)
+    const cupsDistance = calculateCupsDistance(linus, cups)
+    const adminBellDistance = calculateAdminBellDistance(linus, adminBell)
+    const gongDistance = calculateGongDistance(linus, gong)
 
-    let highlighted = false
-
-    if (distance <= 160) {
-        highlighted = true
-    } else if (distance > 160) {
-        highlighted = false
-    }
-    if (highlighted === true) {
-        adminTable.image = adminTable.sprites.high
-    } else if (highlighted === false) {
-        adminTable.image = adminTable.sprites.init
-    }
 
     let moving = true
     linus.moving = false
-    let interacted = false
+    let gongable = true
 
     if (keys.w.pressed) {
         linus.moving = true
@@ -326,23 +395,59 @@ function animate() {
                 movables.position.x -= 4
             })
     } if (keys.f.pressed) {
-        interacted = true
-        highlighted = false
+        if (objectState.adminTable.highlighted) {
+            objectState.adminTable.interacted = true
+            objectState.adminTable.highlighted = false
+        } if (objectState.plcTable1.highlighted) {
+            objectState.plcTable1.interacted = true
+            objectState.plcTable1.highlighted = false
+        } if (objectState.plcTable2.highlighted) {
+            objectState.plcTable2.interacted = true
+            objectState.plcTable2.highlighted = false
+        } if (objectState.cups.highlighted) {
+            objectState.cups.interacted = true
+            objectState.cups.highlighted = false
+        } if (objectState.adminBell.highlighted) {
+            audio.Bell.play()
+        }
     }
+    objectState.adminTable.highlighted = adminTableDistance <= 160;
+    adminTable.image = 
+    (objectState.adminTable.interacted) ? 
+    adminTable.sprites.inter : 
+    (objectState.adminTable.highlighted ? adminTable.sprites.high : adminTable.sprites.init)
 
-    
-    if (interacted === true) {
-        adminTable.image = adminTable.sprites.inter
-        highlighted = false
-    } else if (interacted === false && highlighted === true) {
-        adminTable.image = adminTable.sprites.high
-    } else if (interacted === false && highlighted === false) {
-        adminTable.image = adminTable.sprites.init
-    }
+    objectState.plcTable1.highlighted = plcTable1Distance <= 160;
+    plcTable1.image = 
+    (objectState.plcTable1.interacted) ? 
+    plcTable1.sprites.inter : 
+    (objectState.plcTable1.highlighted ? plcTable1.sprites.high : plcTable1.sprites.init)
+
+    objectState.plcTable2.highlighted = plcTable2Distance <= 160;
+    plcTable2.image = 
+    (objectState.plcTable2.interacted) ? 
+    plcTable2.sprites.inter : 
+    (objectState.plcTable2.highlighted ? plcTable2.sprites.high : plcTable2.sprites.init)
+
+    objectState.cups.highlighted = cupsDistance <= 160;
+    cups.image = 
+    (objectState.cups.interacted) ? 
+    cups.sprites.inter : 
+    (objectState.cups.highlighted ? cups.sprites.high : cups.sprites.init)
+
+    objectState.gong.highlighted = gongDistance <= 90;
+    gong.image = 
+    (!objectState.gong.interacted && objectState.gong.highlighted) ? 
+    gong.sprites.high : gong.sprites.init;
+
+    objectState.adminBell.highlighted = adminBellDistance <= 40;
+    adminBell.image = 
+    (!objectState.adminBell.interacted && objectState.adminBell.highlighted) ? 
+    adminBell.sprites.high : adminBell.sprites.init;
 }
-animate()
 
-let lastKey = ''
+
+
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
         case 'w':
@@ -367,7 +472,6 @@ window.addEventListener('keydown', (e) => {
             break
     }
 })
-
 window.addEventListener('keyup', (e) => {
     switch (e.key) {
         case 'w':
@@ -381,6 +485,9 @@ window.addEventListener('keyup', (e) => {
             break
         case 'd':
             keys.d.pressed = false
+            break
+        case 'f':
+            keys.f.pressed = false
             break
     }
 })

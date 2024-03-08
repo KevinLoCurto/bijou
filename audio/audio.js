@@ -8,6 +8,10 @@ const audio = {
         src: './audio/maingameMusic.wav',
         html5: true
     }),
+    Bell: new Howl({
+        src: '/audio/PING.m4a',
+        html5: true
+    }),
     Gong: new Howl({
         src: './audio/gong.wav',
         html5: true
