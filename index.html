@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body style="background-color: black;">
+
+ <div id="main-menu">
+    <button id="start-game">Start Game</button>
+    <button id="instructions">How to play</button>
+    <img src="/assets/testImage.png" alt="" id="testimage">
+</div>
+
+<div id="game-screen" style="display: none;">
+    <canvas id="canvas"></canvas>
+    <div id="timer">
+
+    </div>
+    <div id="tasklist">
+
+    </div>
+</div>
+
+<div id="instruction-screen">
+    <h1>How to play</h1>
+    <p>sfksdfsdf</p>
+    <button id="back" style="display: none;">Back</button>
+</div>
+
+<div id="end-screen">
+    <h1>You won!</h1>
+    <button id="restart" style="display: none;">Back to Main Menu</button>
+</div> 
+<canvas></canvas>
+<script src="scripts/classes.js"></script> 
+<script src="scripts/utils.js"></script>
+  <script src="scripts/collisions.js"></script>
+  <script src="scripts/main.js"></script>
+  <!-- <script src="data/audio.js"></script> -->
+</body>
+</html>
+
