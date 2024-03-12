@@ -55,6 +55,32 @@ const adminTable = new Interactable({
     },
 })
 
+const sink = new Interactable({
+    position: {
+        x: -490,
+        y: 40
+    },
+    image: sinkInitial,
+    sprites: {
+        init: sinkInitial,
+        high: sinkHighlighted,
+        inter: sinkInteracted
+    },
+})
+
+const adminDesk = new Interactable({
+    position: {
+        x: -370,
+        y: 80
+    },
+    image: adminDeskInitial,
+    sprites: {
+        init: adminDeskInitial,
+        high: adminDeskHighlighted,
+        inter: adminDeskInteracted
+    },
+})
+
 const plcTable1 = new Interactable({
     position: {
         x: 150,
@@ -185,43 +211,49 @@ function stopTimer() {
     clearInterval(timerInterval)
 }
 
-// function spawnPlayer() {
-//     document.getElementById('game-screen').style.display = 'block'
-//     document.getElementById('timer').style.display = 'block'
-//     document.getElementById('main-menu').style.display = 'none'
-//     document.getElementById('testimage').style.display = 'none'
-// }
-// function openInstructions() {
-//     document.getElementById('main-menu').style.display = 'none'
-//     document.getElementById('testimage').style.display = 'none'
-//     document.getElementById('instruction-screen').style.display = 'block'
-//     document.getElementById('back').style.display = 'block'
-// }
-// function closeInstructions() {
-//     document.getElementById('main-menu').style.display = 'block'
-//     document.getElementById('testimage').style.display = 'block'
-//     document.getElementById('back').style.display = 'none'
-// }
-// function restartGame() {
-//     document.getElementById('main-menu').style.display = 'block'
-//     document.getElementById('testimage').style.display = 'block'
-//     document.getElementById('end-screen').style.display = 'none'
-// }
+function spawnPlayer() {
+    document.getElementById('game-screen').style.display = 'block'
+    document.getElementById('timer').style.display = 'block'
+    document.getElementById('main-menu').style.display = 'none'
+    document.getElementById('testimage').style.display = 'none'
+}
+function openInstructions() {
+    document.getElementById('main-menu').style.display = 'none'
+    document.getElementById('testimage').style.display = 'none'
+    document.getElementById('instruction-screen').style.display = 'block'
+    document.getElementById('back').style.display = 'block'
+}
+function closeInstructions() {
+    document.getElementById('main-menu').style.display = 'block'
+    document.getElementById('testimage').style.display = 'block'
+    document.getElementById('back').style.display = 'none'
+}
+function restartGame() {
+    document.getElementById('main-menu').style.display = 'block'
+    document.getElementById('testimage').style.display = 'block'
+    document.getElementById('end-screen').style.display = 'none'
+}
 
-// document.getElementById('start-game').addEventListener('click', () => {
-//     spawnPlayer()
-// }) 
-// document.getElementById('instructions').addEventListener('click', () => {
-//     openInstructions()
-// })
-// document.getElementById('back').addEventListener('click', () => {
-//     closeInstructions()
-// })
-// document.getElementById('restart').addEventListener('click', () => {
-//     restartGame()
-// })
+document.getElementById('start-game').addEventListener('click', () => {
+    spawnPlayer()
+    displayTimer()
+})
+document.getElementById('instructions').addEventListener('click', () => {
+    openInstructions()
+})
+document.getElementById('back').addEventListener('click', () => {
+    closeInstructions()
+})
+document.getElementById('restart').addEventListener('click', () => {
+    restartGame()
+})
 
-const interactables = [adminTable, plcTable1, plcTable2, cups, adminBell, gong]
+const interactables = [
+    adminTable, adminDesk, sink, adminBell,
+    plcTable1, plcTable2,
+    cups, gong
+]
+
 const movables = [background, ...boundaries, ...interactables]
 
 let objectState = {
@@ -243,37 +275,37 @@ let objectState = {
         highlighted: false,
         timerStarted: false,
         timerStopped: false
+    }, adminDesk: {
+        highlighted: false,
+        interacted: false
+    }, sink: {
+        highlighted: false,
+        interacted: false
     }
 }
 
 const imageConstants = [
-    linusDown, linusLeft, linusRight, linusUp, 
-    image,
+    linusDown, linusLeft, linusRight, linusUp, image,
     adminTableInitial, adminTableHighlighted, adminTableInteracted,
     plcTable1Initial, plcTable1Highlighted, plcTable1Interacted,
     plcTable2Initial, plcTable2Highlighted, plcTable2Interacted,
     cupsInitial, cupsHighlighted, cupsInteracted,
+    adminDeskInitial, adminDeskHighlighted, adminDeskInteracted,
+    sinkInitial, sinkHighlighted, sinkInteracted,
     adminBellInitial, adminBellHighlighted,
     gongInitial, gongHighlighted,
 ]
 
 let imagesLoaded = 0
-
-function loadImage(imageConstant) {
-    const image = new Image()
-    image.onload = function() {
-        if (imagesLoaded < imageConstants.length) {
-            loadImage(imageConstants[imagesLoaded])
-            imagesLoaded++
-        } else {
-            animate()
-            imagesLoaded = 0
-        }
+imageConstants.forEach((imageConstant, index) => {
+    const image = new Image();
+    image.onload = () => {
+        imagesLoaded++;
+        if (imagesLoaded === imageConstants.length)
+            animate();
     }
-    image.src = imageConstant.src
-}
-
-loadImage(imageConstants[0])
+    image.src = imageConstant.src;
+})
 
 function animate() {
     window.requestAnimationFrame(animate)
@@ -290,9 +322,10 @@ function animate() {
     const plcTable1Distance = calculateFourtableVerticalDistance(linus, plcTable1)
     const plcTable2Distance = calculateFourtableVerticalDistance(linus, plcTable2)
     const cupsDistance = calculateCupsDistance(linus, cups)
+    const adminDeskDistance = calculateCupsDistance(linus, adminDesk)
+    const sinkDistance = calculateSinkDistance(linus, sink)
     const adminBellDistance = calculateAdminBellDistance(linus, adminBell)
     const gongDistance = calculateGongDistance(linus, gong)
-
 
     let moving = true
     linus.moving = false
@@ -409,44 +442,60 @@ function animate() {
             objectState.cups.highlighted = false
         } if (objectState.adminBell.highlighted) {
             audio.Bell.play()
+        } if (objectState.adminDesk.highlighted) {
+            objectState.adminDesk.interacted = true
+            objectState.adminDesk.highlighted = false
+        } if (objectState.sink.highlighted) {
+            objectState.sink.interacted = true
+            objectState.sink.highlighted = false
         }
     }
     objectState.adminTable.highlighted = adminTableDistance <= 160;
-    adminTable.image = 
-    (objectState.adminTable.interacted) ? 
-    adminTable.sprites.inter : 
-    (objectState.adminTable.highlighted ? adminTable.sprites.high : adminTable.sprites.init)
+    adminTable.image =
+        (objectState.adminTable.interacted) ?
+            adminTable.sprites.inter :
+            (objectState.adminTable.highlighted ? adminTable.sprites.high : adminTable.sprites.init)
 
     objectState.plcTable1.highlighted = plcTable1Distance <= 160;
-    plcTable1.image = 
-    (objectState.plcTable1.interacted) ? 
-    plcTable1.sprites.inter : 
-    (objectState.plcTable1.highlighted ? plcTable1.sprites.high : plcTable1.sprites.init)
+    plcTable1.image =
+        (objectState.plcTable1.interacted) ?
+            plcTable1.sprites.inter :
+            (objectState.plcTable1.highlighted ? plcTable1.sprites.high : plcTable1.sprites.init)
 
     objectState.plcTable2.highlighted = plcTable2Distance <= 160;
-    plcTable2.image = 
-    (objectState.plcTable2.interacted) ? 
-    plcTable2.sprites.inter : 
-    (objectState.plcTable2.highlighted ? plcTable2.sprites.high : plcTable2.sprites.init)
+    plcTable2.image =
+        (objectState.plcTable2.interacted) ?
+            plcTable2.sprites.inter :
+            (objectState.plcTable2.highlighted ? plcTable2.sprites.high : plcTable2.sprites.init)
 
     objectState.cups.highlighted = cupsDistance <= 160;
-    cups.image = 
-    (objectState.cups.interacted) ? 
-    cups.sprites.inter : 
-    (objectState.cups.highlighted ? cups.sprites.high : cups.sprites.init)
+    cups.image =
+        (objectState.cups.interacted) ?
+            cups.sprites.inter :
+            (objectState.cups.highlighted ? cups.sprites.high : cups.sprites.init)
+
+    objectState.adminDesk.highlighted = adminDeskDistance <= 160;
+    adminDesk.image =
+        (objectState.adminDesk.interacted) ?
+            adminDesk.sprites.inter :
+            (objectState.adminDesk.highlighted ? adminDesk.sprites.high : adminDesk.sprites.init)
+
+    objectState.sink.highlighted = sinkDistance <= 160;
+    sink.image =
+        (objectState.sink.interacted) ?
+            sink.sprites.inter :
+            (objectState.sink.highlighted ? sink.sprites.high : sink.sprites.init)
 
     objectState.gong.highlighted = gongDistance <= 90;
-    gong.image = 
-    (!objectState.gong.interacted && objectState.gong.highlighted) ? 
-    gong.sprites.high : gong.sprites.init;
+    gong.image =
+        (!objectState.gong.interacted && objectState.gong.highlighted) ?
+            gong.sprites.high : gong.sprites.init;
 
     objectState.adminBell.highlighted = adminBellDistance <= 40;
-    adminBell.image = 
-    (!objectState.adminBell.interacted && objectState.adminBell.highlighted) ? 
-    adminBell.sprites.high : adminBell.sprites.init;
+    adminBell.image =
+        (!objectState.adminBell.interacted && objectState.adminBell.highlighted) ?
+            adminBell.sprites.high : adminBell.sprites.init;
 }
-
-
 
 window.addEventListener('keydown', (e) => {
     switch (e.key) {

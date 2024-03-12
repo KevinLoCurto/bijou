@@ -27,8 +27,15 @@ function calculateCupsDistance(object1, object2) {
     return Math.sqrt(dx * dx + dy * dy)
 }
 
+function calculateSinkDistance(object1, object2) {
+    const dx = object1.position.x - (object2.position.x - 30)
+    const dy = object1.position.y - (object2.position.y + 60)
+    return Math.sqrt(dx * dx + dy * dy)
+}
+
 function calculateAdminBellDistance(object1, object2) {
     const dx = object1.position.x - (object2.position.x + 70)
     const dy = object1.position.y - (object2.position.y + 270)
     return Math.sqrt(dx * dx + dy * dy)
 }
+

@@ -1,4 +1,5 @@
 
+
 const image = new Image()
 image.src = '/assets/world/map.png'
 
@@ -13,11 +14,6 @@ linusLeft.src = '/characters/players/linus/linusLeft.png'
 
 const linusRight = new Image()
 linusRight.src = '/characters/players/linus/linusRight.png'
-
-const gongInitial = new Image()
-gongInitial.src = '/assets/interactables/gongInitial.png'
-const gongHighlighted = new Image()
-gongHighlighted.src = '/assets/interactables/gongHighlighted.png'
 
 const adminTableInitial = new Image()
 adminTableInitial.src = '/assets/interactables/adminTableInitial.png'
@@ -47,7 +43,26 @@ cupsHighlighted.src = '/assets/interactables/cupsHighlighted.png'
 const cupsInteracted = new Image()
 cupsInteracted.src = '/assets/interactables/cupsInteracted.png'
 
+const adminDeskInitial = new Image()
+adminDeskInitial.src = '/assets/interactables/adminDeskInitial.png'
+const adminDeskHighlighted = new Image()
+adminDeskHighlighted.src = '/assets/interactables/adminDeskHighlighted.png'
+const adminDeskInteracted = new Image()
+adminDeskInteracted.src = '/assets/interactables/adminDeskInteracted.png'
+
+const sinkInitial = new Image()
+sinkInitial.src = '/assets/interactables/sinkInitial.png'
+const sinkHighlighted = new Image()
+sinkHighlighted.src = '/assets/interactables/sinkHighlighted.png'
+const sinkInteracted = new Image()
+sinkInteracted.src = '/assets/interactables/sinkInteracted.png'
+
 const adminBellInitial = new Image()
 adminBellInitial.src = '/assets/interactables/adminBellInitial.png'
 const adminBellHighlighted = new Image()
 adminBellHighlighted.src = '/assets/interactables/adminBellHighlighted.png'
+
+const gongInitial = new Image()
+gongInitial.src = '/assets/interactables/gongInitial.png'
+const gongHighlighted = new Image()
+gongHighlighted.src = '/assets/interactables/gongHighlighted.png'

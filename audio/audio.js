@@ -1,19 +1,10 @@
 const audio = {
-    Pregame: new Howl({
-        src: './audio/pregameMusic.wav',
-        html5: true
-        // volume: any value from 0 to 1
-    }),
-    Maingame: new Howl({
-        src: './audio/maingameMusic.wav',
-        html5: true
-    }),
     Bell: new Howl({
-        src: '/audio/PING.m4a',
+        src: '/audio/PING.wav',
         html5: true
     }),
-    Gong: new Howl({
-        src: './audio/gong.wav',
+    Cups: new Howl({
+        src: '/audio/cups.wav',
         html5: true
     })
 }
