@@ -211,6 +211,8 @@ function stopTimer() {
     clearInterval(timerInterval)
 }
 
+let gameActive = true;
+
 function spawnPlayer() {
     document.getElementById('game-screen').style.display = 'block'
     document.getElementById('timer').style.display = 'block'
@@ -226,12 +228,23 @@ function openInstructions() {
 function closeInstructions() {
     document.getElementById('main-menu').style.display = 'block'
     document.getElementById('testimage').style.display = 'block'
+    document.getElementById('end-screen').style.display = 'none'
+    document.getElementById('instruction-screen').style.display = 'none'
     document.getElementById('back').style.display = 'none'
 }
 function restartGame() {
     document.getElementById('main-menu').style.display = 'block'
     document.getElementById('testimage').style.display = 'block'
+    document.getElementById('timer').style.display = 'none'
+    document.getElementById('restart').style.display = 'none'
     document.getElementById('end-screen').style.display = 'none'
+    document.getElementById('bad-ending').style.display = 'none'
+}
+function endGame() {
+    document.getElementById('game-screen').style.display = 'none'
+    document.getElementById('end-screen').style.display = 'block'
+    document.getElementById('restart').style.display = 'block'
+    stopTimer()
 }
 
 document.getElementById('start-game').addEventListener('click', () => {
@@ -259,28 +272,35 @@ const movables = [background, ...boundaries, ...interactables]
 let objectState = {
     adminTable: {
         highlighted: false,
-        interacted: false
+        interacted: false,
+        audioPlay: false
     }, plcTable1: {
         highlighted: false,
-        interacted: false
+        interacted: false,
+        audioPlay: false
     }, plcTable2: {
         highlighted: false,
-        interacted: false
+        interacted: false,
+        audioPlay: false
     }, cups: {
         highlighted: false,
-        interacted: false
+        interacted: false,
+        audioPlay: false
     }, adminBell: {
         highlighted: false
     }, gong: {
         highlighted: false,
+        audioPlay: false,
         timerStarted: false,
-        timerStopped: false
+        timerStopped: true
     }, adminDesk: {
         highlighted: false,
-        interacted: false
+        interacted: false,
+        audioPlay: false
     }, sink: {
         highlighted: false,
-        interacted: false
+        interacted: false,
+        audioPlay: false
     }
 }
 
@@ -301,14 +321,18 @@ imageConstants.forEach((imageConstant, index) => {
     const image = new Image();
     image.onload = () => {
         imagesLoaded++;
-        if (imagesLoaded === imageConstants.length)
+        if (imagesLoaded === imageConstants.length) {
             animate();
+        }
     }
     image.src = imageConstant.src;
 })
 
 function animate() {
-    window.requestAnimationFrame(animate)
+    window.requestAnimationFrame(animate);
+
+    let interactablesDone = 0
+
     background.draw()
     boundaries.forEach(boundaries => {
         boundaries.draw()
@@ -330,6 +354,20 @@ function animate() {
     let moving = true
     linus.moving = false
     let gongable = true
+
+    if (objectState.adminTable.interacted) {
+        interactablesDone++
+    } if (objectState.plcTable1.interacted) {
+        interactablesDone++
+    } if (objectState.plcTable2.interacted) {
+        interactablesDone++
+    } if (objectState.cups.interacted) {
+        interactablesDone++
+    } if (objectState.adminDesk.interacted) {
+        interactablesDone++
+    } if (objectState.sink.interacted) {
+        interactablesDone++
+    }
 
     if (keys.w.pressed) {
         linus.moving = true
@@ -431,60 +469,66 @@ function animate() {
         if (objectState.adminTable.highlighted) {
             objectState.adminTable.interacted = true
             objectState.adminTable.highlighted = false
+            if (!objectState.adminTable.audioPlay) {
+                audio.Click.play()
+                objectState.adminTable.audioPlay = true
+            }
         } if (objectState.plcTable1.highlighted) {
             objectState.plcTable1.interacted = true
             objectState.plcTable1.highlighted = false
+            if (!objectState.plcTable1.audioPlay) {
+                audio.Click.play()
+                objectState.plcTable1.audioPlay = true
+            }
         } if (objectState.plcTable2.highlighted) {
             objectState.plcTable2.interacted = true
             objectState.plcTable2.highlighted = false
+            if (!objectState.plcTable2.audioPlay) {
+                audio.Click.play()
+                objectState.plcTable2.audioPlay = true
+            }
         } if (objectState.cups.highlighted) {
             objectState.cups.interacted = true
             objectState.cups.highlighted = false
+            if (!objectState.cups.audioPlay) {
+                audio.Cups.play()
+                objectState.cups.audioPlay = true
+            }
         } if (objectState.adminBell.highlighted) {
             audio.Bell.play()
         } if (objectState.adminDesk.highlighted) {
             objectState.adminDesk.interacted = true
             objectState.adminDesk.highlighted = false
+            if (!objectState.adminTable.audioPlay) {
+                audio.Click.play()
+                objectState.cups.audioPlay = true
+            }
         } if (objectState.sink.highlighted) {
             objectState.sink.interacted = true
             objectState.sink.highlighted = false
+            if (!objectState.sink.audioPlay) {
+                audio.Sink.play()
+                objectState.sink.audioPlay = true
+            }
+        } if (objectState.gong.highlighted) {
+            if (!objectState.gong.timerStarted) {
+                keys.f.pressed = false;
+                startTimer();
+                objectState.gong.timerStarted = true
+                objectState.gong.timerStopped = false
+            } else {
+                keys.f.pressed = false
+                gongable = false
+                stopTimer();
+                objectState.gong.timerStarted = false
+                endGame()
+                if (interactablesDone < 6) {
+                    document.getElementById('bad-ending').style.display = 'block'
+                    // play harry zemeschiss
+                }
+            }
         }
     }
-    objectState.adminTable.highlighted = adminTableDistance <= 160;
-    adminTable.image =
-        (objectState.adminTable.interacted) ?
-            adminTable.sprites.inter :
-            (objectState.adminTable.highlighted ? adminTable.sprites.high : adminTable.sprites.init)
-
-    objectState.plcTable1.highlighted = plcTable1Distance <= 160;
-    plcTable1.image =
-        (objectState.plcTable1.interacted) ?
-            plcTable1.sprites.inter :
-            (objectState.plcTable1.highlighted ? plcTable1.sprites.high : plcTable1.sprites.init)
-
-    objectState.plcTable2.highlighted = plcTable2Distance <= 160;
-    plcTable2.image =
-        (objectState.plcTable2.interacted) ?
-            plcTable2.sprites.inter :
-            (objectState.plcTable2.highlighted ? plcTable2.sprites.high : plcTable2.sprites.init)
-
-    objectState.cups.highlighted = cupsDistance <= 160;
-    cups.image =
-        (objectState.cups.interacted) ?
-            cups.sprites.inter :
-            (objectState.cups.highlighted ? cups.sprites.high : cups.sprites.init)
-
-    objectState.adminDesk.highlighted = adminDeskDistance <= 160;
-    adminDesk.image =
-        (objectState.adminDesk.interacted) ?
-            adminDesk.sprites.inter :
-            (objectState.adminDesk.highlighted ? adminDesk.sprites.high : adminDesk.sprites.init)
-
-    objectState.sink.highlighted = sinkDistance <= 160;
-    sink.image =
-        (objectState.sink.interacted) ?
-            sink.sprites.inter :
-            (objectState.sink.highlighted ? sink.sprites.high : sink.sprites.init)
 
     objectState.gong.highlighted = gongDistance <= 90;
     gong.image =
@@ -495,6 +539,44 @@ function animate() {
     adminBell.image =
         (!objectState.adminBell.interacted && objectState.adminBell.highlighted) ?
             adminBell.sprites.high : adminBell.sprites.init;
+
+    if (objectState.gong.timerStarted) {
+        objectState.adminTable.highlighted = adminTableDistance <= 160;
+        adminTable.image =
+            (objectState.adminTable.interacted) ?
+                adminTable.sprites.inter :
+                (objectState.adminTable.highlighted ? adminTable.sprites.high : adminTable.sprites.init)
+
+        objectState.plcTable1.highlighted = plcTable1Distance <= 160;
+        plcTable1.image =
+            (objectState.plcTable1.interacted) ?
+                plcTable1.sprites.inter :
+                (objectState.plcTable1.highlighted ? plcTable1.sprites.high : plcTable1.sprites.init)
+
+        objectState.plcTable2.highlighted = plcTable2Distance <= 160;
+        plcTable2.image =
+            (objectState.plcTable2.interacted) ?
+                plcTable2.sprites.inter :
+                (objectState.plcTable2.highlighted ? plcTable2.sprites.high : plcTable2.sprites.init)
+
+        objectState.cups.highlighted = cupsDistance <= 160;
+        cups.image =
+            (objectState.cups.interacted) ?
+                cups.sprites.inter :
+                (objectState.cups.highlighted ? cups.sprites.high : cups.sprites.init)
+
+        objectState.adminDesk.highlighted = adminDeskDistance <= 160;
+        adminDesk.image =
+            (objectState.adminDesk.interacted) ?
+                adminDesk.sprites.inter :
+                (objectState.adminDesk.highlighted ? adminDesk.sprites.high : adminDesk.sprites.init)
+
+        objectState.sink.highlighted = sinkDistance <= 160;
+        sink.image =
+            (objectState.sink.interacted) ?
+                sink.sprites.inter :
+                (objectState.sink.highlighted ? sink.sprites.high : sink.sprites.init)
+    }
 }
 
 window.addEventListener('keydown', (e) => {

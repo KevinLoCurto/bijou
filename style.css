@@ -1,3 +1,40 @@
+/* --------------------------- GENERAL -------------------------------- */
+
+h1 {
+    font-size: 48pt;
+    font-family: 'crang', sans-serif;
+    color: rgb(204, 204, 204);
+}
+
+h2 {
+    font-size: 24pt;
+    font-family: 'crang', sans-serif;
+    color: rgb(204, 204, 204);
+}
+
+p {
+    font-size: 16pt;
+    font-family: 'vcr', sans-serif;
+    color: rgb(204, 204, 204);
+}
+
+.textbox {
+    padding-top: 25px;
+    padding-left: 25px;
+    padding-right: 400px;
+}
+
+/* --------------------------- IN-GAME UI -------------------------------- */
+
+#timer {
+    color: #f12321;
+    font-size: 64pt;
+    font-family: 'vcr', sans-serif;
+    margin-left: 25px;
+}
+
+/* --------------------------- MAIN MENU -------------------------------- */
+
 #main-menu {
     display: block;
     position: absolute;
@@ -19,36 +56,101 @@
     display: block;
 }
 
+#instructions {
+    background-color: #7cc049;
+    margin-left: 25px;
+    margin-top: 50px;
+    max-width: 500px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+}
 
+.buttontext {
+    color: black;
+}
+
+#instructions:hover {
+    background-color: #63953d;
+}
+
+#start-game {
+    background-color: #7cc049;
+    margin-left: 25px;
+    margin-top: 50px;
+    max-width: 500px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+}
+
+#start-game:hover {
+    background-color: #63953d;
+}
+
+/* --------------------------- INSTRUCTION SCREEN -------------------------------- */
 
 #instruction-screen {
-    display: none;
-    background-color: #fff;
-    padding: 20px;
+    background-color: black;
+    padding-bottom: 450px;
 }
 
-
-
-#game-screen, #instruction-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+#linus-story {
+    font-size: 20pt;
+    font-family: 'vcr', sans-serif;
+    color: rgb(204, 204, 204);
 }
 
-#timer {
-    position: absolute;
+#back {
+    background-color: #7cc049;
+    margin-left: 25px;
+    margin-top: 50px;
+    max-width: 300px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 65px;
 }
 
-#tracklist {
-    position: absolute;
+#back:hover {
+    background-color: #63953d;
 }
 
-
+/* --------------------------- END SCREEN -------------------------------- */
 
 #end-screen {
     display: none;
+    padding: 25px;
 }
 
+#restart {
+    background-color: #7cc049;
+    margin-left: 25px;
+    margin-top: 50px;
+    margin-bottom: 75px;
+    max-width: 300px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 65px;
+}
+
+#restart:hover {
+    background-color: #63953d;
+}
+
+#bad-ending {
+    color: #f12321;
+    margin-left: 25px;
+}
+
+/* --------------------------- FONT LOGIC -------------------------------- */
+
+@font-face {
+    font-family: 'crang';
+    src: url(/data/fonts/Crang.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'vcr';
+    src: url(/data/fonts/VCR_OSD_MONO_1.001.ttf) format('truetype');
+}
 
