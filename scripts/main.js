@@ -216,6 +216,7 @@ let gameActive = true;
 function spawnPlayer() {
     document.getElementById('game-screen').style.display = 'block'
     document.getElementById('timer').style.display = 'block'
+    document.getElementById('tasklist').style.display = 'block'
     document.getElementById('main-menu').style.display = 'none'
     document.getElementById('testimage').style.display = 'none'
 }
@@ -242,6 +243,7 @@ function restartGame() {
 }
 function endGame() {
     document.getElementById('game-screen').style.display = 'none'
+    document.getElementById('tasklist').style.display = 'none'
     document.getElementById('end-screen').style.display = 'block'
     document.getElementById('restart').style.display = 'block'
     stopTimer()
@@ -332,6 +334,9 @@ function animate() {
     window.requestAnimationFrame(animate);
 
     let interactablesDone = 0
+    let steckerliisteUsgmacht = 0
+    let tasseUfgruumt = 0
+    let gschirrspüelerIgruumt = 0
 
     background.draw()
     boundaries.forEach(boundaries => {
@@ -354,20 +359,6 @@ function animate() {
     let moving = true
     linus.moving = false
     let gongable = true
-
-    if (objectState.adminTable.interacted) {
-        interactablesDone++
-    } if (objectState.plcTable1.interacted) {
-        interactablesDone++
-    } if (objectState.plcTable2.interacted) {
-        interactablesDone++
-    } if (objectState.cups.interacted) {
-        interactablesDone++
-    } if (objectState.adminDesk.interacted) {
-        interactablesDone++
-    } if (objectState.sink.interacted) {
-        interactablesDone++
-    }
 
     if (keys.w.pressed) {
         linus.moving = true
@@ -524,6 +515,7 @@ function animate() {
                 endGame()
                 if (interactablesDone < 6) {
                     document.getElementById('bad-ending').style.display = 'block'
+                    document.getElementById('end-screen').style.display = 'none'
                     // play harry zemeschiss
                 }
             }
@@ -577,6 +569,30 @@ function animate() {
                 sink.sprites.inter :
                 (objectState.sink.highlighted ? sink.sprites.high : sink.sprites.init)
     }
+
+    if (objectState.adminTable.interacted) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+    } if (objectState.plcTable1.interacted) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+    } if (objectState.plcTable2.interacted) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+    } if (objectState.cups.interacted) {
+        interactablesDone++
+        tasseUfgruumt++
+    } if (objectState.adminDesk.interacted) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+    } if (objectState.sink.interacted) {
+        interactablesDone++
+        gschirrspüelerIgruumt++
+    }
+
+    document.getElementById('sterckerliisteUsmache').textContent = steckerliisteUsgmacht
+    document.getElementById('gschirrspüelerIruume').textContent = gschirrspüelerIgruumt
+    document.getElementById('tasseUfruume').textContent = tasseUfgruumt
 }
 
 window.addEventListener('keydown', (e) => {
