@@ -8,3 +8,5 @@ for each object
 7 add distance calculation const (maybe create new function as well)
 8 set object's interaction state to true when interacted in if statement
 9 add interaction logic & adjust
+10 add let for interaction progress counter
+11 add logic to add progress count to said counter upon interaction
