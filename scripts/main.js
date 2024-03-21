@@ -38,8 +38,8 @@ const linus = new Sprite({
 
 const background = new Sprite({
     position: {
-        x: offset.x,
-        y: offset.y
+        x: -1450,
+        y: -1440
     },
     image: image
 })
