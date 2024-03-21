@@ -28,6 +28,13 @@ rT.src = '/assets/world/rosaTable.png'
 const uT = new Image()
 uT.src = '/assets/world/ursTable.png'
 
+const gT1 = new Image()
+gT1.src = '/assets/world/glassTable1.png' 
+const gT2 = new Image()
+gT2.src = '/assets/world/glassTable2.png'
+const gT3 = new Image()
+gT3.src = '/assets/world/glassTable3.png'
+
 const adminTableInitial = new Image()
 adminTableInitial.src = '/assets/interactables/adminTableInitial.png'
 const adminTableHighlighted = new Image()

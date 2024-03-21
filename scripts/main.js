@@ -92,6 +92,30 @@ const ursTable = new Sprite({
     image: uT
 })
 
+const glassTable1 = new Sprite({
+    position: {
+        x: -530,
+        y: 920
+    },
+    image: gT1
+})
+
+const glassTable2 = new Sprite({
+    position: {
+        x: -890,
+        y: 800
+    },
+    image: gT2
+})
+
+const glassTable3 = new Sprite({
+    position: {
+        x: -810,
+        y: 1120
+    },
+    image: gT3
+})
+
 const adminTable = new Interactable({
     position: {
         x: -690,
@@ -382,6 +406,7 @@ function badEnding() {
     audio.harryZemeschiss.play()
     stopTimer()
 }
+
 document.getElementById('start-game').addEventListener('click', () => {
     spawnPlayer()
     displayTimer()
@@ -397,7 +422,8 @@ document.getElementById('restart').addEventListener('click', () => {
 })
 
 const stoicObjects = [
-    christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable
+    christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable, 
+    glassTable1, glassTable2, glassTable3
 ]
 const interactables = [
     adminTable, adminDesk, sink, adminBell,
@@ -546,7 +572,6 @@ function animate() {
 
     let moving = true
     linus.moving = false
-    let gongable = true
 
     if (keys.w.pressed) {
         linus.moving = true
@@ -895,7 +920,6 @@ function animate() {
     document.getElementById('gschirrspüelerIruume').textContent = gschirrspüelerIgruumt
     document.getElementById('tasseUfruume').textContent = tasseUfgruumt
     document.getElementById('druckerUfruume').textContent = druckerUfgruumt
-    console.log(interactablesDone)
 }
 
 window.addEventListener('keydown', (e) => {
