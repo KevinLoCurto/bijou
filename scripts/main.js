@@ -132,7 +132,7 @@ const adminTable = new Interactable({
 const sink = new Interactable({
     position: {
         x: -490,
-        y: 40
+        y: 0
     },
     image: sinkInitial,
     sprites: {
@@ -235,14 +235,92 @@ const plcTable6 = new Interactable({
 
 const plcTable7 = new Interactable({
     position: {
-        x: 0,
-        y: 0
+        x: 110,
+        y: -80
     },
     image: plcTable7Initial,
     sprites: {
         init: plcTable7Initial,
         high: plcTable7Highlighted,
         inter: plcTable7Interacted
+    }
+})
+
+const plcTable8 = new Interactable({
+    position: {
+        x: 510,
+        y: 680
+    },
+    image: plcTable8Initial,
+    sprites: {
+        init: plcTable8Initial,
+        high: plcTable8Highlighted,
+        inter: plcTable8Interacted
+    }
+})
+
+const plcTable9 = new Interactable({
+    position: {
+        x: 350,
+        y: -80
+    },
+    image: plcTable9Initial,
+    sprites: {
+        init: plcTable9Initial,
+        high: plcTable9Highlighted,
+        inter: plcTable9Interacted
+    }
+})
+
+const plcTable10 = new Interactable({
+    position: {
+        x: 790,
+        y: -80
+    },
+    image: plcTable10Initial,
+    sprites: {
+        init: plcTable10Initial,
+        high: plcTable10Highlighted,
+        inter: plcTable10Interacted
+    }
+})
+
+const plcTable11 = new Interactable({
+    position: {
+        x: 790,
+        y: -320
+    },
+    image: plcTable11Initial,
+    sprites: {
+        init: plcTable11Initial,
+        high: plcTable11Highlighted,
+        inter: plcTable11Interacted
+    }
+})
+
+const plcTable12 = new Interactable({
+    position: {
+        x: -130,
+        y: 1240
+    },
+    image: plcTable12Initial,
+    sprites: {
+        init: plcTable12Initial,
+        high: plcTable12Highlighted,
+        inter: plcTable12Interacted
+    }
+})
+
+const plcTable13 = new Interactable({
+    position: {
+        x: -130,
+        y: 960
+    },
+    image: plcTable13Initial,
+    sprites: {
+        init: plcTable13Initial,
+        high: plcTable13Highlighted,
+        inter: plcTable13Interacted
     }
 })
 
@@ -369,6 +447,7 @@ function spawnPlayer() {
     document.getElementById('tasklist').style.display = 'block'
     document.getElementById('main-menu').style.display = 'none'
     document.getElementById('testimage').style.display = 'none'
+    audio.sBijou.play()
 }
 function openInstructions() {
     document.getElementById('main-menu').style.display = 'none'
@@ -422,12 +501,13 @@ document.getElementById('restart').addEventListener('click', () => {
 })
 
 const stoicObjects = [
-    christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable, 
+    christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable,
     glassTable1, glassTable2, glassTable3
 ]
 const interactables = [
     adminTable, adminDesk, sink, adminBell,
     plcTable1, plcTable2, plcTable3, plcTable4, plcTable5, plcTable6,
+    plcTable7, plcTable8, plcTable9, plcTable10, plcTable11, plcTable12, plcTable13,
     cups, printer, gong
 ]
 const movables = [
@@ -476,6 +556,36 @@ let objectState = {
         interacted: false,
         audioPlay: false,
         increased: false
+    }, plcTable8: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, plcTable9: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, plcTable10: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, plcTable11: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, plcTable12: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, plcTable13: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
     }, cups: {
         highlighted: false,
         interacted: false,
@@ -516,6 +626,12 @@ const imageConstants = [
     plcTable5Initial, plcTable5Highlighted, plcTable5Interacted,
     plcTable6Initial, plcTable6Highlighted, plcTable6Interacted,
     plcTable7Initial, plcTable7Highlighted, plcTable7Interacted,
+    plcTable8Initial, plcTable8Highlighted, plcTable8Interacted,
+    plcTable9Initial, plcTable9Highlighted, plcTable9Interacted,
+    plcTable10Initial, plcTable10Highlighted, plcTable10Interacted,
+    plcTable11Initial, plcTable11Highlighted, plcTable11Interacted,
+    plcTable12Initial, plcTable12Highlighted, plcTable12Interacted,
+    plcTable13Initial, plcTable13Highlighted, plcTable13Interacted,
     printerInitial, printerHighlighted, printerInteracted,
     cupsInitial, cupsHighlighted, cupsInteracted,
     adminDeskInitial, adminDeskHighlighted, adminDeskInteracted,
@@ -530,6 +646,7 @@ let steckerliisteUsgmacht = 0
 let tasseUfgruumt = 0
 let gschirrspüelerIgruumt = 0
 let druckerUfgruumt = 0
+let bijouComplete = false
 imageConstants.forEach((imageConstant, index) => {
     const image = new Image();
     image.onload = () => {
@@ -562,7 +679,13 @@ function animate() {
     const plcTable4Distance = calculateFourtableVerticalDistance(linus, plcTable4)
     const plcTable5Distance = calculateFourtableVerticalDistance(linus, plcTable5)
     const plcTable6Distance = calculateFourtableVerticalDistance(linus, plcTable6)
-    const plcTable7Distance = calculateFourtableVerticalDistance(linus, plcTable7)
+    const plcTable7Distance = calculateSinkDistance(linus, plcTable7)
+    const plcTable8Distance = calculateSinkDistance(linus, plcTable8)
+    const plcTable9Distance = calculateSinkDistance(linus, plcTable9)
+    const plcTable10Distance = calculateCupsDistance(linus, plcTable10)
+    const plcTable11Distance = calculateCupsDistance(linus, plcTable11)
+    const plcTable12Distance = calculateCupsDistance(linus, plcTable12)
+    const plcTable13Distance = calculateCupsDistance(linus, plcTable13)
     const cupsDistance = calculateCupsDistance(linus, cups)
     const adminDeskDistance = calculateCupsDistance(linus, adminDesk)
     const sinkDistance = calculateSinkDistance(linus, sink)
@@ -726,6 +849,48 @@ function animate() {
                 audio.Click.play()
                 objectState.plcTable7.audioPlay = true
             }
+        } if (objectState.plcTable8.highlighted) {
+            objectState.plcTable8.interacted = true
+            objectState.plcTable8.highlighted = false
+            if (!objectState.plcTable8.audioPlay) {
+                audio.Click.play()
+                objectState.plcTable8.audioPlay = true
+            }
+        } if (objectState.plcTable9.highlighted) {
+            objectState.plcTable9.interacted = true
+            objectState.plcTable9.highlighted = false
+            if (!objectState.plcTable9.audioPlay) {
+                audio.Click.play()
+                objectState.plcTable9.audioPlay = true
+            }
+        } if (objectState.plcTable10.highlighted) {
+            objectState.plcTable10.interacted = true
+            objectState.plcTable10.highlighted = false
+            if (!objectState.plcTable10.audioPlay) {
+                audio.Click.play()
+                objectState.plcTable10.audioPlay = true
+            }
+        } if (objectState.plcTable11.highlighted) {
+            objectState.plcTable11.interacted = true
+            objectState.plcTable11.highlighted = false
+            if (!objectState.plcTable11.audioPlay) {
+                audio.Click.play()
+                objectState.plcTable11.audioPlay = true
+            }
+        } if (objectState.plcTable12.highlighted) {
+            objectState.plcTable12.interacted = true
+            objectState.plcTable12.highlighted = false
+            if (!objectState.plcTable12.audioPlay) {
+                audio.Click.play()
+                objectState.plcTable12.audioPlay = true
+            }
+        } if (objectState.plcTable13.highlighted) {
+            objectState.plcTable13.interacted = true
+            objectState.plcTable13.highlighted = false
+            if (!objectState.plcTable13.audioPlay) {
+                audio.Click.play()
+                objectState.plcTable13.audioPlay = true
+            }
         } if (objectState.cups.highlighted) {
             objectState.cups.interacted = true
             objectState.cups.highlighted = false
@@ -761,14 +926,14 @@ function animate() {
                 keys.f.pressed = false
                 startTimer()
                 audio.Gong.play()
+                playerAudio.linusStart.play()
                 objectState.gong.timerStarted = true
                 objectState.gong.timerStopped = false
             } else {
                 keys.f.pressed = false
-                gongable = false
                 audio.Gong.play()
                 objectState.gong.timerStarted = false
-                if (interactablesDone === 11) {
+                if (interactablesDone === 18) {
                     stopTimer()
                     goodEnding()
                 } else {
@@ -835,11 +1000,47 @@ function animate() {
                 plcTable6.sprites.inter :
                 (objectState.plcTable6.highlighted ? plcTable6.sprites.high : plcTable6.sprites.init)
 
-        objectState.plcTable7.highlighted = plcTable7Distance <= 160;
+        objectState.plcTable7.highlighted = plcTable7Distance <= 120;
         plcTable7.image =
             (objectState.plcTable7.interacted) ?
                 plcTable7.sprites.inter :
                 (objectState.plcTable7.highlighted ? plcTable7.sprites.high : plcTable7.sprites.init)
+
+        objectState.plcTable8.highlighted = plcTable8Distance <= 200;
+        plcTable8.image =
+            (objectState.plcTable8.interacted) ?
+                plcTable8.sprites.inter :
+                (objectState.plcTable8.highlighted ? plcTable8.sprites.high : plcTable8.sprites.init)
+
+        objectState.plcTable9.highlighted = plcTable9Distance <= 120;
+        plcTable9.image =
+            (objectState.plcTable9.interacted) ?
+                plcTable9.sprites.inter :
+                (objectState.plcTable9.highlighted ? plcTable9.sprites.high : plcTable9.sprites.init)
+
+        objectState.plcTable10.highlighted = plcTable10Distance <= 120;
+        plcTable10.image =
+            (objectState.plcTable10.interacted) ?
+                plcTable10.sprites.inter :
+                (objectState.plcTable10.highlighted ? plcTable10.sprites.high : plcTable10.sprites.init)
+
+        objectState.plcTable11.highlighted = plcTable11Distance <= 120;
+        plcTable11.image =
+            (objectState.plcTable11.interacted) ?
+                plcTable11.sprites.inter :
+                (objectState.plcTable11.highlighted ? plcTable11.sprites.high : plcTable11.sprites.init)
+
+        objectState.plcTable12.highlighted = plcTable12Distance <= 200;
+        plcTable12.image =
+            (objectState.plcTable12.interacted) ?
+                plcTable12.sprites.inter :
+                (objectState.plcTable12.highlighted ? plcTable12.sprites.high : plcTable12.sprites.init)
+
+        objectState.plcTable13.highlighted = plcTable13Distance <= 200;
+        plcTable13.image =
+            (objectState.plcTable13.interacted) ?
+                plcTable13.sprites.inter :
+                (objectState.plcTable13.highlighted ? plcTable13.sprites.high : plcTable13.sprites.init)
 
         objectState.cups.highlighted = cupsDistance <= 160;
         cups.image =
@@ -898,6 +1099,30 @@ function animate() {
         interactablesDone++
         steckerliisteUsgmacht++
         objectState.plcTable7.increased = true
+    } if (objectState.plcTable8.interacted && !objectState.plcTable8.increased) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+        objectState.plcTable8.increased = true
+    } if (objectState.plcTable9.interacted && !objectState.plcTable9.increased) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+        objectState.plcTable9.increased = true
+    } if (objectState.plcTable10.interacted && !objectState.plcTable10.increased) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+        objectState.plcTable10.increased = true
+    } if (objectState.plcTable11.interacted && !objectState.plcTable11.increased) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+        objectState.plcTable11.increased = true
+    } if (objectState.plcTable12.interacted && !objectState.plcTable12.increased) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+        objectState.plcTable12.increased = true
+    } if (objectState.plcTable13.interacted && !objectState.plcTable13.increased) {
+        interactablesDone++
+        steckerliisteUsgmacht++
+        objectState.plcTable13.increased = true
     } if (objectState.cups.interacted && !objectState.cups.increased) {
         interactablesDone++
         tasseUfgruumt++
@@ -914,6 +1139,11 @@ function animate() {
         interactablesDone++
         druckerUfgruumt++
         objectState.printer.increased = true
+    }
+
+    if (interactablesDone === 18 && !bijouComplete) {
+        bijouComplete = true
+        playerAudio.linusEnd.play()
     }
 
     document.getElementById('sterckerliisteUsmache').textContent = steckerliisteUsgmacht

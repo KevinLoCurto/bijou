@@ -91,6 +91,48 @@ plcTable7Highlighted.src = '/assets/interactables/plcTable7Highlighted.png'
 const plcTable7Interacted = new Image()
 plcTable7Interacted.src = '/assets/interactables/plcTable7Interacted.png'
 
+const plcTable8Initial = new Image()
+plcTable8Initial.src = '/assets/interactables/plcTable8Initial.png'
+const plcTable8Highlighted = new Image()
+plcTable8Highlighted.src = '/assets/interactables/plcTable8Highlighted.png'
+const plcTable8Interacted = new Image()
+plcTable8Interacted.src = '/assets/interactables/plcTable8Interacted.png'
+
+const plcTable9Initial = new Image()
+plcTable9Initial.src = '/assets/interactables/plcTable9Initial.png'
+const plcTable9Highlighted = new Image()
+plcTable9Highlighted.src = '/assets/interactables/plcTable9Highlighted.png'
+const plcTable9Interacted = new Image()
+plcTable9Interacted.src = '/assets/interactables/plcTable9Interacted.png'
+
+const plcTable10Initial = new Image()
+plcTable10Initial.src = '/assets/interactables/plcTable10Initial.png'
+const plcTable10Highlighted = new Image()
+plcTable10Highlighted.src = '/assets/interactables/plcTable10Highlighted.png'
+const plcTable10Interacted = new Image()
+plcTable10Interacted.src = '/assets/interactables/plcTable10Interacted.png'
+
+const plcTable11Initial = new Image()
+plcTable11Initial.src = '/assets/interactables/plcTable11Initial.png'
+const plcTable11Highlighted = new Image()
+plcTable11Highlighted.src = '/assets/interactables/plcTable11Highlighted.png'
+const plcTable11Interacted = new Image()
+plcTable11Interacted.src = '/assets/interactables/plcTable11Interacted.png'
+
+const plcTable12Initial = new Image()
+plcTable12Initial.src = '/assets/interactables/plcTable12Initial.png'
+const plcTable12Highlighted = new Image()
+plcTable12Highlighted.src = '/assets/interactables/plcTable12Highlighted.png'
+const plcTable12Interacted = new Image()
+plcTable12Interacted.src = '/assets/interactables/plcTable12Interacted.png'
+
+const plcTable13Initial = new Image()
+plcTable13Initial.src = '/assets/interactables/plcTable13Initial.png'
+const plcTable13Highlighted = new Image()
+plcTable13Highlighted.src = '/assets/interactables/plcTable13Highlighted.png'
+const plcTable13Interacted = new Image()
+plcTable13Interacted.src = '/assets/interactables/plcTable13Interacted.png'
+
 const cupsInitial = new Image()
 cupsInitial.src = '/assets/interactables/cupsInitial.png'
 const cupsHighlighted = new Image()

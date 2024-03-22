@@ -1,34 +1,34 @@
 const audio = {
     Bell: new Howl({
         src: '/audio/environment/PING.wav',
-        html5: true
     }),
     Cups: new Howl({
         src: '/audio/environment/cups.wav',
-        html5: true
     }),
     Click: new Howl({
         src: '/audio/environment/click.wav',
-        html5: true
     }),
     Sink: new Howl({
         src: '/audio/environment/gschirrspüeler.wav',
-        html5: true
     }),
     Gong: new Howl({
         src: '/audio/environment/gong.wav',
-        html5: true 
+        volume: 0.2
     }),
     harryZemeschiss: new Howl({
         src: '/audio/environment/harryZemeschiss.wav',
-        html5: true
+    }),
+    Printer: new Howl({
+        src: '/audio/environment/crumble.wav',
+    }),
+    sBijou: new Howl({
+        src: '/audio/environment/sbijou.wav'
     })
 }
 
 const playerAudio = {
     kevinBijou: new Howl({
-        src: '/audio/player/sbijou1.wav',
-        html5: true
+        src: '/audio/player/kevin/sbijou1.wav',
     }),
     // kevinStart: new Howl({
     //     src: '/audio/player/kevinStart.wav',
@@ -43,20 +43,16 @@ const playerAudio = {
     //     html5: true
     // }),
     linusBijou: new Howl({
-        src: '/audio/player/linusBijou.wav',
-        html5: true
+        src: '/audio/player/linus/linusBijou.wav',
     }),
     linusStart: new Howl({
-        src: '/audio/player/linusStart.wav',
-        html5: true
+        src: '/audio/player/linus/linusStart.wav',
     }),
     linusEnd: new Howl({
-        src: '/audio/player/linusEnd.wav',
-        html5: true
+        src: '/audio/player/linus/linusEnd.wav',
     }),
     linusSelect: new Howl({
-        src: '/audio/player/linusSelect.wav',
-        html5: true
+        src: '/audio/player/linus/linusSelect.wav',
     })
 }
 
@@ -75,7 +71,3 @@ var linusAudio = [
     '/audio/npc/linus/linus4.wav',
     '/audio/npc/linus/linus5.wav'
 ]
-
-const selectAudio = {
-
-}
