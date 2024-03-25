@@ -79,3 +79,19 @@ var zeriAudio = [
     '/audio/npc/zeri/zeri4.wav',
     '/audio/npc/zeri/zeri5.wav'
 ]
+
+var simonAudio = [
+    '/audio/npc/simon/simon1.wav',
+    '/audio/npc/simon/simon2.wav',
+    '/audio/npc/simon/simon3.wav',
+    '/audio/npc/simon/simon4.wav',
+    '/audio/npc/simon/simon5.wav'
+]
+
+var gianAudio = [
+    '/audio/npc/gian/gian1.wav',
+    '/audio/npc/gian/gian2.wav',
+    '/audio/npc/gian/gian3.wav',
+    '/audio/npc/gian/gian4.wav',
+    '/audio/npc/gian/gian5.wav'
+]

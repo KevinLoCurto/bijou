@@ -46,11 +46,27 @@ const zeriNPC = new Sprite({
 
 const kevinNPC = new Sprite({
     position: {
-     x: -250,
+     x: -230,
      y: 240
     },
     image: npcKevin
- })
+})
+
+const gianNPC = new Sprite({
+    position: {
+     x: 770,
+     y: 80
+    },
+    image: npcGian
+})
+
+const simonNPC = new Sprite({
+    position: {
+     x: 140,
+     y: 875
+    },
+    image: npcSimon
+})
 
 const background = new Sprite({
     position: {
@@ -517,7 +533,7 @@ document.getElementById('restart').addEventListener('click', () => {
 })
 
 const npcs = [
-    zeriNPC, kevinNPC
+    zeriNPC, kevinNPC, gianNPC, simonNPC
 ]
 
 const stoicObjects = [
@@ -642,6 +658,12 @@ let npcState = {
         delayed: false,
     },
     kevin: {
+        delayed: false
+    },
+    gian: {
+        delayed: false
+    },
+    simon: {
         delayed: false
     }
 }
@@ -997,6 +1019,26 @@ function animate() {
             npcState.kevin.delayed = true
             setTimeout(() => {
                 npcState.kevin.delayed = false
+            }, 5000)
+        } 
+    }
+
+    if (calculateNPCDistance(linus, gianNPC) <= 200) {
+        if (!npcState.gian.delayed) {
+            playRandomDialogueGian()
+            npcState.gian.delayed = true
+            setTimeout(() => {
+                npcState.gian.delayed = false
+            }, 5000)
+        } 
+    }
+
+    if (calculateNPCDistance(linus, simonNPC) <= 200) {
+        if (!npcState.simon.delayed) {
+            playRandomDialogueSimon()
+            npcState.simon.delayed = true
+            setTimeout(() => {
+                npcState.simon.delayed = false
             }, 5000)
         } 
     }

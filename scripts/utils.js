@@ -72,3 +72,17 @@ function playRandomDialogueZeri() {
     zeriDialogue.play()
 }
 
+function playRandomDialogueSimon() {
+    var randomIndex = Math.floor(Math.random() * simonAudio.length)
+    var simonDialogue = new Audio(simonAudio[randomIndex])
+
+    simonDialogue.play()
+}
+
+function playRandomDialogueGian() {
+    var randomIndex = Math.floor(Math.random() * gianAudio.length)
+    var gianDialogue = new Audio(gianAudio[randomIndex])
+
+    gianDialogue.play()
+}
+
