@@ -71,3 +71,11 @@ var linusAudio = [
     '/audio/npc/linus/linus4.wav',
     '/audio/npc/linus/linus5.wav'
 ]
+
+var zeriAudio = [
+    '/audio/npc/zeri/zeri1.wav',
+    '/audio/npc/zeri/zeri2.wav',
+    '/audio/npc/zeri/zeri3.wav',
+    '/audio/npc/zeri/zeri4.wav',
+    '/audio/npc/zeri/zeri5.wav'
+]

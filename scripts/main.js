@@ -36,6 +36,22 @@ const linus = new Sprite({
     }
 })
 
+const zeriNPC = new Sprite({
+   position: {
+    x: 110,
+    y: -415
+   },
+   image: npcZeri 
+})
+
+const kevinNPC = new Sprite({
+    position: {
+     x: -250,
+     y: 240
+    },
+    image: npcKevin
+ })
+
 const background = new Sprite({
     position: {
         x: -1450,
@@ -500,6 +516,10 @@ document.getElementById('restart').addEventListener('click', () => {
     restartGame()
 })
 
+const npcs = [
+    zeriNPC, kevinNPC
+]
+
 const stoicObjects = [
     christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable,
     glassTable1, glassTable2, glassTable3
@@ -512,7 +532,8 @@ const interactables = [
 ]
 const movables = [
     background, ...boundaries,
-    ...interactables, ...stoicObjects
+    ...interactables, ...stoicObjects,
+    ...npcs
 ]
 
 let objectState = {
@@ -616,8 +637,18 @@ let objectState = {
     }
 }
 
+let npcState = {
+    zeri: {
+        delayed: false,
+    },
+    kevin: {
+        delayed: false
+    }
+}
+
 const imageConstants = [
     linusDown, linusLeft, linusRight, linusUp, image,
+    npcZeri,
     adminTableInitial, adminTableHighlighted, adminTableInteracted,
     plcTable1Initial, plcTable1Highlighted, plcTable1Interacted,
     plcTable2Initial, plcTable2Highlighted, plcTable2Interacted,
@@ -671,6 +702,9 @@ function animate() {
     interactables.forEach(interactable => {
         interactable.draw()
     })
+    npcs.forEach(npc => {
+        npc.draw()
+    })
 
     const adminTableDistance = calculateFourtableVerticalDistance(linus, adminTable)
     const plcTable1Distance = calculateFourtableVerticalDistance(linus, plcTable1)
@@ -719,7 +753,7 @@ function animate() {
             movables.forEach((movables) => {
                 movables.position.y += 4
             })
-    } else if (keys.a.pressed) {
+    } if (keys.a.pressed) {
         linus.moving = true
         linus.image = linus.sprites.left
         for (let i = 0; i < boundaries.length; i++) {
@@ -743,7 +777,7 @@ function animate() {
             movables.forEach((movables) => {
                 movables.position.x += 4
             })
-    } else if (keys.s.pressed) {
+    } if (keys.s.pressed) {
         linus.moving = true
         linus.image = linus.sprites.down
         for (let i = 0; i < boundaries.length; i++) {
@@ -768,7 +802,7 @@ function animate() {
             movables.forEach((movables) => {
                 movables.position.y -= 4
             })
-    } else if (keys.d.pressed) {
+    } if (keys.d.pressed) {
         linus.moving = true
         linus.image = linus.sprites.right
         for (let i = 0; i < boundaries.length; i++) {
@@ -945,6 +979,26 @@ function animate() {
     } if (keys.b.pressed) {
         playRandomDialogueKevin()
         keys.b.pressed = false
+    }
+
+    if (calculateNPCDistance(linus, zeriNPC) <= 200) {
+        if (!npcState.zeri.delayed) {
+            playRandomDialogueZeri()
+            npcState.zeri.delayed = true
+            setTimeout(() => {
+                npcState.zeri.delayed = false
+            }, 5000)
+        } 
+    }
+
+    if (calculateNPCDistance(linus, kevinNPC) <= 200) {
+        if (!npcState.kevin.delayed) {
+            playRandomDialogueKevin()
+            npcState.kevin.delayed = true
+            setTimeout(() => {
+                npcState.kevin.delayed = false
+            }, 5000)
+        } 
     }
 
     objectState.gong.highlighted = gongDistance <= 90;

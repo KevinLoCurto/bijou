@@ -15,6 +15,11 @@ linusLeft.src = '/characters/players/linus/linusLeft.png'
 const linusRight = new Image()
 linusRight.src = '/characters/players/linus/linusRight.png'
 
+const npcZeri = new Image()
+npcZeri.src = '/characters/npcs/zeri.png'
+const npcKevin = new Image()
+npcKevin.src = '/characters/npcs/kevin.png'
+
 const cT = new Image()
 cT.src = '/assets/world/christineTable.png'
 const eT = new Image()
