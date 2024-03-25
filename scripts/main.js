@@ -46,7 +46,7 @@ const zeriNPC = new Sprite({
 
 const kevinNPC = new Sprite({
     position: {
-     x: -230,
+     x: -250,
      y: 240
     },
     image: npcKevin
@@ -505,6 +505,7 @@ function restartGame() {
 function goodEnding() {
     document.getElementById('game-screen').style.display = 'none'
     document.getElementById('tasklist').style.display = 'none'
+    document.getElementById('timer').style.display = 'none'
     document.getElementById('end-screen').style.display = 'block'
     document.getElementById('restart').style.display = 'block'
     stopTimer()
@@ -512,6 +513,7 @@ function goodEnding() {
 function badEnding() {
     document.getElementById('game-screen').style.display = 'none'
     document.getElementById('tasklist').style.display = 'none'
+    document.getElementById('timer').style.display = 'none'
     document.getElementById('bad-ending').style.display = 'block'
     document.getElementById('restart').style.display = 'block'
     audio.harryZemeschiss.play()
@@ -1246,6 +1248,8 @@ function animate() {
     document.getElementById('gschirrspüelerIruume').textContent = gschirrspüelerIgruumt
     document.getElementById('tasseUfruume').textContent = tasseUfgruumt
     document.getElementById('druckerUfruume').textContent = druckerUfgruumt
+    document.getElementById('gameTime').textContent = gameTime
+    console.log(gameTime)
 }
 
 window.addEventListener('keydown', (e) => {

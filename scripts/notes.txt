@@ -10,3 +10,5 @@ for each object
 9 add interaction logic & adjust
 10 add let for interaction progress counter
 11 add logic to add progress count to said counter upon interaction
+
+david laptop leading to ostergruss (ostergruss.sbw.media)
