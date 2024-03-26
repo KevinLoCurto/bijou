@@ -86,3 +86,10 @@ function playRandomDialogueGian() {
     gianDialogue.play()
 }
 
+function playRandomDialogueNiki() {
+    var randomIndex = Math.floor(Math.random() * nikiAudio.length)
+    var nikiDialogue = new Audio(nikiAudio[randomIndex])
+
+    nikiDialogue.play()
+}
+

@@ -1,5 +1,7 @@
 "use strict";
 
+// ------------------------- GENERAL CANVAS --------------------------------- 
+
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
@@ -19,6 +21,8 @@ c.fillRect(
     canvas.height
 )
 
+// ------------------------- PLAYER CHARACTER --------------------------------- 
+
 const linus = new Sprite({
     position: {
         x: canvas.width / 2 - 192 / 4 / 2,
@@ -35,6 +39,8 @@ const linus = new Sprite({
         right: linusRight
     }
 })
+
+// ------------------------- NON-PLAYER CHARACTERS --------------------------------- 
 
 const zeriNPC = new Sprite({
     position: {
@@ -68,6 +74,16 @@ const simonNPC = new Sprite({
     image: npcSimon
 })
 
+const nikiNPC = new Sprite({
+    position: {
+        x: 510,
+        y: -625
+    },
+    image: npcNiki
+})
+
+// ------------------------- BACKGROUND --------------------------------- 
+
 const background = new Sprite({
     position: {
         x: -1450,
@@ -75,6 +91,8 @@ const background = new Sprite({
     },
     image: image
 })
+
+// ------------------------- DECORATIVE OBJECTS --------------------------------- 
 
 const christineTable = new Sprite({
     position: {
@@ -147,6 +165,8 @@ const glassTable3 = new Sprite({
     },
     image: gT3
 })
+
+// ------------------------- INTERACTABLE OBJECTS --------------------------------- 
 
 const adminTable = new Interactable({
     position: {
@@ -406,26 +426,7 @@ const gong = new Interactable({
     }
 })
 
-const keys = {
-    w: {
-        pressed: false
-    },
-    a: {
-        pressed: false
-    },
-    s: {
-        pressed: false
-    },
-    d: {
-        pressed: false
-    },
-    f: {
-        pressed: false
-    },
-    b: {
-        pressed: false
-    }
-}
+// ------------------------- COLLISIONS --------------------------------- 
 
 const collisionsMap = []
 for (let i = 0; i < collisions.length; i += 80) {
@@ -455,6 +456,8 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
     )
 }
 
+// ------------------------- TIMER --------------------------------- 
+
 let gameTime = 0
 let timerInterval
 function displayTimer() {
@@ -472,6 +475,8 @@ function startTimer() {
 function stopTimer() {
     clearInterval(timerInterval)
 }
+
+// ------------------------- MENU BUTTON INTERACTION --------------------------------- 
 
 function spawnPlayer() {
     document.getElementById('character-selection-screen').style.display = 'none'
@@ -541,10 +546,11 @@ document.getElementById('restart').addEventListener('click', () => {
     restartGame()
 })
 
-const npcs = [
-    zeriNPC, kevinNPC, gianNPC, simonNPC
-]
+// ------------------------- OBJECT GROUPING FOR EASIER RENDERING LOGIC ---------------------------------
 
+const npcs = [
+    zeriNPC, kevinNPC, gianNPC, simonNPC, nikiNPC
+]
 const stoicObjects = [
     christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable,
     glassTable1, glassTable2, glassTable3
@@ -674,6 +680,9 @@ let npcState = {
     },
     simon: {
         delayed: false
+    },
+    niki: {
+        delayed: false
     }
 }
 
@@ -722,12 +731,15 @@ imageConstants.forEach((imageConstant, index) => {
     image.src = imageConstant.src;
 })
 
+// ------------------------- CHARACTER SELECTION LOGIC --------------------------------- 
+
 function playerIsLinus() {
     document.getElementById('linus').style.display = 'block'
     document.getElementById('zeri').style.display = 'none'
     document.getElementById('kevin').style.display = 'none'
     document.getElementById('gian').style.display = 'none'
     document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'none'
 }
 function playerIsKevin() {
     document.getElementById('linus').style.display = 'none'
@@ -735,6 +747,7 @@ function playerIsKevin() {
     document.getElementById('kevin').style.display = 'block'
     document.getElementById('gian').style.display = 'none'
     document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'none'
 }
 function playerIsZeri() {
     document.getElementById('linus').style.display = 'none'
@@ -742,6 +755,7 @@ function playerIsZeri() {
     document.getElementById('kevin').style.display = 'none'
     document.getElementById('gian').style.display = 'none'
     document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'none'
 }
 function playerIsGian() {
     document.getElementById('linus').style.display = 'none'
@@ -749,6 +763,7 @@ function playerIsGian() {
     document.getElementById('kevin').style.display = 'none'
     document.getElementById('gian').style.display = 'block'
     document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'none'
 }
 function playerIsSimon() {
     document.getElementById('linus').style.display = 'none'
@@ -756,10 +771,19 @@ function playerIsSimon() {
     document.getElementById('kevin').style.display = 'none'
     document.getElementById('gian').style.display = 'none'
     document.getElementById('simon').style.display = 'block'
+    document.getElementById('niki').style.display = 'none'
+}
+function playerIsNiki() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'block'
 }
 
 document.getElementById('next-character').addEventListener('click', () => {
-    if (characterSelected < 5) {
+    if (characterSelected < 6) {
         characterSelected++
     }
 })
@@ -769,11 +793,29 @@ document.getElementById('prev-character').addEventListener('click', () => {
     }
 })
 
- 
-
-
+const keys = {
+    w: {
+        pressed: false
+    },
+    a: {
+        pressed: false
+    },
+    s: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    },
+    f: {
+        pressed: false
+    },
+    b: {
+        pressed: false
+    }
+}
 
 function animate() {
+    // ------------------------- IMAGE PLACEMENT ---------------------------------
     window.requestAnimationFrame(animate);
     background.draw()
     boundaries.forEach(boundaries => {
@@ -790,7 +832,7 @@ function animate() {
         npc.draw()
     })
 
-    console.log(characterSelected)
+// ------------------------- DISTANCE CALCULATION ---------------------------------
 
     const adminTableDistance = calculateFourtableVerticalDistance(linus, adminTable)
     const plcTable1Distance = calculateFourtableVerticalDistance(linus, plcTable1)
@@ -815,6 +857,8 @@ function animate() {
 
     let moving = true
     linus.moving = false
+
+    // ------------------------- MOVEMENT ---------------------------------
 
     if (keys.w.pressed && !gameEnded) {
         linus.moving = true
@@ -912,7 +956,11 @@ function animate() {
             movables.forEach((movables) => {
                 movables.position.x -= 4
             })
-    } if (keys.f.pressed && !gameEnded) {
+    } 
+    
+    // ------------------------- INTERACTION LOGIC & AUTOMATIC AUDIO PLAYING ---------------------------------
+    
+    if (keys.f.pressed && !gameEnded) {
         if (objectState.adminTable.highlighted) {
             objectState.adminTable.interacted = true
             objectState.adminTable.highlighted = false
@@ -1100,6 +1148,14 @@ function animate() {
                 npcState.simon.delayed = false
             }, 5000)
         }
+    } if (calculateNPCDistance(linus, nikiNPC) <= 200) {
+        if (!npcState.niki.delayed) {
+            playRandomDialogueNiki()
+            npcState.niki.delayed = true
+            setTimeout(() => {
+                npcState.niki.delayed = false
+            }, 5000)
+        } 
     }
 
     objectState.gong.highlighted = gongDistance <= 90;
@@ -1222,6 +1278,8 @@ function animate() {
                 (objectState.printer.highlighted ? printer.sprites.high : printer.sprites.init)
     }
 
+    // ------------------------- PROGRESS COUNT ---------------------------------
+
     if (objectState.adminTable.interacted && !objectState.adminTable.increased) {
         interactablesDone++
         steckerliisteUsgmacht++
@@ -1307,6 +1365,8 @@ function animate() {
     document.getElementById('druckerUfruume').textContent = druckerUfgruumt
     document.getElementById('gameTime').textContent = gameTime
 
+    // ------------------------- CHARACTER SELECTION ---------------------------------
+
     if (characterSelected === 0) {
         playerIsLinus()
     } if (characterSelected === 1) {
@@ -1317,9 +1377,12 @@ function animate() {
         playerIsGian()
     } if (characterSelected === 4) {
         playerIsSimon()
+    } if (characterSelected === 5) {
+        playerIsNiki()
     }
 }
 
+// ------------------------- KEY PRESS REGISTRATION ---------------------------------
 
 window.addEventListener('keydown', (e) => {
     switch (e.key) {

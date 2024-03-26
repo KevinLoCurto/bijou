@@ -23,6 +23,8 @@ const npcSimon = new Image()
 npcSimon.src = '/characters/npcs/simon.png'
 const npcGian = new Image()
 npcGian.src = '/characters/npcs/gian.png'
+const npcNiki = new Image()
+npcNiki.src = '/characters/npcs/niki.png'
 
 const cT = new Image()
 cT.src = '/assets/world/christineTable.png'

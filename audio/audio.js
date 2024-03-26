@@ -95,3 +95,11 @@ var gianAudio = [
     '/audio/npc/gian/gian4.wav',
     '/audio/npc/gian/gian5.wav'
 ]
+
+var nikiAudio = [
+    '/audio/npc/niki/niki1.wav',
+    '/audio/npc/niki/niki2.wav',
+    '/audio/npc/niki/niki3.wav',
+    '/audio/npc/niki/niki4.wav',
+    '/audio/npc/niki/niki5.wav'
+]
