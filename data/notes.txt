@@ -1,0 +1,15 @@
+for each object
+1 add to imageAdder.js
+2 create const for Interactable 
+3 add const to interactables array
+4 edit object's position until it lines up
+5 add object to let objectState
+6 add object to render queue
+7 add distance calculation const (maybe create new function as well)
+8 set object's interaction state to true when interacted in if statement
+9 add interaction logic & adjust
+10 add let for interaction progress counter
+11 add logic to add progress count to said counter upon interaction
+
+david laptop leading to ostergruss (ostergruss.sbw.media)
+luca npc line: bitte im EG ufstuehle 

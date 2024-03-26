@@ -99,9 +99,20 @@ p {
     background-color: #63953d;
 }
 
+/* --------------------------- CHARACTER SELECTION SCREEN -------------------------------- */
+
+#character-selection-screen {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
 #start-game {
     background-color: #7cc049;
-    margin-left: 25px;
+    margin-left: 75px;
     margin-top: 50px;
     width: 400px;
     padding-top: 5px;
@@ -113,15 +124,32 @@ p {
     background-color: #63953d;
 }
 
-/* --------------------------- CHARACTER SELECTION SCREEN -------------------------------- */
+#prev-character {
+    background-color: #7cc049;
+    margin-left: 60px;
+    margin-top: 50px;
+    width: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+}
 
-#character-selection-screen {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+#prev-character:hover {
+    background-color: #63953d;
+}
+
+#next-character {
+    background-color: #7cc049;
+    margin-left: 25px;
+    margin-top: 50px;
+    width: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+}
+
+#next-character:hover {
+    background-color: #63953d;
 }
 
 /* --------------------------- INSTRUCTION SCREEN -------------------------------- */

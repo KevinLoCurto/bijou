@@ -37,33 +37,33 @@ const linus = new Sprite({
 })
 
 const zeriNPC = new Sprite({
-   position: {
-    x: 110,
-    y: -415
-   },
-   image: npcZeri 
+    position: {
+        x: 110,
+        y: -415
+    },
+    image: npcZeri
 })
 
 const kevinNPC = new Sprite({
     position: {
-     x: -250,
-     y: 240
+        x: -250,
+        y: 240
     },
     image: npcKevin
 })
 
 const gianNPC = new Sprite({
     position: {
-     x: 770,
-     y: 80
+        x: 770,
+        y: 80
     },
     image: npcGian
 })
 
 const simonNPC = new Sprite({
     position: {
-     x: 140,
-     y: 875
+        x: 140,
+        y: 875
     },
     image: npcSimon
 })
@@ -709,6 +709,8 @@ let tasseUfgruumt = 0
 let gschirrspüelerIgruumt = 0
 let druckerUfgruumt = 0
 let bijouComplete = false
+let gameEnded = false
+let characterSelected = 0
 imageConstants.forEach((imageConstant, index) => {
     const image = new Image();
     image.onload = () => {
@@ -719,6 +721,57 @@ imageConstants.forEach((imageConstant, index) => {
     }
     image.src = imageConstant.src;
 })
+
+function playerIsLinus() {
+    document.getElementById('linus').style.display = 'block'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'none'
+}
+function playerIsKevin() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'block'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'none'
+}
+function playerIsZeri() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'block'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'none'
+}
+function playerIsGian() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'block'
+    document.getElementById('simon').style.display = 'none'
+}
+function playerIsSimon() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'block'
+}
+
+document.getElementById('next-character').addEventListener('click', () => {
+    if (characterSelected < 5) {
+        characterSelected++
+    }
+})
+document.getElementById('prev-character').addEventListener('click', () => {
+    if (characterSelected > 0) {
+        characterSelected--
+    }
+})
+
+ 
+
+
 
 function animate() {
     window.requestAnimationFrame(animate);
@@ -736,6 +789,8 @@ function animate() {
     npcs.forEach(npc => {
         npc.draw()
     })
+
+    console.log(characterSelected)
 
     const adminTableDistance = calculateFourtableVerticalDistance(linus, adminTable)
     const plcTable1Distance = calculateFourtableVerticalDistance(linus, plcTable1)
@@ -761,7 +816,7 @@ function animate() {
     let moving = true
     linus.moving = false
 
-    if (keys.w.pressed) {
+    if (keys.w.pressed && !gameEnded) {
         linus.moving = true
         linus.image = linus.sprites.up
         for (let i = 0; i < boundaries.length; i++) {
@@ -784,7 +839,7 @@ function animate() {
             movables.forEach((movables) => {
                 movables.position.y += 4
             })
-    } if (keys.a.pressed) {
+    } if (keys.a.pressed && !gameEnded) {
         linus.moving = true
         linus.image = linus.sprites.left
         for (let i = 0; i < boundaries.length; i++) {
@@ -808,7 +863,7 @@ function animate() {
             movables.forEach((movables) => {
                 movables.position.x += 4
             })
-    } if (keys.s.pressed) {
+    } if (keys.s.pressed && !gameEnded) {
         linus.moving = true
         linus.image = linus.sprites.down
         for (let i = 0; i < boundaries.length; i++) {
@@ -833,7 +888,7 @@ function animate() {
             movables.forEach((movables) => {
                 movables.position.y -= 4
             })
-    } if (keys.d.pressed) {
+    } if (keys.d.pressed && !gameEnded) {
         linus.moving = true
         linus.image = linus.sprites.right
         for (let i = 0; i < boundaries.length; i++) {
@@ -857,7 +912,7 @@ function animate() {
             movables.forEach((movables) => {
                 movables.position.x -= 4
             })
-    } if (keys.f.pressed) {
+    } if (keys.f.pressed && !gameEnded) {
         if (objectState.adminTable.highlighted) {
             objectState.adminTable.interacted = true
             objectState.adminTable.highlighted = false
@@ -998,6 +1053,7 @@ function animate() {
                 keys.f.pressed = false
                 audio.Gong.play()
                 objectState.gong.timerStarted = false
+                gameEnded = true
                 if (interactablesDone === 18) {
                     stopTimer()
                     goodEnding()
@@ -1007,7 +1063,7 @@ function animate() {
                 }
             }
         }
-    } if (keys.b.pressed) {
+    } if (keys.b.pressed && !gameEnded) {
         playRandomDialogueKevin()
         keys.b.pressed = false
     }
@@ -1019,37 +1075,31 @@ function animate() {
             setTimeout(() => {
                 npcState.zeri.delayed = false
             }, 5000)
-        } 
-    }
-
-    if (calculateNPCDistance(linus, kevinNPC) <= 200) {
+        }
+    } if (calculateNPCDistance(linus, kevinNPC) <= 200) {
         if (!npcState.kevin.delayed) {
             playRandomDialogueKevin()
             npcState.kevin.delayed = true
             setTimeout(() => {
                 npcState.kevin.delayed = false
             }, 5000)
-        } 
-    }
-
-    if (calculateNPCDistance(linus, gianNPC) <= 200) {
+        }
+    } if (calculateNPCDistance(linus, gianNPC) <= 200) {
         if (!npcState.gian.delayed) {
             playRandomDialogueGian()
             npcState.gian.delayed = true
             setTimeout(() => {
                 npcState.gian.delayed = false
             }, 5000)
-        } 
-    }
-
-    if (calculateNPCDistance(linus, simonNPC) <= 200) {
+        }
+    } if (calculateNPCDistance(linus, simonNPC) <= 200) {
         if (!npcState.simon.delayed) {
             playRandomDialogueSimon()
             npcState.simon.delayed = true
             setTimeout(() => {
                 npcState.simon.delayed = false
             }, 5000)
-        } 
+        }
     }
 
     objectState.gong.highlighted = gongDistance <= 90;
@@ -1256,8 +1306,20 @@ function animate() {
     document.getElementById('tasseUfruume').textContent = tasseUfgruumt
     document.getElementById('druckerUfruume').textContent = druckerUfgruumt
     document.getElementById('gameTime').textContent = gameTime
-    console.log(gameTime)
+
+    if (characterSelected === 0) {
+        playerIsLinus()
+    } if (characterSelected === 1) {
+        playerIsKevin()
+    } if (characterSelected === 2) {
+        playerIsZeri()
+    } if (characterSelected === 3) {
+        playerIsGian()
+    } if (characterSelected === 4) {
+        playerIsSimon()
+    }
 }
+
 
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
@@ -1303,4 +1365,5 @@ window.addEventListener('keyup', (e) => {
             break
     }
 })
+
 
