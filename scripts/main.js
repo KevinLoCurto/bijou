@@ -474,11 +474,10 @@ function stopTimer() {
 }
 
 function spawnPlayer() {
+    document.getElementById('character-selection-screen').style.display = 'none'
     document.getElementById('game-screen').style.display = 'block'
     document.getElementById('timer').style.display = 'block'
     document.getElementById('tasklist').style.display = 'block'
-    document.getElementById('main-menu').style.display = 'none'
-    document.getElementById('testimage').style.display = 'none'
     audio.sBijou.play()
 }
 function openInstructions() {
@@ -493,6 +492,11 @@ function closeInstructions() {
     document.getElementById('end-screen').style.display = 'none'
     document.getElementById('instruction-screen').style.display = 'none'
     document.getElementById('back').style.display = 'none'
+}
+function openCharacterSelection() {
+    document.getElementById('main-menu').style.display = 'none'
+    document.getElementById('testimage').style.display = 'none'
+    document.getElementById('character-selection-screen').style.display = 'block'
 }
 function restartGame() {
     document.getElementById('main-menu').style.display = 'block'
@@ -520,6 +524,9 @@ function badEnding() {
     stopTimer()
 }
 
+document.getElementById('character-select').addEventListener('click', () => {
+    openCharacterSelection()
+})
 document.getElementById('start-game').addEventListener('click', () => {
     spawnPlayer()
     displayTimer()

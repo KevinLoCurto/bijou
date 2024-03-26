@@ -85,7 +85,7 @@ p {
     background-color: #63953d;
 }
 
-#start-game {
+#character-select {
     background-color: #7cc049;
     margin-left: 25px;
     margin-top: 50px;
@@ -95,8 +95,33 @@ p {
     padding-left: 7px;
 }
 
+#character-select:hover {
+    background-color: #63953d;
+}
+
+#start-game {
+    background-color: #7cc049;
+    margin-left: 25px;
+    margin-top: 50px;
+    width: 400px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+}
+
 #start-game:hover {
     background-color: #63953d;
+}
+
+/* --------------------------- CHARACTER SELECTION SCREEN -------------------------------- */
+
+#character-selection-screen {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 /* --------------------------- INSTRUCTION SCREEN -------------------------------- */

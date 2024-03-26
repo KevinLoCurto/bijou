@@ -12,3 +12,4 @@ for each object
 11 add logic to add progress count to said counter upon interaction
 
 david laptop leading to ostergruss (ostergruss.sbw.media)
+luca npc line: bitte im EG ufstuehle 
