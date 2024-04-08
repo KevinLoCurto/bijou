@@ -157,6 +157,7 @@ p {
 #instruction-screen {
     background-color: black;
     padding-bottom: 0px;
+    justify-content: center;
 }
 
 #linus-story {

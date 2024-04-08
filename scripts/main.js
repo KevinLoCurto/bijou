@@ -488,7 +488,7 @@ function spawnPlayer() {
 function openInstructions() {
     document.getElementById('main-menu').style.display = 'none'
     document.getElementById('testimage').style.display = 'none'
-    document.getElementById('instruction-screen').style.display = 'block'
+    document.getElementById('instruction-screen').style.display = 'flex'
     document.getElementById('back').style.display = 'block'
 }
 function closeInstructions() {
@@ -502,6 +502,7 @@ function openCharacterSelection() {
     document.getElementById('main-menu').style.display = 'none'
     document.getElementById('testimage').style.display = 'none'
     document.getElementById('character-selection-screen').style.display = 'block'
+    npcState.linus.selectionPlayed = false
 }
 function restartGame() {
     document.getElementById('main-menu').style.display = 'block'
@@ -669,21 +670,39 @@ let objectState = {
 }
 
 let npcState = {
+    linus: {
+        delayed: false,
+        selectionPlayed: true,
+    },
     zeri: {
         delayed: false,
+        selectionPlayed: false,
     },
     kevin: {
-        delayed: false
+        delayed: false,
+        selectionPlayed: false,
     },
     gian: {
-        delayed: false
+        delayed: false,
+        selectionPlayed: false,
     },
     simon: {
-        delayed: false
+        delayed: false,
+        selectionPlayed: false,
     },
     niki: {
-        delayed: false
+        delayed: false,
+        selectionPlayed: false,
     }
+}
+
+function resetNPCState() {
+    npcState.linus.selectionPlayed = false
+    npcState.kevin.selectionPlayed = false
+    npcState.zeri.selectionPlayed = false
+    npcState.gian.selectionPlayed = false
+    npcState.simon.selectionPlayed = false
+    npcState.niki.selectionPlayed = false
 }
 
 const imageConstants = [
@@ -733,54 +752,6 @@ imageConstants.forEach((imageConstant, index) => {
 
 // ------------------------- CHARACTER SELECTION LOGIC --------------------------------- 
 
-function playerIsLinus() {
-    document.getElementById('linus').style.display = 'block'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsKevin() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'block'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsZeri() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'block'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsGian() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'block'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsSimon() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'block'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsNiki() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'block'
-}
 
 document.getElementById('next-character').addEventListener('click', () => {
     if (characterSelected < 6) {
@@ -792,6 +763,89 @@ document.getElementById('prev-character').addEventListener('click', () => {
         characterSelected--
     }
 })
+
+function playerIsLinus() {
+    document.getElementById('linus').style.display = 'block'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'none'
+    if (!npcState.linus.selectionPlayed) {
+        playerAudio.linusSelect.play()
+        npcState.linus.selectionPlayed = true
+    }
+}
+function playerIsKevin() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'block'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'none'
+    if (!npcState.kevin.selectionPlayed) {
+        playerAudio.kevinSelect.play()
+        npcState.kevin.selectionPlayed = true
+    }
+    resetNPCState()
+    npcState.kevin.selectionPlayed = true
+}
+function playerIsZeri() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'block'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'none'
+    if (!npcState.zeri.selectionPlayed) {
+        playerAudio.zeriSelect.play()
+        npcState.zeri.selectionPlayed = true
+    }
+    resetNPCState()
+    npcState.zeri.selectionPlayed = true
+}
+function playerIsGian() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'block'
+    document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'none'
+    if (!npcState.gian.selectionPlayed) {
+        playerAudio.gianSelect.play()
+        npcState.gian.selectionPlayed = true
+    }
+    resetNPCState()
+    npcState.gian.selectionPlayed = true
+}
+function playerIsSimon() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'block'
+    document.getElementById('niki').style.display = 'none'
+    if (!npcState.simon.selectionPlayed) {
+        playerAudio.simonSelect.play()
+        npcState.simon.selectionPlayed = true
+    }
+    resetNPCState()
+    npcState.simon.selectionPlayed = true
+}
+function playerIsNiki() {
+    document.getElementById('linus').style.display = 'none'
+    document.getElementById('zeri').style.display = 'none'
+    document.getElementById('kevin').style.display = 'none'
+    document.getElementById('gian').style.display = 'none'
+    document.getElementById('simon').style.display = 'none'
+    document.getElementById('niki').style.display = 'block'
+    if (!npcState.niki.selectionPlayed) {
+        playerAudio.nikiSelect.play()
+        npcState.niki.selectionPlayed = true
+    }
+    resetNPCState()
+    npcState.niki.selectionPlayed = true
+}
 
 const keys = {
     w: {
@@ -832,6 +886,8 @@ function animate() {
         npc.draw()
     })
 
+    console.log(characterSelected)
+
 // ------------------------- DISTANCE CALCULATION ---------------------------------
 
     const adminTableDistance = calculateFourtableVerticalDistance(linus, adminTable)
@@ -858,7 +914,7 @@ function animate() {
     let moving = true
     linus.moving = false
 
-    // ------------------------- MOVEMENT ---------------------------------
+    // ------------------------- PLAYER MOVEMENT ---------------------------------
 
     if (keys.w.pressed && !gameEnded) {
         linus.moving = true

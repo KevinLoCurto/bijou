@@ -27,21 +27,6 @@ const audio = {
 }
 
 const playerAudio = {
-    kevinBijou: new Howl({
-        src: '/audio/player/kevin/sbijou1.wav',
-    }),
-    // kevinStart: new Howl({
-    //     src: '/audio/player/kevinStart.wav',
-    //     html5: true
-    // }),
-    // kevinEnd: new Howl({
-    //     src: '/audio/player/kevinEnd.wav',
-    //     html5: true
-    // }),
-    // kevinSelect: new Howl({
-    //     src: '/audio/player/kevinSelect.wav',
-    //     html5: true
-    // }),
     linusBijou: new Howl({
         src: '/audio/player/linus/linusBijou.wav',
     }),
@@ -53,7 +38,63 @@ const playerAudio = {
     }),
     linusSelect: new Howl({
         src: '/audio/player/linus/linusSelect.wav',
-    })
+    }),
+
+    kevinBijou: new Howl({
+        src: '/audio/player/kevin/sbijou1.wav',
+    }),
+    // kevinStart: new Howl({
+    //     src: '/audio/player/kevinStart.wav',
+    //     html5: true
+    // }), 
+    // kevinEnd: new Howl({
+    //     src: '/audio/player/kevinEnd.wav',
+    //     html5: true
+    // }),
+    kevinSelect: new Howl({
+        src: '/audio/player/kevin/sbijou1.wav',
+        html5: true
+    }),
+
+    zeriStart: new Howl({
+        src: '/audio/player/zeri/zeriStart.wav'
+    }),
+    zeriEnd: new Howl({
+        src: '/audio/player/zeri/zeriEnd.wav'
+    }),
+    zeriSelect: new Howl({
+        src: '/audio/player/zeri/zeriSelect.wav'
+    }),
+
+    gianStart: new Howl({
+        src: '/audio/player/gian/gianStart.wav'
+    }),
+    gianEnd: new Howl({
+        src: '/audio/player/gian/gianEnd.wav'
+    }),
+    gianSelect: new Howl({
+        src: '/audio/player/gian/gianSelect.wav'
+    }),
+
+    simonStart: new Howl({
+        src: '/audio/player/simon/simonStart.wav'
+    }),
+    simonEnd: new Howl({
+        src: '/audio/player/simon/simonEnd.wav'
+    }),
+    simonSelect: new Howl({
+        src: '/audio/player/simon/simonSelect.wav'
+    }),
+
+    nikiStart: new Howl({
+        src: '/audio/player/niki/nikiStart.wav'
+    }),
+    nikiEnd: new Howl({
+        src: '/audio/player/niki/nikiEnd.wav'
+    }),
+    nikiSelect: new Howl({
+        src: '/audio/player/niki/nikiSelect.wav'
+    }), 
 }
 
 var kevinAudio = [
