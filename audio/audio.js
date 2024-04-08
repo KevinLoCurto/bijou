@@ -43,17 +43,14 @@ const playerAudio = {
     kevinBijou: new Howl({
         src: '/audio/player/kevin/sbijou1.wav',
     }),
-    // kevinStart: new Howl({
-    //     src: '/audio/player/kevinStart.wav',
-    //     html5: true
-    // }), 
-    // kevinEnd: new Howl({
-    //     src: '/audio/player/kevinEnd.wav',
-    //     html5: true
-    // }),
+    kevinStart: new Howl({
+        src: '/audio/npc/kevin/sbijou3.wav',
+    }), 
+    kevinEnd: new Howl({
+        src: '/audio/npc/kevin/sbijou2.wav',
+    }),
     kevinSelect: new Howl({
         src: '/audio/player/kevin/sbijou1.wav',
-        html5: true
     }),
 
     zeriStart: new Howl({

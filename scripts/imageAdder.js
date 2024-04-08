@@ -5,15 +5,30 @@ image.src = '/assets/world/map.png'
 
 const linusDown = new Image()
 linusDown.src = '/characters/players/linus/linusDown.png'
-
 const linusUp = new Image()
 linusUp.src = '/characters/players/linus/linusUp.png'
-
 const linusLeft = new Image()
 linusLeft.src = '/characters/players/linus/linusLeft.png'
-
 const linusRight = new Image()
 linusRight.src = '/characters/players/linus/linusRight.png'
+
+const kevinDown = new Image()
+kevinDown.src = '/characters/players/kevin/kevinDown.png'
+const kevinUp = new Image()
+kevinUp.src = '/characters/players/kevin/kevinUp.png'
+const kevinLeft = new Image()
+kevinLeft.src = '/characters/players/kevin/kevinLeft.png'
+const kevinRight = new Image()
+kevinRight.src = '/characters/players/kevin/kevinRight.png'
+
+const zeriDown = new Image()
+zeriDown.src = '/characters/players/zeri/zeriDown.png'
+const zeriUp = new Image()
+zeriUp.src = '/characters/players/zeri/zeriUp.png'
+const zeriLeft = new Image()
+zeriLeft.src = '/characters/players/zeri/zeriLeft.png'
+const zeriRight = new Image()
+zeriRight.src = '/characters/players/zeri/zeriRight.png'
 
 const npcZeri = new Image()
 npcZeri.src = '/characters/npcs/zeri.png'
