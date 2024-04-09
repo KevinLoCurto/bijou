@@ -30,6 +30,26 @@ zeriLeft.src = '/characters/players/zeri/zeriLeft.png'
 const zeriRight = new Image()
 zeriRight.src = '/characters/players/zeri/zeriRight.png'
 
+const gianDown = new Image()
+gianDown.src = '/characters/players/gian/gianDown.png'
+const gianUp = new Image()
+gianUp.src = '/characters/players/gian/gianUp.png'
+const gianLeft = new Image()
+gianLeft.src = '/characters/players/gian/gianLeft.png'
+const gianRight = new Image()
+gianRight.src = '/characters/players/gian/gianRight.png'
+
+const simonDown = new Image()
+simonDown.src = '/characters/players/simon/simonDown.png'
+const simonUp = new Image()
+simonUp.src = '/characters/players/simon/simonUp.png'
+const simonLeft = new Image()
+simonLeft.src = '/characters/players/simon/simonLeft.png'
+const simonRight = new Image()
+simonRight.src = '/characters/players/simon/simonRight.png'
+
+const npcLinus = new Image()
+npcLinus.src = '/characters/npcs/linus.png'
 const npcZeri = new Image()
 npcZeri.src = '/characters/npcs/zeri.png'
 const npcKevin = new Image()

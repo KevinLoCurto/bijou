@@ -74,7 +74,49 @@ const zeri = new Sprite({
     }
 })
 
+const gian = new Sprite({
+    position: {
+        x: canvas.width / 2 - 192 / 4 / 2,
+        y: canvas.height / 2 - 68 / 2
+    },
+    image: gianDown,
+    frames: {
+        max: 4
+    },
+    sprites: {
+        up: gianUp,
+        down: gianDown,
+        left: gianLeft,
+        right: gianRight
+    }
+})
+
+const simon = new Sprite({
+    position: {
+        x: canvas.width / 2 - 192 / 4 / 2,
+        y: canvas.height / 2 - 68 / 2
+    },
+    image: simonDown,
+    frames: {
+        max: 4
+    },
+    sprites: {
+        up: simonUp,
+        down: simonDown,
+        left: simonLeft,
+        right: simonRight
+    }
+})
+
 // ------------------------- NON-PLAYER CHARACTERS --------------------------------- 
+
+const linusNPC = new Sprite({
+    position: {
+        x: 310,
+        y: 75
+    },
+    image: npcLinus
+})
 
 const zeriNPC = new Sprite({
     position: {
@@ -522,7 +564,7 @@ function spawnPlayer() {
 function openInstructions() {
     document.getElementById('main-menu').style.display = 'none'
     document.getElementById('testimage').style.display = 'none'
-    document.getElementById('instruction-screen').style.display = 'flex'
+    document.getElementById('instruction-screen').style.display = 'block'
     document.getElementById('back').style.display = 'block'
 }
 function closeInstructions() {
@@ -602,7 +644,7 @@ const players = [
     linus, kevin, zeri, gian, simon, niki
 ]
 const npcs = [
-    zeriNPC, kevinNPC, gianNPC, simonNPC, nikiNPC
+    linusNPC, zeriNPC, kevinNPC, gianNPC, simonNPC, nikiNPC
 ]
 const stoicObjects = [
     christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable,
@@ -978,9 +1020,19 @@ function animate() {
     interactables.forEach(interactable => {
         interactable.draw()
     })
-    npcs.forEach(npc => {
-        npc.draw()
-    })
+    if (!npcState.linus.isPlayer) {
+        linusNPC.draw()
+    } if (!npcState.kevin.isPlayer) {
+        kevinNPC.draw()
+    } if (!npcState.zeri.isPlayer) {
+        zeriNPC.draw()
+    } if (!npcState.gian.isPlayer) {
+        gianNPC.draw()
+    } if (!npcState.simon.isPlayer) {
+        simonNPC.draw()
+    } if (!npcState.niki.isPlayer) {
+        nikiNPC.draw()
+    } 
 
     // ------------------------- DISTANCE CALCULATION ---------------------------------
 
@@ -1073,6 +1125,46 @@ function animate() {
                     break
                 }
             }
+        } if (npcState.gian.isPlayer) {
+            gian.moving = true
+            gian.image = gian.sprites.up
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: gian,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x,
+                                y: boundary.position.y + 4
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
+        } if (npcState.simon.isPlayer) {
+            simon.moving = true
+            simon.image = simon.sprites.up
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: simon,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x,
+                                y: boundary.position.y + 4
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
         }
 
         if (moving)
@@ -1128,6 +1220,46 @@ function animate() {
                 if (
                     rectangularCollision({
                         rectangle1: zeri,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x + 4,
+                                y: boundary.position.y
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
+        } if (npcState.gian.isPlayer) {
+            gian.moving = true
+            gian.image = gian.sprites.left
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: gian,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x + 4,
+                                y: boundary.position.y
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
+        } if (npcState.simon.isPlayer) {
+            simon.moving = true
+            simon.image = simon.sprites.left
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: simon,
                         rectangle2: {
                             ...boundary, position: {
                                 x: boundary.position.x + 4,
@@ -1210,6 +1342,48 @@ function animate() {
                     break
                 }
             }
+        } if (npcState.gian.isPlayer) {
+            gian.moving = true
+            gian.image = gian.sprites.down
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: gian,
+                        rectangle2: {
+                            ...boundary,
+                            position: {
+                                x: boundary.position.x,
+                                y: boundary.position.y - 4
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
+        } if (npcState.simon.isPlayer) {
+            simon.moving = true
+            simon.image = simon.sprites.down
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: simon,
+                        rectangle2: {
+                            ...boundary,
+                            position: {
+                                x: boundary.position.x,
+                                y: boundary.position.y - 4
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
         }
 
         if (moving)
@@ -1265,6 +1439,46 @@ function animate() {
                 if (
                     rectangularCollision({
                         rectangle1: zeri,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x - 4,
+                                y: boundary.position.y
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
+        } if (npcState.gian.isPlayer) {
+            gian.moving = true
+            gian.image = gian.sprites.right
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: gian,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x - 4,
+                                y: boundary.position.y
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
+        } if (npcState.simon.isPlayer) {
+            simon.moving = true
+            simon.image = simon.sprites.right
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: simon,
                         rectangle2: {
                             ...boundary, position: {
                                 x: boundary.position.x - 4,
@@ -1456,7 +1670,15 @@ function animate() {
         keys.b.pressed = false
     }
 
-    if (calculateNPCDistance(linus, zeriNPC) <= 200) {
+    if (calculateNPCDistance(linus, linusNPC) <= 200) {
+        if (!npcState.linus.delayed) {
+            playRandomDialogueLinus()
+            npcState.linus.delayed = true
+            setTimeout(() => {
+                npcState.linus.delayed = false
+            }, 5000)
+        }
+    } if (calculateNPCDistance(linus, zeriNPC) <= 200) {
         if (!npcState.zeri.delayed) {
             playRandomDialogueZeri()
             npcState.zeri.delayed = true

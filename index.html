@@ -12,24 +12,38 @@
 <body style="background-color: black;">
 
   <div id="main-menu">
-    <div>
-      <p>
-        wenn du s spiel startisch und es d graphics nöd richtig tüend lade, eifach d siite im browser neu lade <br>
-        wenn ich e neui version usebring und du die gern möchtisch usprobiere, tue eifach d Cache vo dim Browser leere,
-        denn söttis update. süsch gohts halt ein zwei stund bis es s update registriert.
-      </p>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <p>
+          wenn du s spiel startisch und es d graphics nöd richtig tüend lade, eifach d siite im browser neu lade.
+          wenn ich e neui version usebring und du die gern möchtisch usprobiere, tue eifach d Cache vo dim Browser
+          leere,
+          denn söttis update. süsch gohts halt ein zwei stund bis es s update registriert.
+        </p>
+      </div>
+      <div class="col-md-2"></div>
+
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div id="character-select">
+            <p class="buttontext">
+              easy, lass gschnell s'Bijou mache
+            </p>
+          </div>
+          <div id="instructions">
+            <p class="buttontext">
+              wie spielt mer da?
+            </p>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+
+      <img src="/assets/testImage.png" id="testimage" style="width: 2px;">
     </div>
-    <div id="character-select">
-      <p class="buttontext">
-        easy, lass gschnell s'Bijou mache
-      </p>
-    </div>
-    <div id="instructions">
-      <p class="buttontext">
-        wie spielt mer da?
-      </p>
-    </div>
-    <img src="/assets/testImage.png" id="testimage">
   </div>
 
   <div id="end-screen" style="display: none;">
@@ -140,114 +154,131 @@
 
   <div id="character-selection-screen" style="display: none;">
     <p>placeholder, character selection screen soon.</p>
-    <div id="character-slideshow">
 
-      <div id="linus" style="display: none;">
-        <h1>De Linus</h1>
-        <img src="/characters/select/linus.png" style="scale: 200%; margin: 20px;">
-        <p>
-          *linus noises* <br>
-          De Linus isch de Bijou-Chef - er weiss immerno am beste wies do lauft. Er isch wie en Mediamatiker eifach fürs
-          Bijou; jack of all trades, master of none. <br> stats in the future
-        </p>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div id="character-slideshow">
+
+          <div id="linus" style="display: none;">
+            <h1>De Linus</h1><br>
+            <img src="/characters/select/linus.png" style="scale: 200%; margin: 20px;">
+            <p><br>
+              *linus noises* <br>
+              De Linus isch de Bijou-Chef - er weiss immerno am beste wies lauft. Er isch wie en Mediamatiker eifach fürs
+              Bijou; jack of all trades, master of none. <br> stats in the future
+            </p>
+          </div>
+
+          <div id="kevin" style="display: none;">
+            <h1>De Kevin</h1><br>
+            <img class="select-images" src="/characters/select/kevin.png" style="scale: 200%; margin: 20px;">
+            <p><br>
+              "s'Bijou!!" <br>
+              De Kevin wird dir so uf de Sack goh mit sim huere "s'Bijou!!" dass du so schnell wie möglich wirsch fertig
+              si
+              wölle. Defür ischer ja wenigstens guet mit de Chübel. <br> stats in the future
+
+            </p>
+          </div>
+
+          <div id="zeri" style="display: none;">
+            <h1>D Zeri</h1><br>
+            <img class="select-images" src="/characters/select/zeri.png" style="scale: 200%; margin: 20px;">
+            <p><br>
+              "pass uf bro, mit minere Raucherlunge hani kei Usduur" <br>
+              die einzig Motivation zum bim Bijou gas geh isch d Zigipause wo sie denoch chan mache. Sie isch recht
+              tollpatschig und d Raucherlunge hilft ihre tatsächlich au nöd wirklich. <br> stats in the
+              future
+            </p>
+          </div>
+
+          <div id="gian" style="display: none;">
+            <h1>De Gian</h1><br>
+            <img class="select-images" src="/characters/select/gian.png" style="scale: 200%; margin: 20px;">
+            <p><br>
+              "ich ha eh nur s Admin also eigentlich chömer au hei goh" <br>
+              <br> stats in the future
+            </p>
+          </div>
+
+          <div id="simon" style="display: none;">
+            <h1>De Simon</h1><br>
+            <img class="select-images" src="/characters/select/simon.png" style="scale: 200%; margin: 20px;">
+            <p><br>
+              "it's-a me, Simon!"<br>
+              De Simon wött noch enere lange Wuche volle Creactiva-Horror au nume no hei go F1 luege. Mit sim relativ
+              chline
+              Körper ischer no erstuunlich wendig und chunt a Ort ane wo anderi nöd dure chönd<br> stats in the future
+            </p>
+          </div>
+
+          <div id="niki" style="display: none;">
+            <h1>De Niki</h1><br>
+            <img class="select-images" src="/characters/select/niki.png" style="scale: 200%; margin: 20px;">
+            <p><br>
+              "bisch parat zum bijouniere?" <br>
+              De Niki isch e professionelli Gymratte, s Bijou isch also Kinderkram für ihn. Phalt ihn eifach vom Diego
+              fern
+              süscht chömemer ja nirgends ane. <br> stats in the future
+            </p>
+          </div>
+        </div>
       </div>
-
-      <div id="kevin" style="display: none;">
-        <h1>De Kevin</h1>
-        <img class="select-images" src="/characters/select/kevin.png" style="scale: 200%; margin: 20px;">
-        <p>
-          "s'Bijou!!" <br>
-          De Kevin wird dir so uf de Sack goh mit sim huere "s'Bijou!!" dass du so schnell wie möglich wirsch fertig si
-          wölle. Defür ischer ja wenigstens guet mit de Chübel. <br> stats in the future
-
-        </p>
-      </div>
-
-      <div id="zeri" style="display: none;">
-        <h1>D Zeri</h1>
-        <img class="select-images" src="/characters/select/zeri.png" style="scale: 200%; margin: 20px;">
-        <p>
-          "pass uf bro, mit minere Raucherlunge hani kei Usduur" <br>
-          die einzig Motivation zum bim Bijou gas geh isch d Zigipause wo sie denoch chan mache. Sie isch recht
-          tollpatschig und d Raucherlunge hilft ihre tatsächlich au nöd wirklich. <br> stats in the
-          future
-        </p>
-      </div>
-
-      <div id="gian" style="display: none;">
-        <h1>De Gian</h1>
-        <img class="select-images" src="/characters/select/gian.png" style="scale: 200%; margin: 20px;">
-        <p>
-          "ich ha eh nur s Admin also eigentlich chömer au hei goh" <br>
-          <br> stats in the future
-        </p>
-      </div>
-
-      <div id="simon" style="display: none;">
-        <h1>De Simon</h1>
-        <img class="select-images" src="/characters/select/simon.png" style="scale: 200%; margin: 20px;">
-        <p>
-          "it's-a me, Simon!"<br>
-          De Simon wött noch enere lange Wuche volle Creactiva-Horror au nume no hei go F1 luege. Mit sim relativ chline
-          Körper ischer no erstuunlich wendig und chunt a Ort ane wo anderi nöd dure chönd<br> stats in the future
-        </p>
-      </div>
-
-      <div id="niki" style="display: none;">
-        <h1>De Niki</h1>
-        <img class="select-images" src="/characters/select/niki.png" style="scale: 200%; margin: 20px;">
-        <p>
-          "bisch parat zum bijouniere?" <br>
-          De Niki isch e professionelli Gymratte, s Bijou isch also Kinderkram für ihn. Phalt ihn eifach vom Diego fern
-          süscht chömemer ja nirgends ane. <br> stats in the future
-        </p>
-      </div>
+      <div class="col-md-2"></div>
     </div>
 
-    <div style="display: flex; flex-direction: row;">
-      <div id="prev-character">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-4" id="prev-character">
         <p class="buttontext">
           eis zruck
         </p>
       </div>
-      <div id="next-character">
+      <div class="col-md-4" id="next-character">
         <p class="buttontext">
           eis füre
         </p>
       </div>
+      <div class="col-md-3"></div>
     </div>
 
-    <div id="start-game">
-      <p class="buttontext">
-        ey perfekt, let's go
-      </p>
-    </div>
-
-    <div id="back" style="display: none;">
-      <div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-5" id="start-game">
         <p class="buttontext">
-          ahaaaaa jetz checki
+          ey perfekt, let's go
         </p>
       </div>
+      <div class="col-md-3"></div>
     </div>
+  </div>
 
-    <div id="restart" style="display: none;">
+  <div id="back" style="display: none;">
+    <div>
       <p class="buttontext">
-        zruck zum Startmenü
+        ahaaaaa jetz checki
       </p>
     </div>
+  </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
-      integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA=="
-      crossorigin="anonymous" referrerpolicy="no-referrer">
-      </script>
+  <div id="restart" style="display: none;">
+    <p class="buttontext">
+      zruck zum Startmenü
+    </p>
+  </div>
 
-    <script src="audio/audio.js"></script>
-    <script src="scripts/imageAdder.js"></script>
-    <script src="scripts/classes.js"></script>
-    <script src="scripts/utils.js"></script>
-    <script src="scripts/collisions.js"></script>
-    <script src="scripts/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
+    integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+  <script src="audio/audio.js"></script>
+  <script src="scripts/imageAdder.js"></script>
+  <script src="scripts/classes.js"></script>
+  <script src="scripts/utils.js"></script>
+  <script src="scripts/collisions.js"></script>
+  <script src="scripts/main.js"></script>
 
 </body>
 
