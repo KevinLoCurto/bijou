@@ -1671,7 +1671,7 @@ function animate() {
     }
 
     if (calculateNPCDistance(linus, linusNPC) <= 200) {
-        if (!npcState.linus.delayed) {
+        if (!npcState.linus.delayed && !npcState.linus.isPlayer) {
             playRandomDialogueLinus()
             npcState.linus.delayed = true
             setTimeout(() => {
@@ -1679,7 +1679,7 @@ function animate() {
             }, 5000)
         }
     } if (calculateNPCDistance(linus, zeriNPC) <= 200) {
-        if (!npcState.zeri.delayed) {
+        if (!npcState.zeri.delayed && !npcState.zeri.isPlayer) {
             playRandomDialogueZeri()
             npcState.zeri.delayed = true
             setTimeout(() => {
@@ -1687,7 +1687,7 @@ function animate() {
             }, 5000)
         }
     } if (calculateNPCDistance(linus, kevinNPC) <= 200) {
-        if (!npcState.kevin.delayed) {
+        if (!npcState.kevin.delayed && !npcState.kevin.isPlayer) {
             playRandomDialogueKevin()
             npcState.kevin.delayed = true
             setTimeout(() => {
@@ -1695,7 +1695,7 @@ function animate() {
             }, 5000)
         }
     } if (calculateNPCDistance(linus, gianNPC) <= 200) {
-        if (!npcState.gian.delayed) {
+        if (!npcState.gian.delayed && !npcState.gian.isPlayer) {
             playRandomDialogueGian()
             npcState.gian.delayed = true
             setTimeout(() => {
@@ -1703,7 +1703,7 @@ function animate() {
             }, 5000)
         }
     } if (calculateNPCDistance(linus, simonNPC) <= 200) {
-        if (!npcState.simon.delayed) {
+        if (!npcState.simon.delayed && !npcState.simon.isPlayer) {
             playRandomDialogueSimon()
             npcState.simon.delayed = true
             setTimeout(() => {
@@ -1711,7 +1711,7 @@ function animate() {
             }, 5000)
         }
     } if (calculateNPCDistance(linus, nikiNPC) <= 200) {
-        if (!npcState.niki.delayed) {
+        if (!npcState.niki.delayed && !npcState.niki.isPlayer) {
             playRandomDialogueNiki()
             npcState.niki.delayed = true
             setTimeout(() => {
