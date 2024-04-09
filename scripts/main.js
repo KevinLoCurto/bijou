@@ -823,8 +823,14 @@ function resetNPCState() {
 }
 
 const imageConstants = [
-    linusDown, linusLeft, linusRight, linusUp, image,
-    npcZeri,
+    linusDown, linusLeft, linusRight, linusUp, 
+    kevinDown, kevinLeft, kevinRight, kevinUp, 
+    zeriDown, zeriLeft, zeriRight, zeriUp, 
+    gianDown, gianLeft, gianRight, gianUp, 
+    simonDown, simonLeft, simonRight, simonUp, 
+    nikiDown, nikiLeft, nikiRight, nikiUp, 
+    image,
+    npcLinus, npcKevin, npcZeri, npcGian, npcSimon, npcNiki,
     adminTableInitial, adminTableHighlighted, adminTableInteracted,
     plcTable1Initial, plcTable1Highlighted, plcTable1Interacted,
     plcTable2Initial, plcTable2Highlighted, plcTable2Interacted,
@@ -868,7 +874,6 @@ imageConstants.forEach((imageConstant, index) => {
 })
 
 // ------------------------- CHARACTER SELECTION LOGIC --------------------------------- 
-
 
 document.getElementById('next-character').addEventListener('click', () => {
     if (characterSelected < 6) {
