@@ -48,6 +48,15 @@ simonLeft.src = '/characters/players/simon/simonLeft.png'
 const simonRight = new Image()
 simonRight.src = '/characters/players/simon/simonRight.png'
 
+const nikiDown = new Image()
+nikiDown.src = '/characters/players/niki/nikiDown.png'
+const nikiUp = new Image()
+nikiUp.src = '/characters/players/niki/nikiUp.png'
+const nikiLeft = new Image()
+nikiLeft.src = '/characters/players/niki/nikiLeft.png'
+const nikiRight = new Image()
+nikiRight.src = '/characters/players/niki/nikiRight.png'
+
 const npcLinus = new Image()
 npcLinus.src = '/characters/npcs/linus.png'
 const npcZeri = new Image()

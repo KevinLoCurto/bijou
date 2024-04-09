@@ -108,6 +108,23 @@ const simon = new Sprite({
     }
 })
 
+const niki = new Sprite({
+    position: {
+        x: canvas.width / 2 - 192 / 4 / 2,
+        y: canvas.height / 2 - 68 / 2
+    },
+    image: nikiDown,
+    frames: {
+        max: 4
+    },
+    sprites: {
+        up: nikiUp,
+        down: nikiDown,
+        left: nikiLeft,
+        right: nikiRight
+    }
+})
+
 // ------------------------- NON-PLAYER CHARACTERS --------------------------------- 
 
 const linusNPC = new Sprite({
@@ -1165,6 +1182,26 @@ function animate() {
                     break
                 }
             }
+        } if (npcState.niki.isPlayer) {
+            niki.moving = true
+            niki.image = niki.sprites.up
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: niki,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x,
+                                y: boundary.position.y + 4
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
         }
 
         if (moving)
@@ -1260,6 +1297,26 @@ function animate() {
                 if (
                     rectangularCollision({
                         rectangle1: simon,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x + 4,
+                                y: boundary.position.y
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
+        } if (npcState.niki.isPlayer) {
+            niki.moving = true
+            niki.image = niki.sprites.left
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: niki,
                         rectangle2: {
                             ...boundary, position: {
                                 x: boundary.position.x + 4,
@@ -1384,6 +1441,27 @@ function animate() {
                     break
                 }
             }
+        } if (npcState.niki.isPlayer) {
+            niki.moving = true
+            niki.image = niki.sprites.down
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: niki,
+                        rectangle2: {
+                            ...boundary,
+                            position: {
+                                x: boundary.position.x,
+                                y: boundary.position.y - 4
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
         }
 
         if (moving)
@@ -1491,7 +1569,28 @@ function animate() {
                     break
                 }
             }
+        } if (npcState.niki.isPlayer) {
+            niki.moving = true
+            niki.image = niki.sprites.right
+            for (let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i]
+                if (
+                    rectangularCollision({
+                        rectangle1: niki,
+                        rectangle2: {
+                            ...boundary, position: {
+                                x: boundary.position.x - 4,
+                                y: boundary.position.y
+                            }
+                        }
+                    })
+                ) {
+                    moving = false
+                    break
+                }
+            }
         }
+
         if (moving)
             movables.forEach((movables) => {
                 movables.position.x -= 4
