@@ -77,12 +77,22 @@
       </h1>
       <h2>Da muesch alles no mache:</h2>
       <p>
+        Chübel leere <span id="chübelLeere">0</span>/2 <br>
         Steckerliiste usmache <span id="sterckerliisteUsmache">0</span>/15 <br>
         Bim Drucker Ornig mache <span id="druckerUfruume">0</span>/1 <br>
         Gschirrspüeler iruume <span id="gschirrspüelerIruume">0</span>/1 <br>
         Tasse ufruume <span id="tasseUfruume">0</span>/1
-      </p>
-    </div>
+      </p><br><br>
+
+      <div>
+        <p id="trash-alert"></p>
+      </div>
+
+      <div>
+        <img src="assets/user-interface/trashbag.png" style="margin-bottom: 20px; margin-right: 15px; scale: 150%;">
+        <img id="progressbar" src="" style="scale: 125%; margin-left: 30px;">
+      </div>
+    </div><br>
   </div>
 
   <div id="timer" style="display: none;"></div>
@@ -120,14 +130,20 @@
         nomel lüüte und denn hesches gschafft! <br>
       </p>
 
-      <h2>Ufgob 2: Steckerliiste usmache</h2>
+      <h2>Ufgob 2: de Müll entsorge</h2>
+      <p>
+        Isch eigentlich au logisch, die ganze Mülleimer sind wieder mol randvoll mit Müll, de mues weg. Tue am liebste
+        so viel Müll wie möglich in ein Müllsack ine; natürlich nume so viel wie du au träge chasch. <br>
+      </p>
+
+      <h2>Ufgob 3: Steckerliiste usmache</h2>
       <p>
         Steckerliiste hets uf fast allne Tisch und sie lüüchted rot wenns igschalte sind. Wennd dich nebt emene Tisch
         befindsch, de F-Chnopf drucke zum d Steckerliiste uszmache. Em Linus sis Go-To wenn de Kevin wieder mol nix
         z'tue het und ihn go nerve chunt. <br>
       </p>
 
-      <h2>Ufgob 3: de Gschirrspüeler iruume</h2>
+      <h2>Ufgob 4: de Gschirrspüeler iruume</h2>
       <p>
         Mein Gott die Sauerei wos do im Admin scho wieder het! Chönd denn die ihres Züg nöd selber in Gschirrspüeler
         tue? Debi hend de Niki und de Laurin extra es Schild designt. Ja egal, gmacht werde mueses so oder so, jetz
@@ -135,13 +151,13 @@
         halt du dra glaube. <br>
       </p>
 
-      <h2>Ufgob 4: de Tasseschrank ordne</h2>
+      <h2>Ufgob 5: de Tasseschrank ordne</h2>
       <p>
         Die ganze Tasse sind scho wieder es kompletts Durenand, dis OCD haltet das nöd us, so lauft das nöd. Schnell,
         tue alli Tasse schön ordne damits nüm sone Sauerei isch. <br>
       </p>
 
-      <h2>Ufgob 5: Bim Drucker zue Ornig mache</h2>
+      <h2>Ufgob 6: Bim Drucker zue Ornig mache</h2>
       <p>
         Die vom erste Lehrjohr hend grad hüt Morge es Karin-Modul fertig gmacht und hend drum alli müese ihri
         Broschürene usdrucke. Wenn du lang gnueg a de SBW gsi bisch wirsch selber sicher wüsse was für en absolute Pain
@@ -153,136 +169,251 @@
   </div>
 
   <div id="character-selection-screen" style="display: none;">
-    <p>placeholder, character selection screen soon.</p>
 
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8">
         <div id="character-slideshow">
-
           <!-- 
             Linus's stats:
-            
+            Speed: 4
+            Capacity: 20
            -->
           <div id="linus" style="display: none;">
-            <h1>De Linus</h1><br>
-            <img src="/characters/select/linus.png" style="scale: 200%; margin: 20px;">
-            <p><br>
-              *linus noises* <br>
-              De Linus isch de Bijou-Chef - er weiss immerno am beste wies lauft. Er isch wie en Mediamatiker eifach fürs
-              Bijou; jack of all trades, master of none. <br> stats in the future
-            </p>
+            <h1>De Linus</h1>
+            <img src="/characters/select/linus.png" style="scale: 150%; margin: 25px;">
+
+            <p>*linus noises*</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <p>
+                  De Linus isch de Bijou-Chef - er weiss immerno am beste wies lauft. Er isch wie en Mediamatiker eifach
+                  fürs Bijou; jack of all trades, master of none. <br>
+                </p>
+              </div>
+              <div class="col-md-5">
+                <h2>
+                  Stats
+                </h2>
+                <p>
+                  Schnelligkeit: 4 <br>
+                  Müllkapazität: 20 <br>
+                  Guet: nix <br>
+                  Schlecht: au nix <br>
+                </p>
+              </div>
+            </div>
           </div>
 
+          <!-- 
+            Kevin's stats:
+            Speed: 4
+            Capacity: 30
+           -->
           <div id="kevin" style="display: none;">
-            <h1>De Kevin</h1><br>
-            <img class="select-images" src="/characters/select/kevin.png" style="scale: 200%; margin: 20px;">
-            <p><br>
-              "s'Bijou!!" <br>
-              De Kevin wird dir so uf de Sack goh mit sim huere "s'Bijou!!" dass du so schnell wie möglich wirsch fertig
-              si
-              wölle. Defür ischer ja wenigstens guet mit de Chübel. <br> stats in the future
-
-            </p>
+            <h1>De Kevin</h1>
+            <img class="select-images" src="/characters/select/kevin.png" style="scale: 150%; margin: 25px;">
+            <p>s'Bijou!!</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <p>
+                  De Kevin wird dir so uf de Sack goh mit sim huere "s'Bijou!!" dass du so schnell wie möglich wirsch
+                  fertig si wölle. Defür ischer ja wenigstens guet mit de Chübel. <br>
+                </p>
+              </div>
+              <div class="col-md-5">
+                <h2>
+                  Stats
+                </h2>
+                <p>
+                  Schnelligkeit: 4 <br>
+                  Müllkapazität: 30 <br>
+                  Guet: guet mit de Chübel <br>
+                  Schlecht: isch chli en Idiot <br>
+                </p>
+              </div>
+            </div>
           </div>
 
+          <!-- 
+            Zeri's stats:
+            Speed: 5
+            Capacity: 15
+           -->
           <div id="zeri" style="display: none;">
-            <h1>D Zeri</h1><br>
-            <img class="select-images" src="/characters/select/zeri.png" style="scale: 200%; margin: 20px;">
-            <p><br>
-              "pass uf bro, mit minere Raucherlunge hani kei Usduur" <br>
-              die einzig Motivation zum bim Bijou gas geh isch d Zigipause wo sie denoch chan mache. Sie isch recht
-              tollpatschig und d Raucherlunge hilft ihre tatsächlich au nöd wirklich. <br> stats in the
-              future
-            </p>
+            <h1>D Zeri</h1>
+            <img class="select-images" src="/characters/select/zeri.png" style="scale: 150%; margin: 25px;">
+            <p>pass uf bro, mit minere Raucherlunge hani kei Usduur</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <p>
+                  die einzig Motivation zum bim Bijou gas geh isch d Zigipause wo sie denoch chan mache. Sie isch recht
+                  tollpatschig und d Raucherlunge hilft ihre tatsächlich au nöd wirklich. <br>
+                </p>
+              </div>
+              <div class="col-md-5">
+                <h2>
+                  Stats
+                </h2>
+                <p>
+                  Schnelligkeit: 5 <br>
+                  Müllkapazität: 15 <br>
+                  Guet: schnell (smol) <br>
+                  Schlecht: tollpatschig und mag nöd viel träge <br>
+                </p>
+              </div>
+            </div>
           </div>
 
+          <!-- 
+            Gian's stats:
+            Speed: 3
+            Capacity: 30
+           -->
           <div id="gian" style="display: none;">
-            <h1>De Gian</h1><br>
-            <img class="select-images" src="/characters/select/gian.png" style="scale: 200%; margin: 20px;">
-            <p><br>
-              "ich ha eh nur s Admin also eigentlich chömer au hei goh" <br>
-              <br> stats in the future
-            </p>
+            <h1>De Gian</h1>
+            <img class="select-images" src="/characters/select/gian.png" style="scale: 150%; margin: 25px;">
+            <p>ich ha eh nur s Admin also eigentlich chömer au hei goh</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <p>
+                  Loh di nöd devo tüsche, dass de Gian normalerwis en easy Job het bim Bijou. Er wür gern de 07er
+                  verwütsche also wird er scho gas geh, au wenner nöd grad de Schnellsti isch. <br>
+                </p>
+              </div>
+              <div class="col-md-5">
+                <h2>
+                  Stats
+                </h2>
+                <p>
+                  Schnelligkeit: 3 <br>
+                  Müllkapazität: 30 <br>
+                  Guet: chan viel uf zmol träge <br>
+                  Schlecht: bitzli en langsame <br>
+                </p>
+              </div>
+            </div>
           </div>
 
+          <!-- 
+            Simon's stats:
+            Speed: 5
+            Capacity: 15
+           -->
           <div id="simon" style="display: none;">
-            <h1>De Simon</h1><br>
-            <img class="select-images" src="/characters/select/simon.png" style="scale: 200%; margin: 20px;">
-            <p><br>
-              "it's-a me, Simon!"<br>
-              De Simon wött noch enere lange Wuche volle Creactiva-Horror au nume no hei go F1 luege. Mit sim relativ
-              chline
-              Körper ischer no erstuunlich wendig und chunt a Ort ane wo anderi nöd dure chönd<br> stats in the future
-            </p>
+            <h1>De Simon</h1>
+            <img class="select-images" src="/characters/select/simon.png" style="scale: 150%; margin: 25px;">
+            <p>It's-a me, Simon!</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <p>
+                  De Simon wött noch enere lange Wuche volle Creactiva-Horror au nume no hei go F1 luege. Mit sim
+                  relativ
+                  chline Körper ischer no erstuunlich wendig <br>
+                </p>
+              </div>
+              <div class="col-md-5">
+                <h2>
+                  Stats
+                </h2>
+                <p>
+                  Schnelligkeit: 5 <br>
+                  Müllkapazität: 15 <br>
+                  Guet: chli und schnell <br>
+                  Schlecht: treit nöd so viel Müll uf zmol <br>
+                </p>
+              </div>
+            </div>
           </div>
 
+          <!-- 
+            Niki's stats:
+            Speed: 5
+            Capacity: 
+           -->
           <div id="niki" style="display: none;">
-            <h1>De Niki</h1><br>
-            <img class="select-images" src="/characters/select/niki.png" style="scale: 200%; margin: 20px;">
-            <p><br>
-              "bisch bereit zum bijouniere?" <br>
-              De Niki isch e professionelli Gymratte, s Bijou isch also Kinderkram für ihn. Phalt ihn eifach vom Diego
-              fern
-              süscht chömemer ja nirgends ane. <br> stats in the future
+            <h1>De Niki</h1>
+            <img class="select-images" src="/characters/select/niki.png" style="scale: 150%; margin: 25px;">
+            <p>bisch bereit zum bijouniere?</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <p>
+                  De Niki isch e professionelli Gymratte, s'Bijou isch also Kinderkram für ihn. Phalt ihn eifach vom
+                  Diego
+                  fern süscht chömemer ja nirgends ane.<br>
+                </p>
+              </div>
+              <div class="col-md-5">
+                <h2>
+                  Stats
+                </h2>
+                <p>
+                  Schnelligkeit: 5 <br>
+                  Müllkapazität: 40 <br>
+                  Guet: de niki isch OP <br>
+                  Schlecht: lost extrem luuti gym musik <br>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-4" id="prev-character">
+            <p id="prev-text">
+              eis zruck
             </p>
           </div>
+          <div class="col-md-4" id="next-character">
+            <p id="next-text">
+              eis witer
+            </p>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-5" id="start-game">
+            <p id="start-text"></p>
+          </div>
+          <div class="col-md-3"></div>
         </div>
       </div>
-      <div class="col-md-2"></div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-4" id="prev-character">
+      <div id="back" style="display: none;">
+        <div>
+          <p class="buttontext">
+            ahaaaaa jetz checki
+          </p>
+        </div>
+      </div>
+
+      <div id="restart" style="display: none;">
         <p class="buttontext">
-          eis zruck
+          zruck zum Startmenü
         </p>
       </div>
-      <div class="col-md-4" id="next-character">
-        <p class="buttontext">
-          eis füre
-        </p>
-      </div>
-      <div class="col-md-3"></div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-5" id="start-game">
-        <p class="buttontext">
-          ey perfekt, let's go
-        </p>
-      </div>
-      <div class="col-md-3"></div>
-    </div>
-  </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
+        integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
 
-  <div id="back" style="display: none;">
-    <div>
-      <p class="buttontext">
-        ahaaaaa jetz checki
-      </p>
-    </div>
-  </div>
-
-  <div id="restart" style="display: none;">
-    <p class="buttontext">
-      zruck zum Startmenü
-    </p>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
-    integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
-
-  <script src="audio/audio.js"></script>
-  <script src="scripts/imageAdder.js"></script>
-  <script src="scripts/classes.js"></script>
-  <script src="scripts/utils.js"></script>
-  <script src="scripts/collisions.js"></script>
-  <script src="scripts/main.js"></script>
+      <script src="audio/audio.js"></script>
+      <script src="scripts/imageAdder.js"></script>
+      <script src="scripts/classes.js"></script>
+      <script src="scripts/utils.js"></script>
+      <script src="scripts/collisions.js"></script>
+      <script src="scripts/main.js"></script>
 
 </body>
 

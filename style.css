@@ -88,7 +88,7 @@ p {
     padding-left: 0px;
 }
 
-.buttontext {
+#prev-text, #next-text, #start-text, .buttontext {
     color: black;
 }
 
@@ -138,7 +138,7 @@ p {
 #prev-character {
     background-color: #7cc049;
     margin-left: 0px;
-    margin-top: 50px;
+    margin-top: 25px;
     width: 200px;
     padding-top: 20px;
     padding-bottom: 5px;
@@ -152,7 +152,7 @@ p {
 #next-character {
     background-color: #7cc049;
     margin-left: 25px;
-    margin-top: 50px;
+    margin-top: 25px;
     width: 200px;
     padding-top: 20px;
     padding-bottom: 5px;

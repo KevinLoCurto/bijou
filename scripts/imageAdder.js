@@ -225,3 +225,17 @@ const gongInitial = new Image()
 gongInitial.src = '/assets/interactables/gongInitial.png'
 const gongHighlighted = new Image()
 gongHighlighted.src = '/assets/interactables/gongHighlighted.png'
+
+const trashcanPLCInitial = new Image()
+trashcanPLCInitial.src = '/assets/interactables/trashcanPLCInitial.png'
+const trashcanPLCHighlighted = new Image()
+trashcanPLCHighlighted.src = '/assets/interactables/trashcanPLCHighlighted.png'
+const trashcanPLCInteracted = new Image()
+trashcanPLCInteracted.src = '/assets/interactables/trashcanPLCInteracted.png'
+
+const trashcanLAInitial = new Image()
+trashcanLAInitial.src = '/assets/interactables/trashcanLAInitial.png'
+const trashcanLAHighlighted = new Image()
+trashcanLAHighlighted.src = '/assets/interactables/trashcanLAHighlighted.png'
+const trashcanLAInteracted = new Image()
+trashcanLAInteracted.src = '/assets/interactables/trashcanLAInteracted.png'

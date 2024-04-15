@@ -21,6 +21,23 @@ c.fillRect(
     canvas.height
 )
 
+// ------------------------- UNIVERSALLY USED VARIABLES --------------------------------- 
+
+let imagesLoaded = 0
+let interactablesDone = 0
+let steckerliisteUsgmacht = 0
+let tasseUfgruumt = 0
+let gschirrspüelerIgruumt = 0
+let druckerUfgruumt = 0
+let chübelGleert = 0
+let bijouComplete = false
+let gameEnded = false
+let characterSelected = 0
+let movementSpeed = 0
+let trashCapacity = 0
+let gameTime = 0
+let timerInterval
+
 // ------------------------- PLAYER CHARACTER --------------------------------- 
 
 const linus = new Sprite({
@@ -551,8 +568,7 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
 
 // ------------------------- TIMER --------------------------------- 
 
-let gameTime = 0
-let timerInterval
+
 function displayTimer() {
     const timerElement = document.getElementById('timer')
     const minutes = Math.floor(gameTime / 60)
@@ -654,8 +670,115 @@ document.getElementById('restart').addEventListener('click', () => {
     restartGame()
 })
 
-// ------------------------- OBJECT GROUPING FOR EASIER RENDERING LOGIC ---------------------------------
+// ------------------------- TRASH --------------------------------- 
 
+const trashcanPLC = new Interactable({
+    position: {
+        x: 790,
+        y: 160
+    },
+    image: trashcanPLCInitial,
+    sprites: {
+        init: trashcanPLCInitial,
+        high: trashcanPLCHighlighted,
+        inter: trashcanPLCInteracted
+    }
+})
+
+const trashcanLA = new Interactable({
+    position: {
+        x: -370,
+        y: 440
+    },
+    image: trashcanLAInitial,
+    sprites: {
+        init: trashcanLAInitial,
+        high: trashcanLAHighlighted,
+        inter: trashcanLAInteracted
+    }
+})
+
+// ------------------------- TRASH INVENTORY TRACKING --------------------------------- 
+
+let trashProgress = 0
+const progressbar = [
+    '/assets/user-interface/progress-0.png',
+    '/assets/user-interface/progress-1.png',
+    '/assets/user-interface/progress-2.png',
+    '/assets/user-interface/progress-3.png',
+    '/assets/user-interface/progress-4.png',
+    '/assets/user-interface/progress-5.png',
+    '/assets/user-interface/progress-6.png',
+    '/assets/user-interface/progress-7.png',
+    '/assets/user-interface/progress-8.png',
+    '/assets/user-interface/progress-9.png',
+    '/assets/user-interface/progress-10.png',
+    '/assets/user-interface/progress-11.png',
+    '/assets/user-interface/progress-12.png',
+    '/assets/user-interface/progress-13.png',
+    '/assets/user-interface/progress-14.png',
+    '/assets/user-interface/progress-15.png',
+    '/assets/user-interface/progress-16.png',
+    '/assets/user-interface/progress-17.png',
+    '/assets/user-interface/progress-18.png',
+    '/assets/user-interface/progress-19.png',
+    '/assets/user-interface/progress-20.png'
+]
+
+const progressImage = document.getElementById('progressbar')
+progressImage.src = progressbar[trashProgress]
+
+function smallTrashPickup() {
+    if (trashCapacity === 15) {
+        trashProgress = (trashProgress + 2) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 20) {
+        trashProgress = (trashProgress + 1) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 30) {
+        trashProgress = (trashProgress + 1) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 40) {
+        trashProgress = (trashProgress + 0) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    }
+}
+function mediumTrashPickup() {
+    if (trashCapacity === 15) {
+        trashProgress = (trashProgress + 6) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 20) {
+        trashProgress = (trashProgress + 5) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 30) {
+        trashProgress = (trashProgress + 2) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 40) {
+        trashProgress = (trashProgress + 1) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    }
+}
+function largeTrashPickup() {
+    if (trashCapacity === 15) {
+        trashProgress = (trashProgress + 15) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 20) {
+        trashProgress = (trashProgress + 10) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 30) {
+        trashProgress = (trashProgress + 6) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 40) {
+        trashProgress = (trashProgress + 5) % progressbar.length
+        progressImage.src = progressbar[trashProgress]
+    }
+}
+function resetProgressbar() {
+    trashProgress = 0
+}
+
+
+// ------------------------- OBJECT GROUPING FOR EASIER RENDERING LOGIC ---------------------------------
 
 const players = [
     linus, kevin, zeri, gian, simon, niki
@@ -671,7 +794,12 @@ const interactables = [
     adminTable, adminDesk, sink, adminBell,
     plcTable1, plcTable2, plcTable3, plcTable4, plcTable5, plcTable6,
     plcTable7, plcTable8, plcTable9, plcTable10, plcTable11, plcTable12, plcTable13,
-    cups, printer, gong
+    cups, printer, gong,
+    trashcanPLC, trashcanLA
+]
+const steckerliiste = [
+    adminTable, plcTable1, plcTable2, plcTable3, plcTable4, plcTable5, plcTable6,
+    plcTable7, plcTable8, plcTable9, plcTable10, plcTable11, plcTable12, plcTable13,
 ]
 const movables = [
     background, ...boundaries,
@@ -777,6 +905,16 @@ let objectState = {
         interacted: false,
         audioPlay: false,
         increased: false
+    }, trashcanPLC: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, trashcanLA: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
     }
 }
 
@@ -785,31 +923,37 @@ let npcState = {
         delayed: false,
         selectionPlayed: true,
         isPlayer: false,
+        statsApplied: false,
     },
     zeri: {
         delayed: false,
         selectionPlayed: false,
         isPlayer: false,
+        statsApplied: false,
     },
     kevin: {
         delayed: false,
         selectionPlayed: false,
         isPlayer: false,
+        statsApplied: false,
     },
     gian: {
         delayed: false,
         selectionPlayed: false,
         isPlayer: false,
+        statsApplied: false,
     },
     simon: {
         delayed: false,
         selectionPlayed: false,
         isPlayer: false,
+        statsApplied: false,
     },
     niki: {
         delayed: false,
         selectionPlayed: false,
         isPlayer: false,
+        statsApplied: false,
     }
 }
 
@@ -823,12 +967,12 @@ function resetNPCState() {
 }
 
 const imageConstants = [
-    linusDown, linusLeft, linusRight, linusUp, 
-    kevinDown, kevinLeft, kevinRight, kevinUp, 
-    zeriDown, zeriLeft, zeriRight, zeriUp, 
-    gianDown, gianLeft, gianRight, gianUp, 
-    simonDown, simonLeft, simonRight, simonUp, 
-    nikiDown, nikiLeft, nikiRight, nikiUp, 
+    linusDown, linusLeft, linusRight, linusUp,
+    kevinDown, kevinLeft, kevinRight, kevinUp,
+    zeriDown, zeriLeft, zeriRight, zeriUp,
+    gianDown, gianLeft, gianRight, gianUp,
+    simonDown, simonLeft, simonRight, simonUp,
+    nikiDown, nikiLeft, nikiRight, nikiUp,
     image,
     npcLinus, npcKevin, npcZeri, npcGian, npcSimon, npcNiki,
     adminTableInitial, adminTableHighlighted, adminTableInteracted,
@@ -851,17 +995,11 @@ const imageConstants = [
     sinkInitial, sinkHighlighted, sinkInteracted,
     adminBellInitial, adminBellHighlighted,
     gongInitial, gongHighlighted,
+    trashcanPLCInitial, trashcanPLCHighlighted, trashcanPLCInteracted,
+    trashcanLAInitial, trashcanLAHighlighted, trashcanLAInteracted,
 ]
 
-let imagesLoaded = 0
-let interactablesDone = 0
-let steckerliisteUsgmacht = 0
-let tasseUfgruumt = 0
-let gschirrspüelerIgruumt = 0
-let druckerUfgruumt = 0
-let bijouComplete = false
-let gameEnded = false
-let characterSelected = 0
+
 imageConstants.forEach((imageConstant, index) => {
     const image = new Image();
     image.onload = () => {
@@ -896,6 +1034,10 @@ function playerIsLinus() {
     if (!npcState.linus.selectionPlayed) {
         playerAudio.linusSelect.play()
         npcState.linus.selectionPlayed = true
+    } if (!npcState.linus.statsApplied) {
+        movementSpeed = 4
+        trashCapacity = 20
+        npcState.linus.statsApplied = true
     }
 }
 function playerIsKevin() {
@@ -908,6 +1050,10 @@ function playerIsKevin() {
     if (!npcState.kevin.selectionPlayed) {
         playerAudio.kevinSelect.play()
         npcState.kevin.selectionPlayed = true
+    } if (!npcState.kevin.statsApplied) {
+        movementSpeed = 4
+        trashCapacity = 30
+        npcState.kevin.statsApplied = true
     }
     resetNPCState()
     npcState.kevin.selectionPlayed = true
@@ -922,9 +1068,14 @@ function playerIsZeri() {
     if (!npcState.zeri.selectionPlayed) {
         playerAudio.zeriSelect.play()
         npcState.zeri.selectionPlayed = true
+    } if (!npcState.zeri.statsApplied) {
+        movementSpeed = 5
+        trashCapacity = 15
+        npcState.zeri.statsApplied = true
     }
     resetNPCState()
     npcState.zeri.selectionPlayed = true
+
 }
 function playerIsGian() {
     document.getElementById('linus').style.display = 'none'
@@ -936,6 +1087,10 @@ function playerIsGian() {
     if (!npcState.gian.selectionPlayed) {
         playerAudio.gianSelect.play()
         npcState.gian.selectionPlayed = true
+    } if (!npcState.gian.statsApplied) {
+        movementSpeed = 3
+        trashCapacity = 30
+        npcState.gian.statsApplied = true
     }
     resetNPCState()
     npcState.gian.selectionPlayed = true
@@ -950,6 +1105,10 @@ function playerIsSimon() {
     if (!npcState.simon.selectionPlayed) {
         playerAudio.simonSelect.play()
         npcState.simon.selectionPlayed = true
+    } if (!npcState.simon.statsApplied) {
+        movementSpeed = 5
+        trashCapacity = 15
+        npcState.simon.statsApplied = true
     }
     resetNPCState()
     npcState.simon.selectionPlayed = true
@@ -964,6 +1123,10 @@ function playerIsNiki() {
     if (!npcState.niki.selectionPlayed) {
         playerAudio.nikiSelect.play()
         npcState.niki.selectionPlayed = true
+    } if (!npcState.niki.statsApplied) {
+        trashCapacity = 40
+        movementSpeed = 5
+        npcState.niki.statsApplied = true
     }
     resetNPCState()
     npcState.niki.selectionPlayed = true
@@ -997,40 +1160,41 @@ function animate() {
     boundaries.forEach(boundaries => {
         boundaries.draw()
     })
+    console.log(trashProgress)
 
     if (npcState.linus.isPlayer) {
         linus.draw()
-        if (interactablesDone === 18 && !bijouComplete) {
+        if (interactablesDone === 20 && !bijouComplete) {
             bijouComplete = true
             playerAudio.linusEnd.play()
         }
     } if (npcState.kevin.isPlayer) {
         kevin.draw()
-        if (interactablesDone === 18 && !bijouComplete) {
+        if (interactablesDone === 20 && !bijouComplete) {
             bijouComplete = true
             playerAudio.kevinEnd.play()
         }
     } if (npcState.zeri.isPlayer) {
         zeri.draw()
-        if (interactablesDone === 18 && !bijouComplete) {
+        if (interactablesDone === 20 && !bijouComplete) {
             bijouComplete = true
             playerAudio.zeriEnd.play()
         }
     } if (npcState.gian.isPlayer) {
         gian.draw()
-        if (interactablesDone === 18 && !bijouComplete) {
+        if (interactablesDone === 20 && !bijouComplete) {
             bijouComplete = true
             playerAudio.gianEnd.play()
         }
     } if (npcState.simon.isPlayer) {
         simon.draw()
-        if (interactablesDone === 18 && !bijouComplete) {
+        if (interactablesDone === 20 && !bijouComplete) {
             bijouComplete = true
             playerAudio.simonEnd.play()
         }
     } if (npcState.niki.isPlayer) {
         niki.draw()
-        if (interactablesDone === 18 && !bijouComplete) {
+        if (interactablesDone === 20 && !bijouComplete) {
             bijouComplete = true
             playerAudio.nikiEnd.play()
         }
@@ -1054,7 +1218,7 @@ function animate() {
         simonNPC.draw()
     } if (!npcState.niki.isPlayer) {
         nikiNPC.draw()
-    } 
+    }
 
     // ------------------------- DISTANCE CALCULATION ---------------------------------
 
@@ -1078,6 +1242,9 @@ function animate() {
     const adminBellDistance = calculateAdminBellDistance(linus, adminBell)
     const printerDistance = calculatePrinterDistance(linus, printer)
     const gongDistance = calculateGongDistance(linus, gong)
+
+    const trashcanPLCDistance = calculateTrashcanDistance(linus, trashcanPLC)
+    const trashcanLADistance = calculateTrashcanDistance(linus, trashcanLA)
 
     let moving = true
     players.forEach(player => {
@@ -1211,7 +1378,7 @@ function animate() {
 
         if (moving)
             movables.forEach((movables) => {
-                movables.position.y += 4
+                movables.position.y += movementSpeed
             })
     } if (keys.a.pressed && !gameEnded) {
         if (npcState.linus.isPlayer) {
@@ -1224,7 +1391,7 @@ function animate() {
                         rectangle1: linus,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x + 4,
+                                x: boundary.position.x + movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1244,7 +1411,7 @@ function animate() {
                         rectangle1: kevin,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x + 4,
+                                x: boundary.position.x + movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1264,7 +1431,7 @@ function animate() {
                         rectangle1: zeri,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x + 4,
+                                x: boundary.position.x + movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1284,7 +1451,7 @@ function animate() {
                         rectangle1: gian,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x + 4,
+                                x: boundary.position.x + movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1304,7 +1471,7 @@ function animate() {
                         rectangle1: simon,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x + 4,
+                                x: boundary.position.x + movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1324,7 +1491,7 @@ function animate() {
                         rectangle1: niki,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x + 4,
+                                x: boundary.position.x + movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1338,7 +1505,7 @@ function animate() {
 
         if (moving)
             movables.forEach((movables) => {
-                movables.position.x += 4
+                movables.position.x += movementSpeed
             })
     } if (keys.s.pressed && !gameEnded) {
         if (npcState.linus.isPlayer) {
@@ -1353,7 +1520,7 @@ function animate() {
                             ...boundary,
                             position: {
                                 x: boundary.position.x,
-                                y: boundary.position.y - 4
+                                y: boundary.position.y - movementSpeed
                             }
                         }
                     })
@@ -1374,7 +1541,7 @@ function animate() {
                             ...boundary,
                             position: {
                                 x: boundary.position.x,
-                                y: boundary.position.y - 4
+                                y: boundary.position.y - movementSpeed
                             }
                         }
                     })
@@ -1395,7 +1562,7 @@ function animate() {
                             ...boundary,
                             position: {
                                 x: boundary.position.x,
-                                y: boundary.position.y - 4
+                                y: boundary.position.y - movementSpeed
                             }
                         }
                     })
@@ -1416,7 +1583,7 @@ function animate() {
                             ...boundary,
                             position: {
                                 x: boundary.position.x,
-                                y: boundary.position.y - 4
+                                y: boundary.position.y - movementSpeed
                             }
                         }
                     })
@@ -1437,7 +1604,7 @@ function animate() {
                             ...boundary,
                             position: {
                                 x: boundary.position.x,
-                                y: boundary.position.y - 4
+                                y: boundary.position.y - movementSpeed
                             }
                         }
                     })
@@ -1458,7 +1625,7 @@ function animate() {
                             ...boundary,
                             position: {
                                 x: boundary.position.x,
-                                y: boundary.position.y - 4
+                                y: boundary.position.y - movementSpeed
                             }
                         }
                     })
@@ -1471,7 +1638,7 @@ function animate() {
 
         if (moving)
             movables.forEach((movables) => {
-                movables.position.y -= 4
+                movables.position.y -= movementSpeed
             })
     } if (keys.d.pressed && !gameEnded) {
         if (npcState.linus.isPlayer) {
@@ -1484,7 +1651,7 @@ function animate() {
                         rectangle1: linus,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x - 4,
+                                x: boundary.position.x - movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1504,7 +1671,7 @@ function animate() {
                         rectangle1: kevin,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x - 4,
+                                x: boundary.position.x - movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1524,7 +1691,7 @@ function animate() {
                         rectangle1: zeri,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x - 4,
+                                x: boundary.position.x - movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1544,7 +1711,7 @@ function animate() {
                         rectangle1: gian,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x - 4,
+                                x: boundary.position.x - movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1564,7 +1731,7 @@ function animate() {
                         rectangle1: simon,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x - 4,
+                                x: boundary.position.x - movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1584,7 +1751,7 @@ function animate() {
                         rectangle1: niki,
                         rectangle2: {
                             ...boundary, position: {
-                                x: boundary.position.x - 4,
+                                x: boundary.position.x - movementSpeed,
                                 y: boundary.position.y
                             }
                         }
@@ -1598,7 +1765,7 @@ function animate() {
 
         if (moving)
             movables.forEach((movables) => {
-                movables.position.x -= 4
+                movables.position.x -= movementSpeed
             })
     }
 
@@ -1760,13 +1927,29 @@ function animate() {
                 audio.Gong.play()
                 objectState.gong.timerStarted = false
                 gameEnded = true
-                if (interactablesDone === 18) {
+                if (interactablesDone === 20) {
                     stopTimer()
                     goodEnding()
                 } else {
                     stopTimer()
                     badEnding()
                 }
+            }
+        } if (objectState.trashcanPLC.highlighted) {
+            objectState.trashcanPLC.interacted = true
+            objectState.trashcanPLC.highlighted = false
+            if (!objectState.trashcanPLC.audioPlay) {
+                audio.Printer.play()
+                largeTrashPickup()
+                objectState.trashcanPLC.audioPlay = true
+            }
+        } if (objectState.trashcanLA.highlighted) {
+            objectState.trashcanLA.interacted = true
+            objectState.trashcanLA.highlighted = false
+            if (!objectState.trashcanLA.audioPlay) {
+                audio.Printer.play()
+                largeTrashPickup()
+                objectState.trashcanLA.audioPlay = true
             }
         }
     } if (keys.b.pressed && !gameEnded) {
@@ -1942,6 +2125,19 @@ function animate() {
             (objectState.printer.interacted) ?
                 printer.sprites.inter :
                 (objectState.printer.highlighted ? printer.sprites.high : printer.sprites.init)
+
+        objectState.trashcanPLC.highlighted = trashcanPLCDistance <= 80 && trashProgress <= 10;
+        trashcanPLC.image =
+            (objectState.trashcanPLC.interacted) ?
+                trashcanPLC.sprites.inter :
+                (objectState.trashcanPLC.highlighted ? trashcanPLC.sprites.high : trashcanPLC.sprites.init)
+
+        objectState.trashcanLA.highlighted = trashcanLADistance <= 80 && trashProgress <= 10;
+        trashcanLA.image =
+            (objectState.trashcanLA.interacted) ?
+                trashcanLA.sprites.inter :
+                (objectState.trashcanLA.highlighted ? trashcanLA.sprites.high : trashcanLA.sprites.init)
+
     }
 
     // ------------------------- PROGRESS COUNT ---------------------------------
@@ -2018,31 +2214,53 @@ function animate() {
         interactablesDone++
         druckerUfgruumt++
         objectState.printer.increased = true
+    } if (objectState.trashcanPLC.interacted && !objectState.trashcanPLC.increased) {
+        interactablesDone++
+        chübelGleert++
+        objectState.trashcanPLC.increased = true
+    } if (objectState.trashcanLA.interacted && !objectState.trashcanLA.increased) {
+        interactablesDone++
+        chübelGleert++
+        objectState.trashcanLA.increased = true
     }
-
-
 
     document.getElementById('sterckerliisteUsmache').textContent = steckerliisteUsgmacht
     document.getElementById('gschirrspüelerIruume').textContent = gschirrspüelerIgruumt
     document.getElementById('tasseUfruume').textContent = tasseUfgruumt
     document.getElementById('druckerUfruume').textContent = druckerUfgruumt
+    document.getElementById('chübelLeere').textContent = chübelGleert
     document.getElementById('gameTime').textContent = gameTime
+
+    if (trashProgress === 20) {
+        document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
+    }
 
     // ------------------------- CHARACTER SELECTION ---------------------------------
 
     if (characterSelected === 0) {
         playerIsLinus()
+        document.getElementById('start-text').textContent = 'ey perfekt, lets go'
     } if (characterSelected === 1) {
         playerIsKevin()
+        document.getElementById('start-text').textContent = "s'Bijou!!"
     } if (characterSelected === 2) {
         playerIsZeri()
+        document.getElementById('start-text').textContent = 'lecteurgo!'
     } if (characterSelected === 3) {
         playerIsGian()
+        document.getElementById('start-text').textContent = 'ey perfekt, lets go'
     } if (characterSelected === 4) {
         playerIsSimon()
+        document.getElementById('start-text').textContent = 'ey perfekt, lets go'
     } if (characterSelected === 5) {
         playerIsNiki()
+        document.getElementById('start-text').textContent = 'ey perfekt, lets go'
     }
+
+    // ------------------------- CHARACTER SELECTION ---------------------------------
+
+
+
 }
 
 // ------------------------- KEY PRESS REGISTRATION ---------------------------------

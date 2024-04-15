@@ -45,6 +45,12 @@ function calculateAdminBellDistance(object1, object2) {
     return Math.sqrt(dx * dx + dy * dy)
 }
 
+function calculateTrashcanDistance(object1, object2) {
+    const dx = object1.position.x - object2.position.x
+    const dy = object1.position.y - object2.position.y
+    return Math.sqrt(dx * dx + dy * dy)
+}
+
 function calculateNPCDistance(object1, object2) {
     const dx = object1.position.x - object2.position.x
     const dy = object1.position.y - object2.position.y
