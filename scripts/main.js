@@ -964,6 +964,12 @@ function resetNPCState() {
     npcState.gian.selectionPlayed = false
     npcState.simon.selectionPlayed = false
     npcState.niki.selectionPlayed = false
+    npcState.linus.statsApplied = false
+    npcState.kevin.statsApplied = false
+    npcState.zeri.statsApplied = false
+    npcState.gian.statsApplied = false
+    npcState.simon.statsApplied = false
+    npcState.niki.statsApplied = false
 }
 
 const imageConstants = [
