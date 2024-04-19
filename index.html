@@ -10,7 +10,6 @@
 </head>
 
 <body style="background-color: black;">
-
   <div id="main-menu">
     <div class="row">
       <div class="col-md-2"></div>
@@ -22,19 +21,20 @@
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <div id="character-select">
-            <p class="buttontext">
-              easy, lass gschnell s'Bijou mache
-            </p>
-          </div>
           <div id="instructions">
             <p class="buttontext">
               wie spielt mer da?
             </p>
           </div>
+          <div id="character-select">
+            <p class="buttontext">
+              easy, lass gschnell s'Bijou mache
+            </p>
+          </div>
         </div>
         <div class="col-md-3"></div>
       </div>
+      <p style="margin-top: 25px;">version 2.0</p>
 
 
       <img src="/assets/testImage.png" id="testimage" style="width: 2px;">
@@ -80,7 +80,7 @@
       </p><br><br>
 
       <div>
-        <p id="trash-alert"></p>
+        <p id="trash-counter"></p>
       </div>
 
       <div>
@@ -161,6 +161,14 @@
         alles verruume. <br>
       </p>
     </div>
+
+    <div id="back" style="display: none;">
+      <div>
+        <p class="buttontext">
+          ahaaaaa jetz checki
+        </p>
+      </div>
+    </div>
   </div>
 
   <div id="character-selection-screen" style="display: none;">
@@ -203,7 +211,7 @@
           <!-- 
             Kevin's stats:
             Speed: 4
-            Capacity: 30
+            Capacity: 25
            -->
           <div id="kevin" style="display: none;">
             <h1>De Kevin</h1>
@@ -223,7 +231,7 @@
                 </h2>
                 <p>
                   Schnelligkeit: 4 <br>
-                  Müllkapazität: 30 <br>
+                  Müllkapazität: 25 <br>
                   Guet: guet mit de Chübel <br>
                   Schlecht: isch chli en Idiot <br>
                 </p>
@@ -265,7 +273,7 @@
           <!-- 
             Gian's stats:
             Speed: 3
-            Capacity: 30
+            Capacity: 25
            -->
           <div id="gian" style="display: none;">
             <h1>De Gian</h1>
@@ -285,7 +293,7 @@
                 </h2>
                 <p>
                   Schnelligkeit: 3 <br>
-                  Müllkapazität: 30 <br>
+                  Müllkapazität: 25 <br>
                   Guet: chan viel uf zmol träge <br>
                   Schlecht: bitzli en langsame <br>
                 </p>
@@ -328,7 +336,7 @@
           <!-- 
             Niki's stats:
             Speed: 5
-            Capacity: 
+            Capacity: 30
            -->
           <div id="niki" style="display: none;">
             <h1>De Niki</h1>
@@ -349,7 +357,7 @@
                 </h2>
                 <p>
                   Schnelligkeit: 5 <br>
-                  Müllkapazität: 40 <br>
+                  Müllkapazität: 30 <br>
                   Guet: de niki isch OP <br>
                   Schlecht: lost extrem luuti gym musik <br>
                 </p>
@@ -382,32 +390,29 @@
           <div class="col-md-3"></div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div id="back" style="display: none;">
-        <div>
-          <p class="buttontext">
-            ahaaaaa jetz checki
-          </p>
-        </div>
-      </div>
 
-      <div id="restart" style="display: none;">
-        <p class="buttontext">
-          zruck zum Startmenü
-        </p>
-      </div>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
-        integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-        </script>
 
-      <script src="audio/audio.js"></script>
-      <script src="scripts/imageAdder.js"></script>
-      <script src="scripts/classes.js"></script>
-      <script src="scripts/utils.js"></script>
-      <script src="scripts/collisions.js"></script>
-      <script src="scripts/main.js"></script>
+  <div id="restart" style="display: none;">
+    <p class="buttontext">
+      zruck zum Startmenü
+    </p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
+    integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+  <script src="audio/audio.js"></script>
+  <script src="scripts/imageAdder.js"></script>
+  <script src="scripts/classes.js"></script>
+  <script src="scripts/utils.js"></script>
+  <script src="scripts/collisions.js"></script>
+  <script src="scripts/main.js"></script>
 
 </body>
 

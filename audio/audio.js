@@ -91,6 +91,9 @@ const playerAudio = {
     }),
     nikiSelect: new Howl({
         src: '/audio/player/niki/nikiSelect.wav'
+    }),
+    nikiSoundtrack: new Howl({
+        src: '/audio/player/niki/nikiSoundtrack.wav'
     }), 
 }
 

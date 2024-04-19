@@ -778,7 +778,9 @@ const trashbinCutter = new Interactable({
 // ------------------------- TRASH INVENTORY TRACKING --------------------------------- 
 
 let trashProgress = 0
-let trashAvailable = true
+let smallTrashPossible = true
+let mediumTrashPossible = true
+let largeTrashPossible = true
 const progressbar = [
     '/assets/user-interface/progress-0.png',
     '/assets/user-interface/progress-1.png',
@@ -805,104 +807,47 @@ const progressbar = [
 
 function smallTrashPickup() {
     if (trashCapacity === 15) {
-        if (trashProgress < 11) {
-            trashProgress = (trashProgress + 6)
-            progressImage.src = progressbar[trashProgress]
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 4)
+        progressImage.src = progressbar[trashProgress]
     } if (trashCapacity === 20) {
-        if (trashProgress < 15) {
-            trashProgress = (trashProgress + 5)
-            progressImage.src = progressbar[trashProgress]
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 2)
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 25) {
+        trashProgress = (trashProgress + 1)
+        progressImage.src = progressbar[trashProgress]
     } if (trashCapacity === 30) {
-        if (trashProgress < 28) {
-            trashProgress = (trashProgress + 2)
-            progressImage.src = progressbar[trashProgress]
-        } else {
-            trashAvailable = false
-        }
-    } if (trashCapacity === 40) {
-        if (trashProgress < 39) {
-            trashProgress = (trashProgress + 1)
-            progressImage.src = progressbar[trashProgress]
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 1)
+        progressImage.src = progressbar[trashProgress]
     }
 }
 function mediumTrashPickup() {
     if (trashCapacity === 15) {
-        if (trashProgress <= 18) {
-            trashProgress = (trashProgress + 6)
-            progressImage.src = progressbar[trashProgress]
-            trashAvailable = true
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 6)
+        progressImage.src = progressbar[trashProgress]
     } if (trashCapacity === 20) {
-        if (trashProgress <= 15) {
-            trashProgress = (trashProgress + 5)
-            progressImage.src = progressbar[trashProgress]
-            trashAvailable = true
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 5)
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 25) {
+        trashProgress = (trashProgress + 4)
+        progressImage.src = progressbar[trashProgress]
     } if (trashCapacity === 30) {
-        if (trashProgress <= 28) {
-            trashProgress = (trashProgress + 2)
-            progressImage.src = progressbar[trashProgress]
-            trashAvailable = true
-        } else {
-            trashAvailable = false
-        }
-    } if (trashCapacity === 40) {
-        if (trashProgress <= 39) {
-            trashProgress = (trashProgress + 1)
-            progressImage.src = progressbar[trashProgress]
-            trashAvailable = true
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 3)
+        progressImage.src = progressbar[trashProgress]
     }
 }
-
 function largeTrashPickup() {
     if (trashCapacity === 15) {
-        if (trashProgress === 0) {
-            trashProgress = (trashProgress + 15)
-            progressImage.src = progressbar[trashProgress]
-            trashAvailable = true
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 15)
+        progressImage.src = progressbar[trashProgress]
     } if (trashCapacity === 20) {
-        if (trashProgress <= 10) {
-            trashProgress = (trashProgress + 10)
-            progressImage.src = progressbar[trashProgress]
-            trashAvailable = true
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 10)
+        progressImage.src = progressbar[trashProgress]
+    } if (trashCapacity === 25) {
+        trashProgress = (trashProgress + 7)
+        progressImage.src = progressbar[trashProgress]
     } if (trashCapacity === 30) {
-        if (trashProgress <= 24) {
-            trashProgress = (trashProgress + 6)
-            progressImage.src = progressbar[trashProgress]
-            trashAvailable = true
-        } else {
-            trashAvailable = false
-        }
-    } if (trashCapacity === 40) {
-        if (trashProgress <= 35) {
-            trashProgress = (trashProgress + 5)
-            progressImage.src = progressbar[trashProgress]
-            trashAvailable = true
-        } else {
-            trashAvailable = false
-        }
+        trashProgress = (trashProgress + 6)
+        progressImage.src = progressbar[trashProgress]
     }
 }
 
@@ -1110,6 +1055,7 @@ let npcState = {
         selectionPlayed: false,
         isPlayer: false,
         statsApplied: false,
+        soundtrackStarted: false,
     }
 }
 
@@ -1220,7 +1166,7 @@ function playerIsKevin() {
         npcState.kevin.selectionPlayed = true
     } if (!npcState.kevin.statsApplied) {
         movementSpeed = 4
-        trashCapacity = 30
+        trashCapacity = 25
         npcState.kevin.statsApplied = true
     }
     resetNPCState()
@@ -1257,7 +1203,7 @@ function playerIsGian() {
         npcState.gian.selectionPlayed = true
     } if (!npcState.gian.statsApplied) {
         movementSpeed = 3
-        trashCapacity = 30
+        trashCapacity = 25
         npcState.gian.statsApplied = true
     }
     resetNPCState()
@@ -1292,7 +1238,7 @@ function playerIsNiki() {
         playerAudio.nikiSelect.play()
         npcState.niki.selectionPlayed = true
     } if (!npcState.niki.statsApplied) {
-        trashCapacity = 40
+        trashCapacity = 30
         movementSpeed = 5
         npcState.niki.statsApplied = true
     }
@@ -1336,10 +1282,18 @@ function animate() {
             playerAudio.linusEnd.play()
         }
 
-        if (!trashAvailable) {
-            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
-        } else {
-            document.getElementById('trash-alert').textContent = ''
+        if (trashProgress > 10) {
+            largeTrashPossible = false
+            mediumTrashPossible = true
+            smallTrashPossible = true
+        } if (trashProgress > 15) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = true
+        } if (trashProgress > 18) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = false
         }
     } if (npcState.kevin.isPlayer) {
         kevin.draw()
@@ -1348,10 +1302,18 @@ function animate() {
             playerAudio.kevinEnd.play()
         }
 
-        if (trashProgress === 30) {
-            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
-        } if (trashProgress < 30) {
-            document.getElementById('trash-alert').textContent = ''
+        if (trashProgress > 13) {
+            largeTrashPossible = false
+            mediumTrashPossible = true
+            smallTrashPossible = true
+        } if (trashProgress > 16) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = true
+        } if (trashProgress > 19) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = false
         }
     } if (npcState.zeri.isPlayer) {
         zeri.draw()
@@ -1360,10 +1322,18 @@ function animate() {
             playerAudio.zeriEnd.play()
         }
 
-        if (trashProgress === 15) {
-            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
-        } if (trashProgress < 15) {
-            document.getElementById('trash-alert').textContent = ''
+        if (trashProgress > 5) {
+            largeTrashPossible = false
+            mediumTrashPossible = true
+            smallTrashPossible = true
+        } if (trashProgress > 14) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = true
+        } if (trashProgress > 16) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = false
         }
     } if (npcState.gian.isPlayer) {
         gian.draw()
@@ -1372,10 +1342,18 @@ function animate() {
             playerAudio.gianEnd.play()
         }
 
-        if (trashProgress === 30) {
-            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
-        } if (trashProgress < 30) {
-            document.getElementById('trash-alert').textContent = ''
+        if (trashProgress > 13) {
+            largeTrashPossible = false
+            mediumTrashPossible = true
+            smallTrashPossible = true
+        } if (trashProgress > 16) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = true
+        } if (trashProgress > 19) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = false
         }
     } if (npcState.simon.isPlayer) {
         simon.draw()
@@ -1384,24 +1362,42 @@ function animate() {
             playerAudio.simonEnd.play()
         }
 
-        if (trashProgress === 15) {
-            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
-        } if (trashProgress < 15) {
-            document.getElementById('trash-alert').textContent = ''
+        if (trashProgress > 5) {
+            largeTrashPossible = false
+            mediumTrashPossible = true
+            smallTrashPossible = true
+        } if (trashProgress > 14) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = true
+        } if (trashProgress > 16) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = false
         }
     } if (npcState.niki.isPlayer) {
-        niki.draw()
+        niki.draw()    
         if (interactablesDone === 25 && !bijouComplete) {
             bijouComplete = true
             playerAudio.nikiEnd.play()
         }
 
-        if (trashProgress === 40) {
-            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
-        } if (trashProgress < 40) {
-            document.getElementById('trash-alert').textContent = ''
+        if (trashProgress > 14) {
+            largeTrashPossible = false
+            mediumTrashPossible = true
+            smallTrashPossible = true
+        } if (trashProgress > 17) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = true
+        } if (trashProgress > 19) {
+            largeTrashPossible = false
+            mediumTrashPossible = false
+            smallTrashPossible = false
         }
     }
+
+    console.log(npcState.niki.isPlayer)
 
     stoicObjects.forEach(stoicObjects => {
         stoicObjects.draw()
@@ -2114,6 +2110,10 @@ function animate() {
                 keys.f.pressed = false
                 startTimer()
                 audio.Gong.play()
+                if (!npcState.niki.soundtrackStarted && npcState.niki.isPlayer){
+                    playerAudio.nikiSoundtrack.play()
+                    npcState.niki.soundtrackStarted = true
+                    }
 
                 if (npcState.linus.isPlayer) {
                     playerAudio.linusStart.play()
@@ -2151,6 +2151,9 @@ function animate() {
                 objectState.trashcanLA.audioPlay = true
                 if (trashProgress > 0) {
                     trashProgress = 0
+                    largeTrashPossible = true
+                    mediumTrashPossible = true
+                    smallTrashPossible = true
                     progressImage.src = progressbar[trashProgress]
                 }
             }
@@ -2158,8 +2161,8 @@ function animate() {
             keys.f.pressed = false
             objectState.trashcanPLC.interacted = true
             objectState.trashcanPLC.highlighted = false
-            if (trashAvailable) {
-            largeTrashPickup()
+            if (largeTrashPossible) {
+                largeTrashPickup()
             } if (!objectState.trashcanPLC.audioPlay) {
                 audio.Printer.play()
                 objectState.trashcanPLC.audioPlay = true
@@ -2168,8 +2171,9 @@ function animate() {
             keys.f.pressed = false
             objectState.trashcanLA.interacted = true
             objectState.trashcanLA.highlighted = false
-            largeTrashPickup()
-            if (!objectState.trashcanLA.audioPlay) {
+            if (largeTrashPossible) {
+                largeTrashPickup()
+            } if (!objectState.trashcanLA.audioPlay) {
                 audio.Printer.play()
                 objectState.trashcanLA.audioPlay = true
             }
@@ -2177,8 +2181,9 @@ function animate() {
             keys.f.pressed = false
             objectState.trashcanEingang.interacted = true
             objectState.trashcanEingang.highlighted = false
-            largeTrashPickup()
-            if (!objectState.trashcanEingang.audioPlay) {
+            if (largeTrashPossible) {
+                largeTrashPickup()
+            } if (!objectState.trashcanEingang.audioPlay) {
                 audio.Printer.play()
                 objectState.trashcanEingang.audioPlay = true
             }
@@ -2186,8 +2191,9 @@ function animate() {
             keys.f.pressed = false
             objectState.trashbinAdmin.interacted = true
             objectState.trashbinAdmin.highlighted = false
-            mediumTrashPickup()
-            if (!objectState.trashbinAdmin.audioPlay) {
+            if (mediumTrashPossible) {
+                mediumTrashPickup()
+            } if (!objectState.trashbinAdmin.audioPlay) {
                 audio.Printer.play()
                 objectState.trashbinAdmin.audioPlay = true
             }
@@ -2195,8 +2201,9 @@ function animate() {
             keys.f.pressed = false
             objectState.trashbinChristine.interacted = true
             objectState.trashbinChristine.highlighted = false
-            mediumTrashPickup()
-            if (!objectState.trashbinChristine.audioPlay) {
+            if (mediumTrashPossible) {
+                mediumTrashPickup()
+            } if (!objectState.trashbinChristine.audioPlay) {
                 audio.Printer.play()
                 objectState.trashbinChristine.audioPlay = true
             }
@@ -2204,8 +2211,9 @@ function animate() {
             keys.f.pressed = false
             objectState.trashbinRosa.interacted = true
             objectState.trashbinRosa.highlighted = false
-            mediumTrashPickup()
-            if (!objectState.trashbinRosa.audioPlay) {
+            if (mediumTrashPossible) {
+                mediumTrashPickup()
+            } if (!objectState.trashbinRosa.audioPlay) {
                 audio.Printer.play()
                 objectState.trashbinRosa.audioPlay = true
             }
@@ -2213,8 +2221,9 @@ function animate() {
             keys.f.pressed = false
             objectState.trashbinCutter.interacted = true
             objectState.trashbinCutter.highlighted = false
-            mediumTrashPickup()
-            if (!objectState.trashbinCutter.audioPlay) {
+            if (mediumTrashPossible) {
+                mediumTrashPickup()
+            } if (!objectState.trashbinCutter.audioPlay) {
                 audio.Printer.play()
                 objectState.trashbinCutter.audioPlay = true
             }
@@ -2398,49 +2407,49 @@ function animate() {
                 printer.sprites.inter :
                 (objectState.printer.highlighted ? printer.sprites.high : printer.sprites.init)
 
-        if (trashAvailable) {
-            objectState.trashcanPLC.highlighted = trashcanPLCDistance <= 80 && trashProgress < 20;
-            trashcanPLC.image =
-                (objectState.trashcanPLC.interacted) ?
-                    trashcanPLC.sprites.inter :
-                    (objectState.trashcanPLC.highlighted ? trashcanPLC.sprites.high : trashcanPLC.sprites.init)
 
-            objectState.trashcanLA.highlighted = trashcanLADistance <= 80 && trashProgress < 20;
-            trashcanLA.image =
-                (objectState.trashcanLA.interacted) ?
-                    trashcanLA.sprites.inter :
-                    (objectState.trashcanLA.highlighted ? trashcanLA.sprites.high : trashcanLA.sprites.init)
+        objectState.trashcanPLC.highlighted = trashcanPLCDistance <= 80 && largeTrashPossible;
+        trashcanPLC.image =
+            (objectState.trashcanPLC.interacted) ?
+                trashcanPLC.sprites.inter :
+                (objectState.trashcanPLC.highlighted ? trashcanPLC.sprites.high : trashcanPLC.sprites.init)
 
-            objectState.trashcanEingang.highlighted = trashcanEingangDistance <= 80 && trashProgress < 20;
-            trashcanEingang.image =
-                (objectState.trashcanEingang.interacted) ?
-                    trashcanEingang.sprites.inter :
-                    (objectState.trashcanEingang.highlighted ? trashcanEingang.sprites.high : trashcanEingang.sprites.init)
+        objectState.trashcanLA.highlighted = trashcanLADistance <= 80 && largeTrashPossible;
+        trashcanLA.image =
+            (objectState.trashcanLA.interacted) ?
+                trashcanLA.sprites.inter :
+                (objectState.trashcanLA.highlighted ? trashcanLA.sprites.high : trashcanLA.sprites.init)
 
-            objectState.trashbinAdmin.highlighted = trashbinAdminDistance <= 80 && trashProgress < 20;
-            trashbinAdmin.image =
-                (objectState.trashbinAdmin.interacted) ?
-                    trashbinAdmin.sprites.inter :
-                    (objectState.trashbinAdmin.highlighted ? trashbinAdmin.sprites.high : trashbinAdmin.sprites.init)
+        objectState.trashcanEingang.highlighted = trashcanEingangDistance <= 80 && largeTrashPossible;
+        trashcanEingang.image =
+            (objectState.trashcanEingang.interacted) ?
+                trashcanEingang.sprites.inter :
+                (objectState.trashcanEingang.highlighted ? trashcanEingang.sprites.high : trashcanEingang.sprites.init)
 
-            objectState.trashbinChristine.highlighted = trashbinChristineDistance <= 80 && trashProgress < 20;
-            trashbinChristine.image =
-                (objectState.trashbinChristine.interacted) ?
-                    trashbinChristine.sprites.inter :
-                    (objectState.trashbinChristine.highlighted ? trashbinChristine.sprites.high : trashbinChristine.sprites.init)
+        objectState.trashbinAdmin.highlighted = trashbinAdminDistance <= 80 && mediumTrashPossible;
+        trashbinAdmin.image =
+            (objectState.trashbinAdmin.interacted) ?
+                trashbinAdmin.sprites.inter :
+                (objectState.trashbinAdmin.highlighted ? trashbinAdmin.sprites.high : trashbinAdmin.sprites.init)
 
-            objectState.trashbinRosa.highlighted = trashbinRosaDistance <= 80 && trashProgress < 20;
-            trashbinRosa.image =
-                (objectState.trashbinRosa.interacted) ?
-                    trashbinRosa.sprites.inter :
-                    (objectState.trashbinRosa.highlighted ? trashbinRosa.sprites.high : trashbinRosa.sprites.init)
+        objectState.trashbinChristine.highlighted = trashbinChristineDistance <= 80 && mediumTrashPossible;
+        trashbinChristine.image =
+            (objectState.trashbinChristine.interacted) ?
+                trashbinChristine.sprites.inter :
+                (objectState.trashbinChristine.highlighted ? trashbinChristine.sprites.high : trashbinChristine.sprites.init)
 
-            objectState.trashbinCutter.highlighted = trashbinCutterDistance <= 80 && trashProgress < 20;
-            trashbinCutter.image =
-                (objectState.trashbinCutter.interacted) ?
-                    trashbinCutter.sprites.inter :
-                    (objectState.trashbinCutter.highlighted ? trashbinCutter.sprites.high : trashbinCutter.sprites.init)
-        }
+        objectState.trashbinRosa.highlighted = trashbinRosaDistance <= 80 && mediumTrashPossible;
+        trashbinRosa.image =
+            (objectState.trashbinRosa.interacted) ?
+                trashbinRosa.sprites.inter :
+                (objectState.trashbinRosa.highlighted ? trashbinRosa.sprites.high : trashbinRosa.sprites.init)
+
+        objectState.trashbinCutter.highlighted = trashbinCutterDistance <= 80 && mediumTrashPossible;
+        trashbinCutter.image =
+            (objectState.trashbinCutter.interacted) ?
+                trashbinCutter.sprites.inter :
+                (objectState.trashbinCutter.highlighted ? trashbinCutter.sprites.high : trashbinCutter.sprites.init)
+
     }
 
     // ------------------------- PROGRESS COUNT ---------------------------------
@@ -2574,6 +2583,18 @@ function animate() {
     } if (characterSelected === 5) {
         playerIsNiki()
         document.getElementById('start-text').textContent = 'ey perfekt, lets go'
+    }
+
+    // ------------------------- TRASH COUNTER ---------------------------------
+
+    if (largeTrashPossible && mediumTrashPossible && smallTrashPossible) {
+        document.getElementById('trash-counter').textContent = 'hesch no easy viel platz für Müll'
+    } if (!largeTrashPossible && mediumTrashPossible && smallTrashPossible) {
+        document.getElementById('trash-counter').textContent = 'do magsch aber kein 60-Liter Müllsack meh'
+    } if (!largeTrashPossible && !mediumTrashPossible && smallTrashPossible) {
+        document.getElementById('trash-counter').textContent = 'jetz wär au en 30-Liter Müllsack zviel'
+    } if (!largeTrashPossible && !mediumTrashPossible && !smallTrashPossible) {
+        document.getElementById('trash-counter').textContent = 'jetze lieged au nödmol meh chlini Fötzel drin. Schnell de Müll go leere!!'
     }
 }
 
