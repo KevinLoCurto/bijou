@@ -643,22 +643,28 @@ document.getElementById('character-select').addEventListener('click', () => {
     openCharacterSelection()
 })
 document.getElementById('start-game').addEventListener('click', () => {
-    spawnPlayer()
-    displayTimer()
+    document.getElementById('loading-screen').style.display = 'flex'
+    document.getElementById('character-selection-screen').style.display = 'none'
+    setTimeout(() => {
+        document.getElementById('loading-screen').style.display = 'none'
+        spawnPlayer()
+        displayTimer()
 
-    if (characterSelected === 0) {
-        npcState.linus.isPlayer = true
-    } if (characterSelected === 1) {
-        npcState.kevin.isPlayer = true
-    } if (characterSelected === 2) {
-        npcState.zeri.isPlayer = true
-    } if (characterSelected === 3) {
-        npcState.gian.isPlayer = true
-    } if (characterSelected === 4) {
-        npcState.simon.isPlayer = true
-    } if (characterSelected === 5) {
-        npcState.niki.isPlayer = true
-    }
+        if (characterSelected === 0) {
+            npcState.linus.isPlayer = true
+        } if (characterSelected === 1) {
+            npcState.kevin.isPlayer = true
+        } if (characterSelected === 2) {
+            npcState.zeri.isPlayer = true
+        } if (characterSelected === 3) {
+            npcState.gian.isPlayer = true
+        } if (characterSelected === 4) {
+            npcState.simon.isPlayer = true
+        } if (characterSelected === 5) {
+            npcState.niki.isPlayer = true
+        }
+    }, 5000)
+
 })
 document.getElementById('instructions').addEventListener('click', () => {
     openInstructions()
@@ -1376,7 +1382,7 @@ function animate() {
             smallTrashPossible = false
         }
     } if (npcState.niki.isPlayer) {
-        niki.draw()    
+        niki.draw()
         if (interactablesDone === 25 && !bijouComplete) {
             bijouComplete = true
             playerAudio.nikiEnd.play()
@@ -2110,10 +2116,10 @@ function animate() {
                 keys.f.pressed = false
                 startTimer()
                 audio.Gong.play()
-                if (!npcState.niki.soundtrackStarted && npcState.niki.isPlayer){
+                if (!npcState.niki.soundtrackStarted && npcState.niki.isPlayer) {
                     playerAudio.nikiSoundtrack.play()
                     npcState.niki.soundtrackStarted = true
-                    }
+                }
 
                 if (npcState.linus.isPlayer) {
                     playerAudio.linusStart.play()
@@ -2452,7 +2458,7 @@ function animate() {
 
     }
 
-    // ------------------------- PROGRESS COUNT ---------------------------------
+    // ------------------------- PROGRESS COUNT -----------------------------
 
     if (objectState.adminTable.interacted && !objectState.adminTable.increased) {
         interactablesDone++
