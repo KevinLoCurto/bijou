@@ -7,7 +7,7 @@ const c = canvas.getContext('2d')
 
 const offset = {
     x: -1450,
-    y: -800
+    y: -960
 }
 
 canvas.width = 1024
@@ -501,7 +501,7 @@ const cups = new Interactable({
 
 const printer = new Interactable({
     position: {
-        x: -135,
+        x: -130,
         y: 560
     },
     image: printerInitial,
@@ -672,6 +672,18 @@ document.getElementById('restart').addEventListener('click', () => {
 
 // ------------------------- TRASH --------------------------------- 
 
+const container187 = new Interactable({
+    position: {
+        x: 1190,
+        y: -880
+    },
+    image: container187Initial,
+    sprites: {
+        init: container187Initial,
+        high: container187Highlighted,
+    }
+})
+
 const trashcanPLC = new Interactable({
     position: {
         x: 790,
@@ -698,9 +710,75 @@ const trashcanLA = new Interactable({
     }
 })
 
+const trashcanEingang = new Interactable({
+    position: {
+        x: 830,
+        y: 1320
+    },
+    image: trashcanEingangInitial,
+    sprites: {
+        init: trashcanEingangInitial,
+        high: trashcanEingangHighlighted,
+        inter: trashcanEingangInteracted
+    }
+})
+
+const trashbinAdmin = new Interactable({
+    position: {
+        x: -450,
+        y: 360
+    },
+    image: trashbinAdminInitial,
+    sprites: {
+        init: trashbinAdminInitial,
+        high: trashbinAdminHighlighted,
+        inter: trashbinAdminInteracted
+    }
+})
+
+const trashbinChristine = new Interactable({
+    position: {
+        x: 390,
+        y: -200
+    },
+    image: trashbinChristineInitial,
+    sprites: {
+        init: trashbinChristineInitial,
+        high: trashbinChristineHighlighted,
+        inter: trashbinChristineInteracted
+    }
+})
+
+const trashbinRosa = new Interactable({
+    position: {
+        x: 190,
+        y: 200
+    },
+    image: trashbinRosaInitial,
+    sprites: {
+        init: trashbinRosaInitial,
+        high: trashbinRosaHighlighted,
+        inter: trashbinRosaInteracted
+    }
+})
+
+const trashbinCutter = new Interactable({
+    position: {
+        x: 230,
+        y: 600
+    },
+    image: trashbinCutterInitial,
+    sprites: {
+        init: trashbinCutterInitial,
+        high: trashbinCutterHighlighted,
+        inter: trashbinCutterInteracted
+    }
+})
+
 // ------------------------- TRASH INVENTORY TRACKING --------------------------------- 
 
 let trashProgress = 0
+let trashAvailable = true
 const progressbar = [
     '/assets/user-interface/progress-0.png',
     '/assets/user-interface/progress-1.png',
@@ -725,58 +803,111 @@ const progressbar = [
     '/assets/user-interface/progress-20.png'
 ]
 
-const progressImage = document.getElementById('progressbar')
-progressImage.src = progressbar[trashProgress]
-
 function smallTrashPickup() {
     if (trashCapacity === 15) {
-        trashProgress = (trashProgress + 2) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
+        if (trashProgress < 11) {
+            trashProgress = (trashProgress + 6)
+            progressImage.src = progressbar[trashProgress]
+        } else {
+            trashAvailable = false
+        }
     } if (trashCapacity === 20) {
-        trashProgress = (trashProgress + 1) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
+        if (trashProgress < 15) {
+            trashProgress = (trashProgress + 5)
+            progressImage.src = progressbar[trashProgress]
+        } else {
+            trashAvailable = false
+        }
     } if (trashCapacity === 30) {
-        trashProgress = (trashProgress + 1) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
+        if (trashProgress < 28) {
+            trashProgress = (trashProgress + 2)
+            progressImage.src = progressbar[trashProgress]
+        } else {
+            trashAvailable = false
+        }
     } if (trashCapacity === 40) {
-        trashProgress = (trashProgress + 0) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
+        if (trashProgress < 39) {
+            trashProgress = (trashProgress + 1)
+            progressImage.src = progressbar[trashProgress]
+        } else {
+            trashAvailable = false
+        }
     }
 }
 function mediumTrashPickup() {
     if (trashCapacity === 15) {
-        trashProgress = (trashProgress + 6) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
+        if (trashProgress <= 18) {
+            trashProgress = (trashProgress + 6)
+            progressImage.src = progressbar[trashProgress]
+            trashAvailable = true
+        } else {
+            trashAvailable = false
+        }
     } if (trashCapacity === 20) {
-        trashProgress = (trashProgress + 5) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
+        if (trashProgress <= 15) {
+            trashProgress = (trashProgress + 5)
+            progressImage.src = progressbar[trashProgress]
+            trashAvailable = true
+        } else {
+            trashAvailable = false
+        }
     } if (trashCapacity === 30) {
-        trashProgress = (trashProgress + 2) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
+        if (trashProgress <= 28) {
+            trashProgress = (trashProgress + 2)
+            progressImage.src = progressbar[trashProgress]
+            trashAvailable = true
+        } else {
+            trashAvailable = false
+        }
     } if (trashCapacity === 40) {
-        trashProgress = (trashProgress + 1) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
+        if (trashProgress <= 39) {
+            trashProgress = (trashProgress + 1)
+            progressImage.src = progressbar[trashProgress]
+            trashAvailable = true
+        } else {
+            trashAvailable = false
+        }
     }
-}
-function largeTrashPickup() {
-    if (trashCapacity === 15) {
-        trashProgress = (trashProgress + 15) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
-    } if (trashCapacity === 20) {
-        trashProgress = (trashProgress + 10) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
-    } if (trashCapacity === 30) {
-        trashProgress = (trashProgress + 6) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
-    } if (trashCapacity === 40) {
-        trashProgress = (trashProgress + 5) % progressbar.length
-        progressImage.src = progressbar[trashProgress]
-    }
-}
-function resetProgressbar() {
-    trashProgress = 0
 }
 
+function largeTrashPickup() {
+    if (trashCapacity === 15) {
+        if (trashProgress === 0) {
+            trashProgress = (trashProgress + 15)
+            progressImage.src = progressbar[trashProgress]
+            trashAvailable = true
+        } else {
+            trashAvailable = false
+        }
+    } if (trashCapacity === 20) {
+        if (trashProgress <= 10) {
+            trashProgress = (trashProgress + 10)
+            progressImage.src = progressbar[trashProgress]
+            trashAvailable = true
+        } else {
+            trashAvailable = false
+        }
+    } if (trashCapacity === 30) {
+        if (trashProgress <= 24) {
+            trashProgress = (trashProgress + 6)
+            progressImage.src = progressbar[trashProgress]
+            trashAvailable = true
+        } else {
+            trashAvailable = false
+        }
+    } if (trashCapacity === 40) {
+        if (trashProgress <= 35) {
+            trashProgress = (trashProgress + 5)
+            progressImage.src = progressbar[trashProgress]
+            trashAvailable = true
+        } else {
+            trashAvailable = false
+        }
+    }
+}
+
+const progressImage = document.getElementById('progressbar')
+progressImage.src = progressbar[trashProgress]
 
 // ------------------------- OBJECT GROUPING FOR EASIER RENDERING LOGIC ---------------------------------
 
@@ -794,12 +925,9 @@ const interactables = [
     adminTable, adminDesk, sink, adminBell,
     plcTable1, plcTable2, plcTable3, plcTable4, plcTable5, plcTable6,
     plcTable7, plcTable8, plcTable9, plcTable10, plcTable11, plcTable12, plcTable13,
-    cups, printer, gong,
-    trashcanPLC, trashcanLA
-]
-const steckerliiste = [
-    adminTable, plcTable1, plcTable2, plcTable3, plcTable4, plcTable5, plcTable6,
-    plcTable7, plcTable8, plcTable9, plcTable10, plcTable11, plcTable12, plcTable13,
+    cups, printer, gong, container187,
+    trashcanPLC, trashcanLA, trashcanEingang,
+    trashbinAdmin, trashbinChristine, trashbinRosa, trashbinCutter,
 ]
 const movables = [
     background, ...boundaries,
@@ -915,7 +1043,35 @@ let objectState = {
         interacted: false,
         audioPlay: false,
         increased: false
-    }
+    }, trashcanEingang: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, trashbinAdmin: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, trashbinChristine: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, trashbinRosa: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, trashbinCutter: {
+        highlighted: false,
+        interacted: false,
+        audioPlay: false,
+        increased: false
+    }, container187: {
+        highlighted: false,
+        audioPlay: false,
+    },
 }
 
 let npcState = {
@@ -1001,8 +1157,14 @@ const imageConstants = [
     sinkInitial, sinkHighlighted, sinkInteracted,
     adminBellInitial, adminBellHighlighted,
     gongInitial, gongHighlighted,
+    container187Initial, container187Highlighted,
     trashcanPLCInitial, trashcanPLCHighlighted, trashcanPLCInteracted,
     trashcanLAInitial, trashcanLAHighlighted, trashcanLAInteracted,
+    trashcanEingangInitial, trashcanEingangHighlighted, trashcanEingangInteracted,
+    trashbinAdminInitial, trashbinAdminHighlighted, trashbinAdminInteracted,
+    trashbinChristineInitial, trashbinChristineHighlighted, trashbinChristineInteracted,
+    trashbinRosaInitial, trashbinRosaHighlighted, trashbinRosaInteracted,
+    trashbinCutterInitial, trashbinCutterHighlighted, trashbinCutterInteracted,
 ]
 
 
@@ -1166,43 +1328,78 @@ function animate() {
     boundaries.forEach(boundaries => {
         boundaries.draw()
     })
-    console.log(trashProgress)
 
     if (npcState.linus.isPlayer) {
         linus.draw()
-        if (interactablesDone === 20 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete) {
             bijouComplete = true
             playerAudio.linusEnd.play()
         }
+
+        if (!trashAvailable) {
+            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
+        } else {
+            document.getElementById('trash-alert').textContent = ''
+        }
     } if (npcState.kevin.isPlayer) {
         kevin.draw()
-        if (interactablesDone === 20 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete) {
             bijouComplete = true
             playerAudio.kevinEnd.play()
         }
+
+        if (trashProgress === 30) {
+            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
+        } if (trashProgress < 30) {
+            document.getElementById('trash-alert').textContent = ''
+        }
     } if (npcState.zeri.isPlayer) {
         zeri.draw()
-        if (interactablesDone === 20 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete) {
             bijouComplete = true
             playerAudio.zeriEnd.play()
         }
+
+        if (trashProgress === 15) {
+            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
+        } if (trashProgress < 15) {
+            document.getElementById('trash-alert').textContent = ''
+        }
     } if (npcState.gian.isPlayer) {
         gian.draw()
-        if (interactablesDone === 20 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete) {
             bijouComplete = true
             playerAudio.gianEnd.play()
         }
+
+        if (trashProgress === 30) {
+            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
+        } if (trashProgress < 30) {
+            document.getElementById('trash-alert').textContent = ''
+        }
     } if (npcState.simon.isPlayer) {
         simon.draw()
-        if (interactablesDone === 20 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete) {
             bijouComplete = true
             playerAudio.simonEnd.play()
         }
+
+        if (trashProgress === 15) {
+            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
+        } if (trashProgress < 15) {
+            document.getElementById('trash-alert').textContent = ''
+        }
     } if (npcState.niki.isPlayer) {
         niki.draw()
-        if (interactablesDone === 20 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete) {
             bijouComplete = true
             playerAudio.nikiEnd.play()
+        }
+
+        if (trashProgress === 40) {
+            document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
+        } if (trashProgress < 40) {
+            document.getElementById('trash-alert').textContent = ''
         }
     }
 
@@ -1248,9 +1445,15 @@ function animate() {
     const adminBellDistance = calculateAdminBellDistance(linus, adminBell)
     const printerDistance = calculatePrinterDistance(linus, printer)
     const gongDistance = calculateGongDistance(linus, gong)
+    const container187Distance = calculateTrashcanDistance(linus, container187)
 
     const trashcanPLCDistance = calculateTrashcanDistance(linus, trashcanPLC)
     const trashcanLADistance = calculateTrashcanDistance(linus, trashcanLA)
+    const trashcanEingangDistance = calculateTrashcanDistance(linus, trashcanEingang)
+    const trashbinAdminDistance = calculateTrashcanDistance(linus, trashbinAdmin)
+    const trashbinChristineDistance = calculateTrashcanDistance(linus, trashbinChristine)
+    const trashbinRosaDistance = calculateTrashcanDistance(linus, trashbinRosa)
+    const trashbinCutterDistance = calculateTrashcanDistance(linus, trashbinCutter)
 
     let moving = true
     players.forEach(player => {
@@ -1933,7 +2136,7 @@ function animate() {
                 audio.Gong.play()
                 objectState.gong.timerStarted = false
                 gameEnded = true
-                if (interactablesDone === 20) {
+                if (interactablesDone === 25) {
                     stopTimer()
                     goodEnding()
                 } else {
@@ -1941,21 +2144,79 @@ function animate() {
                     badEnding()
                 }
             }
+        } if (objectState.container187.highlighted) {
+            keys.f.pressed = false
+            if (!objectState.container187.audioPlay) {
+                audio.Printer.play()
+                objectState.trashcanLA.audioPlay = true
+                if (trashProgress > 0) {
+                    trashProgress = 0
+                    progressImage.src = progressbar[trashProgress]
+                }
+            }
         } if (objectState.trashcanPLC.highlighted) {
+            keys.f.pressed = false
             objectState.trashcanPLC.interacted = true
             objectState.trashcanPLC.highlighted = false
-            if (!objectState.trashcanPLC.audioPlay) {
+            if (trashAvailable) {
+            largeTrashPickup()
+            } if (!objectState.trashcanPLC.audioPlay) {
                 audio.Printer.play()
-                largeTrashPickup()
                 objectState.trashcanPLC.audioPlay = true
             }
         } if (objectState.trashcanLA.highlighted) {
+            keys.f.pressed = false
             objectState.trashcanLA.interacted = true
             objectState.trashcanLA.highlighted = false
+            largeTrashPickup()
             if (!objectState.trashcanLA.audioPlay) {
                 audio.Printer.play()
-                largeTrashPickup()
                 objectState.trashcanLA.audioPlay = true
+            }
+        } if (objectState.trashcanEingang.highlighted) {
+            keys.f.pressed = false
+            objectState.trashcanEingang.interacted = true
+            objectState.trashcanEingang.highlighted = false
+            largeTrashPickup()
+            if (!objectState.trashcanEingang.audioPlay) {
+                audio.Printer.play()
+                objectState.trashcanEingang.audioPlay = true
+            }
+        } if (objectState.trashbinAdmin.highlighted) {
+            keys.f.pressed = false
+            objectState.trashbinAdmin.interacted = true
+            objectState.trashbinAdmin.highlighted = false
+            mediumTrashPickup()
+            if (!objectState.trashbinAdmin.audioPlay) {
+                audio.Printer.play()
+                objectState.trashbinAdmin.audioPlay = true
+            }
+        } if (objectState.trashbinChristine.highlighted) {
+            keys.f.pressed = false
+            objectState.trashbinChristine.interacted = true
+            objectState.trashbinChristine.highlighted = false
+            mediumTrashPickup()
+            if (!objectState.trashbinChristine.audioPlay) {
+                audio.Printer.play()
+                objectState.trashbinChristine.audioPlay = true
+            }
+        } if (objectState.trashbinRosa.highlighted) {
+            keys.f.pressed = false
+            objectState.trashbinRosa.interacted = true
+            objectState.trashbinRosa.highlighted = false
+            mediumTrashPickup()
+            if (!objectState.trashbinRosa.audioPlay) {
+                audio.Printer.play()
+                objectState.trashbinRosa.audioPlay = true
+            }
+        } if (objectState.trashbinCutter.highlighted) {
+            keys.f.pressed = false
+            objectState.trashbinCutter.interacted = true
+            objectState.trashbinCutter.highlighted = false
+            mediumTrashPickup()
+            if (!objectState.trashbinCutter.audioPlay) {
+                audio.Printer.play()
+                objectState.trashbinCutter.audioPlay = true
             }
         }
     } if (keys.b.pressed && !gameEnded) {
@@ -2024,6 +2285,11 @@ function animate() {
             adminBell.sprites.high : adminBell.sprites.init;
 
     if (objectState.gong.timerStarted) {
+        objectState.container187.highlighted = container187Distance <= 160;
+        container187.image =
+            (!objectState.container187.interacted && objectState.container187.highlighted) ?
+                container187.sprites.high : container187.sprites.init;
+
         objectState.adminTable.highlighted = adminTableDistance <= 160;
         adminTable.image =
             (objectState.adminTable.interacted) ?
@@ -2132,18 +2398,49 @@ function animate() {
                 printer.sprites.inter :
                 (objectState.printer.highlighted ? printer.sprites.high : printer.sprites.init)
 
-        objectState.trashcanPLC.highlighted = trashcanPLCDistance <= 80 && trashProgress <= 10;
-        trashcanPLC.image =
-            (objectState.trashcanPLC.interacted) ?
-                trashcanPLC.sprites.inter :
-                (objectState.trashcanPLC.highlighted ? trashcanPLC.sprites.high : trashcanPLC.sprites.init)
+        if (trashAvailable) {
+            objectState.trashcanPLC.highlighted = trashcanPLCDistance <= 80 && trashProgress < 20;
+            trashcanPLC.image =
+                (objectState.trashcanPLC.interacted) ?
+                    trashcanPLC.sprites.inter :
+                    (objectState.trashcanPLC.highlighted ? trashcanPLC.sprites.high : trashcanPLC.sprites.init)
 
-        objectState.trashcanLA.highlighted = trashcanLADistance <= 80 && trashProgress <= 10;
-        trashcanLA.image =
-            (objectState.trashcanLA.interacted) ?
-                trashcanLA.sprites.inter :
-                (objectState.trashcanLA.highlighted ? trashcanLA.sprites.high : trashcanLA.sprites.init)
+            objectState.trashcanLA.highlighted = trashcanLADistance <= 80 && trashProgress < 20;
+            trashcanLA.image =
+                (objectState.trashcanLA.interacted) ?
+                    trashcanLA.sprites.inter :
+                    (objectState.trashcanLA.highlighted ? trashcanLA.sprites.high : trashcanLA.sprites.init)
 
+            objectState.trashcanEingang.highlighted = trashcanEingangDistance <= 80 && trashProgress < 20;
+            trashcanEingang.image =
+                (objectState.trashcanEingang.interacted) ?
+                    trashcanEingang.sprites.inter :
+                    (objectState.trashcanEingang.highlighted ? trashcanEingang.sprites.high : trashcanEingang.sprites.init)
+
+            objectState.trashbinAdmin.highlighted = trashbinAdminDistance <= 80 && trashProgress < 20;
+            trashbinAdmin.image =
+                (objectState.trashbinAdmin.interacted) ?
+                    trashbinAdmin.sprites.inter :
+                    (objectState.trashbinAdmin.highlighted ? trashbinAdmin.sprites.high : trashbinAdmin.sprites.init)
+
+            objectState.trashbinChristine.highlighted = trashbinChristineDistance <= 80 && trashProgress < 20;
+            trashbinChristine.image =
+                (objectState.trashbinChristine.interacted) ?
+                    trashbinChristine.sprites.inter :
+                    (objectState.trashbinChristine.highlighted ? trashbinChristine.sprites.high : trashbinChristine.sprites.init)
+
+            objectState.trashbinRosa.highlighted = trashbinRosaDistance <= 80 && trashProgress < 20;
+            trashbinRosa.image =
+                (objectState.trashbinRosa.interacted) ?
+                    trashbinRosa.sprites.inter :
+                    (objectState.trashbinRosa.highlighted ? trashbinRosa.sprites.high : trashbinRosa.sprites.init)
+
+            objectState.trashbinCutter.highlighted = trashbinCutterDistance <= 80 && trashProgress < 20;
+            trashbinCutter.image =
+                (objectState.trashbinCutter.interacted) ?
+                    trashbinCutter.sprites.inter :
+                    (objectState.trashbinCutter.highlighted ? trashbinCutter.sprites.high : trashbinCutter.sprites.init)
+        }
     }
 
     // ------------------------- PROGRESS COUNT ---------------------------------
@@ -2228,6 +2525,26 @@ function animate() {
         interactablesDone++
         chübelGleert++
         objectState.trashcanLA.increased = true
+    } if (objectState.trashcanEingang.interacted && !objectState.trashcanEingang.increased) {
+        interactablesDone++
+        chübelGleert++
+        objectState.trashcanEingang.increased = true
+    } if (objectState.trashbinAdmin.interacted && !objectState.trashbinAdmin.increased) {
+        interactablesDone++
+        chübelGleert++
+        objectState.trashbinAdmin.increased = true
+    } if (objectState.trashbinChristine.interacted && !objectState.trashbinChristine.increased) {
+        interactablesDone++
+        chübelGleert++
+        objectState.trashbinChristine.increased = true
+    } if (objectState.trashbinRosa.interacted && !objectState.trashbinRosa.increased) {
+        interactablesDone++
+        chübelGleert++
+        objectState.trashbinRosa.increased = true
+    } if (objectState.trashbinCutter.interacted && !objectState.trashbinCutter.increased) {
+        interactablesDone++
+        chübelGleert++
+        objectState.trashbinCutter.increased = true
     }
 
     document.getElementById('sterckerliisteUsmache').textContent = steckerliisteUsgmacht
@@ -2236,10 +2553,6 @@ function animate() {
     document.getElementById('druckerUfruume').textContent = druckerUfgruumt
     document.getElementById('chübelLeere').textContent = chübelGleert
     document.getElementById('gameTime').textContent = gameTime
-
-    if (trashProgress === 20) {
-        document.getElementById('trash-alert').textContent = 'Jetz isch de Müllsack aber volle, gang ihn schnell dusse go leere!'
-    }
 
     // ------------------------- CHARACTER SELECTION ---------------------------------
 
@@ -2262,11 +2575,6 @@ function animate() {
         playerIsNiki()
         document.getElementById('start-text').textContent = 'ey perfekt, lets go'
     }
-
-    // ------------------------- CHARACTER SELECTION ---------------------------------
-
-
-
 }
 
 // ------------------------- KEY PRESS REGISTRATION ---------------------------------

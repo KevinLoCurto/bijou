@@ -226,6 +226,11 @@ gongInitial.src = '/assets/interactables/gongInitial.png'
 const gongHighlighted = new Image()
 gongHighlighted.src = '/assets/interactables/gongHighlighted.png'
 
+const container187Initial = new Image()
+container187Initial.src = '/assets/interactables/container187Initial.png'
+const container187Highlighted = new Image()
+container187Highlighted.src = '/assets/interactables/container187Highlighted.png'
+
 const trashcanPLCInitial = new Image()
 trashcanPLCInitial.src = '/assets/interactables/trashcanPLCInitial.png'
 const trashcanPLCHighlighted = new Image()
@@ -239,3 +244,38 @@ const trashcanLAHighlighted = new Image()
 trashcanLAHighlighted.src = '/assets/interactables/trashcanLAHighlighted.png'
 const trashcanLAInteracted = new Image()
 trashcanLAInteracted.src = '/assets/interactables/trashcanLAInteracted.png'
+
+const trashcanEingangInitial = new Image()
+trashcanEingangInitial.src = '/assets/interactables/trashcanEingangInitial.png'
+const trashcanEingangHighlighted = new Image()
+trashcanEingangHighlighted.src = '/assets/interactables/trashcanEingangHighlighted.png'
+const trashcanEingangInteracted = new Image()
+trashcanEingangInteracted.src = '/assets/interactables/trashcanEingangInteracted.png'
+
+const trashbinAdminInitial = new Image()
+trashbinAdminInitial.src = '/assets/interactables/trashbinAdminInitial.png'
+const trashbinAdminHighlighted = new Image()
+trashbinAdminHighlighted.src = '/assets/interactables/trashbinAdminHighlighted.png'
+const trashbinAdminInteracted = new Image()
+trashbinAdminInteracted.src = '/assets/interactables/trashbinAdminInteracted.png'
+
+const trashbinChristineInitial = new Image()
+trashbinChristineInitial.src = '/assets/interactables/trashbinChristineInitial.png'
+const trashbinChristineHighlighted = new Image()
+trashbinChristineHighlighted.src = '/assets/interactables/trashbinChristineHighlighted.png'
+const trashbinChristineInteracted = new Image()
+trashbinChristineInteracted.src = '/assets/interactables/trashbinChristineInteracted.png'
+
+const trashbinRosaInitial = new Image()
+trashbinRosaInitial.src = '/assets/interactables/trashbinRosaInitial.png'
+const trashbinRosaHighlighted = new Image()
+trashbinRosaHighlighted.src = '/assets/interactables/trashbinRosaHighlighted.png'
+const trashbinRosaInteracted = new Image()
+trashbinRosaInteracted.src = '/assets/interactables/trashbinRosaInteracted.png'
+
+const trashbinCutterInitial = new Image()
+trashbinCutterInitial.src = '/assets/interactables/trashbinCutterInitial.png'
+const trashbinCutterHighlighted = new Image()
+trashbinCutterHighlighted.src = '/assets/interactables/trashbinCutterHighlighted.png'
+const trashbinCutterInteracted = new Image()
+trashbinCutterInteracted.src = '/assets/interactables/trashbinCutterInteracted.png'
