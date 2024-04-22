@@ -1403,7 +1403,6 @@ function animate() {
         }
     }
 
-    console.log(npcState.niki.isPlayer)
 
     stoicObjects.forEach(stoicObjects => {
         stoicObjects.draw()
@@ -2223,7 +2222,7 @@ function animate() {
                 audio.Printer.play()
                 objectState.trashbinRosa.audioPlay = true
             }
-        } if (objectState.trashbinCutter.highlighted) {
+        } if (objectState.trashbinCutter.highlighted && !objectState.trashbinCutter.interacted) {
             keys.f.pressed = false
             objectState.trashbinCutter.interacted = true
             objectState.trashbinCutter.highlighted = false
@@ -2238,6 +2237,8 @@ function animate() {
         playRandomDialogueKevin()
         keys.b.pressed = false
     }
+
+    console.log(objectState.trashbinCutter.highlighted)
 
     if (calculateNPCDistance(linus, linusNPC) <= 200) {
         if (!npcState.linus.delayed && !npcState.linus.isPlayer) {
@@ -2413,44 +2414,43 @@ function animate() {
                 printer.sprites.inter :
                 (objectState.printer.highlighted ? printer.sprites.high : printer.sprites.init)
 
-
-        objectState.trashcanPLC.highlighted = trashcanPLCDistance <= 80 && largeTrashPossible;
+        objectState.trashcanPLC.highlighted = trashcanPLCDistance <= 80 && !objectState.trashcanPLC.interacted && largeTrashPossible;
         trashcanPLC.image =
             (objectState.trashcanPLC.interacted) ?
                 trashcanPLC.sprites.inter :
                 (objectState.trashcanPLC.highlighted ? trashcanPLC.sprites.high : trashcanPLC.sprites.init)
 
-        objectState.trashcanLA.highlighted = trashcanLADistance <= 80 && largeTrashPossible;
+        objectState.trashcanLA.highlighted = trashcanLADistance <= 80 && !objectState.trashcanLA.interacted && largeTrashPossible;
         trashcanLA.image =
             (objectState.trashcanLA.interacted) ?
                 trashcanLA.sprites.inter :
                 (objectState.trashcanLA.highlighted ? trashcanLA.sprites.high : trashcanLA.sprites.init)
 
-        objectState.trashcanEingang.highlighted = trashcanEingangDistance <= 80 && largeTrashPossible;
+        objectState.trashcanEingang.highlighted = trashcanEingangDistance <= 80 && !objectState.trashcanEingang.interacted && largeTrashPossible;
         trashcanEingang.image =
             (objectState.trashcanEingang.interacted) ?
                 trashcanEingang.sprites.inter :
                 (objectState.trashcanEingang.highlighted ? trashcanEingang.sprites.high : trashcanEingang.sprites.init)
 
-        objectState.trashbinAdmin.highlighted = trashbinAdminDistance <= 80 && mediumTrashPossible;
+        objectState.trashbinAdmin.highlighted = trashbinAdminDistance <= 80 && !objectState.trashbinAdmin.interacted && mediumTrashPossible;
         trashbinAdmin.image =
             (objectState.trashbinAdmin.interacted) ?
                 trashbinAdmin.sprites.inter :
                 (objectState.trashbinAdmin.highlighted ? trashbinAdmin.sprites.high : trashbinAdmin.sprites.init)
 
-        objectState.trashbinChristine.highlighted = trashbinChristineDistance <= 80 && mediumTrashPossible;
+        objectState.trashbinChristine.highlighted = trashbinChristineDistance <= 80 && !objectState.trashbinChristine.interacted && mediumTrashPossible;
         trashbinChristine.image =
             (objectState.trashbinChristine.interacted) ?
                 trashbinChristine.sprites.inter :
                 (objectState.trashbinChristine.highlighted ? trashbinChristine.sprites.high : trashbinChristine.sprites.init)
 
-        objectState.trashbinRosa.highlighted = trashbinRosaDistance <= 80 && mediumTrashPossible;
+        objectState.trashbinRosa.highlighted = trashbinRosaDistance <= 80 && !objectState.trashbinRosa.interacted && mediumTrashPossible;
         trashbinRosa.image =
             (objectState.trashbinRosa.interacted) ?
                 trashbinRosa.sprites.inter :
                 (objectState.trashbinRosa.highlighted ? trashbinRosa.sprites.high : trashbinRosa.sprites.init)
 
-        objectState.trashbinCutter.highlighted = trashbinCutterDistance <= 80 && mediumTrashPossible;
+        objectState.trashbinCutter.highlighted = trashbinCutterDistance <= 80 && !objectState.trashbinCutter.interacted && mediumTrashPossible;
         trashbinCutter.image =
             (objectState.trashbinCutter.interacted) ?
                 trashbinCutter.sprites.inter :
@@ -2458,7 +2458,8 @@ function animate() {
 
     }
 
-    // ------------------------- PROGRESS COUNT -----------------------------
+    // ------------------------- PROGRESS COUNT ---------------------------------------
+
 
     if (objectState.adminTable.interacted && !objectState.adminTable.increased) {
         interactablesDone++
@@ -2596,11 +2597,11 @@ function animate() {
     if (largeTrashPossible && mediumTrashPossible && smallTrashPossible) {
         document.getElementById('trash-counter').textContent = 'hesch no easy viel platz für Müll'
     } if (!largeTrashPossible && mediumTrashPossible && smallTrashPossible) {
-        document.getElementById('trash-counter').textContent = 'do magsch aber kein 60-Liter Müllsack meh'
+        document.getElementById('trash-counter').textContent = 'do magsch aber kein 60-Liter Müllsack meh, suech dir viellicht no paar 30-Liter-Säck zeme'
     } if (!largeTrashPossible && !mediumTrashPossible && smallTrashPossible) {
-        document.getElementById('trash-counter').textContent = 'jetz wär au en 30-Liter Müllsack zviel'
+        document.getElementById('trash-counter').textContent = 'jetz wär au en 30-Liter Müllsack zviel, bitzeli Gefötzel wör aber no goh'
     } if (!largeTrashPossible && !mediumTrashPossible && !smallTrashPossible) {
-        document.getElementById('trash-counter').textContent = 'jetze lieged au nödmol meh chlini Fötzel drin. Schnell de Müll go leere!!'
+        document.getElementById('trash-counter').textContent = 'jetze lieged au nödmol meh chlini Fötzel drin. Dis Müll-Inventar isch randvolle! Schnell de Müll go leere!!'
     }
 }
 
