@@ -276,6 +276,14 @@ const glassTable3 = new Sprite({
     image: gT3
 })
 
+const adminSchrank = new Sprite({
+    position: {
+        x: -810,
+        y: 0
+    },
+    image: schrank
+})
+
 // ------------------------- INTERACTABLE OBJECTS --------------------------------- 
 
 const adminTable = new Interactable({
@@ -293,7 +301,7 @@ const adminTable = new Interactable({
 
 const sink = new Interactable({
     position: {
-        x: -490,
+        x: -530,
         y: 0
     },
     image: sinkInitial,
@@ -870,7 +878,8 @@ const npcs = [
 ]
 const stoicObjects = [
     christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable,
-    glassTable1, glassTable2, glassTable3
+    glassTable1, glassTable2, glassTable3,
+    adminSchrank,
 ]
 const interactables = [
     adminTable, adminDesk, sink, adminBell,
@@ -1982,7 +1991,7 @@ function animate() {
     // ------------------------- INTERACTION LOGIC & AUTOMATIC AUDIO PLAYING ---------------------------------
 
     if (keys.f.pressed && !gameEnded) {
-        if (objectState.adminTable.highlighted) {
+          if (objectState.adminTable.highlighted) {
             objectState.adminTable.interacted = true
             objectState.adminTable.highlighted = false
             if (!objectState.adminTable.audioPlay) {
@@ -2222,7 +2231,7 @@ function animate() {
                 audio.Printer.play()
                 objectState.trashbinRosa.audioPlay = true
             }
-        } if (objectState.trashbinCutter.highlighted && !objectState.trashbinCutter.interacted) {
+        } if (objectState.trashbinCutter.highlighted) {
             keys.f.pressed = false
             objectState.trashbinCutter.interacted = true
             objectState.trashbinCutter.highlighted = false
@@ -2237,8 +2246,6 @@ function animate() {
         playRandomDialogueKevin()
         keys.b.pressed = false
     }
-
-    console.log(objectState.trashbinCutter.highlighted)
 
     if (calculateNPCDistance(linus, linusNPC) <= 200) {
         if (!npcState.linus.delayed && !npcState.linus.isPlayer) {
@@ -2396,7 +2403,7 @@ function animate() {
                 cups.sprites.inter :
                 (objectState.cups.highlighted ? cups.sprites.high : cups.sprites.init)
 
-        objectState.adminDesk.highlighted = adminDeskDistance <= 160;
+        objectState.adminDesk.highlighted = adminDeskDistance <= 80;
         adminDesk.image =
             (objectState.adminDesk.interacted) ?
                 adminDesk.sprites.inter :
@@ -2456,10 +2463,9 @@ function animate() {
                 trashbinCutter.sprites.inter :
                 (objectState.trashbinCutter.highlighted ? trashbinCutter.sprites.high : trashbinCutter.sprites.init)
 
-    }
+    } 
 
-    // ------------------------- PROGRESS COUNT ---------------------------------------
-
+// ------------------------- PROGRESS COUNT ---------------------------------------
 
     if (objectState.adminTable.interacted && !objectState.adminTable.increased) {
         interactablesDone++

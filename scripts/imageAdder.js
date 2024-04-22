@@ -90,6 +90,9 @@ gT2.src = '/assets/world/glassTable2.png'
 const gT3 = new Image()
 gT3.src = '/assets/world/glassTable3.png'
 
+const schrank = new Image()
+schrank.src = '/assets/world/schrank.png' 
+
 const adminTableInitial = new Image()
 adminTableInitial.src = '/assets/interactables/adminTableInitial.png'
 const adminTableHighlighted = new Image()
