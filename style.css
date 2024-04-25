@@ -12,6 +12,12 @@ h2 {
     color: rgb(204, 204, 204);
 }
 
+h3 {
+    font-size: 18pt;
+    font-family: 'crang', sans-serif;
+    color: rgb(204, 204, 204);
+}
+
 p {
     font-size: 16pt;
     font-family: 'vcr', sans-serif;
@@ -110,6 +116,17 @@ p {
     background-color: #63953d;
 }
 
+#patch-notes-button:hover {
+    color: #7cc049;
+}
+
+/* --------------------------- PATCH NOTES -------------------------------- */
+
+#patch-notes {
+    background-color: black;
+    padding-bottom: 0px;
+}
+
 /* --------------------------- CHARACTER SELECTION SCREEN -------------------------------- */
 
 #character-selection-screen {
@@ -176,7 +193,7 @@ p {
     color: rgb(204, 204, 204);
 }
 
-#back {
+#back-1, #back-2 {
     background-color: #7cc049;
     margin-left: 25px;
     margin-top: 50px;
@@ -187,7 +204,7 @@ p {
     padding-left: 55px;
 }
 
-#back:hover {
+#back-1:hover, #back-2:hover {
     background-color: #63953d;
 }
 

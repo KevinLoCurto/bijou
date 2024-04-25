@@ -1,7 +1,12 @@
+const EG = new Image()
+EG.src = '/assets/world/EG.png'
+const OG = new Image()
+OG.src = '/assets/world/OG.png'
 
-
-const image = new Image()
-image.src = '/assets/world/map.png'
+const increase = new Image()
+increase.src = '/assets/world/increase.png'
+const decrease = new Image()
+decrease.src = '/assets/world/decrease.png'
 
 const linusDown = new Image()
 linusDown.src = '/characters/players/linus/linusDown.png'

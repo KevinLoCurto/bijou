@@ -6,7 +6,7 @@ const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
 const offset = {
-    x: -1450,
+    x: -1890,
     y: -960
 }
 
@@ -30,13 +30,14 @@ let tasseUfgruumt = 0
 let gschirrspüelerIgruumt = 0
 let druckerUfgruumt = 0
 let chübelGleert = 0
-let bijouComplete = false
-let gameEnded = false
 let characterSelected = 0
 let movementSpeed = 0
 let trashCapacity = 0
 let gameTime = 0
 let timerInterval
+let currentFloor = 0
+let bijouComplete = false
+let gameEnded = false
 
 // ------------------------- PLAYER CHARACTER --------------------------------- 
 
@@ -194,12 +195,20 @@ const nikiNPC = new Sprite({
 
 // ------------------------- BACKGROUND --------------------------------- 
 
-const background = new Sprite({
+const backgroundEG = new Sprite({
     position: {
-        x: -1450,
+        x: -2730,
         y: -1440
     },
-    image: image
+    image: EG
+})
+
+const backgroundOG = new Sprite({
+    position: {
+        x: -2730,
+        y: -1440
+    },
+    image: OG
 })
 
 // ------------------------- DECORATIVE OBJECTS --------------------------------- 
@@ -546,16 +555,35 @@ const gong = new Interactable({
 
 // ------------------------- COLLISIONS --------------------------------- 
 
-const collisionsMap = []
-for (let i = 0; i < collisions.length; i += 80) {
-    collisionsMap.push(collisions.slice(i, 80 + i))
+const collisionsMapEG = []
+for (let i = 0; i < collisionsEG.length; i += 91) {
+    collisionsMapEG.push(collisionsEG.slice(i, 91 + i))
 }
 
-const boundaries = []
-collisionsMap.forEach((row, i) => {
+const boundariesEG = []
+collisionsMapEG.forEach((row, i) => {
     row.forEach((symbol, j) => {
         if (symbol === 1)
-            boundaries.push(
+            boundariesEG.push(
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    }
+                }))
+    })
+})
+
+const collisionsMapOG = []
+for (let i = 0; i < collisionsOG.length; i += 91) {
+    collisionsMapOG.push(collisionsOG.slice(i, 91 + i))
+}
+
+const boundariesOG = []
+collisionsMapOG.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 1)
+            boundariesOG.push(
                 new Boundary({
                     position: {
                         x: j * Boundary.width + offset.x,
@@ -573,6 +601,33 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
         rectangle1.position.y + rectangle1.height >= rectangle2.position.y
     )
 }
+
+// ------------------------- FLOORS --------------------------------- 
+
+const floors = {
+    EG: {
+        current: true,
+    },
+    OG: {
+        current: false,
+    }
+}
+
+const floorIncrease = new Sprite({
+    position: {
+        x: -1050,
+        y: 1800
+    },
+    image: increase
+})
+
+const floorDecrease = new Sprite({
+    position: {
+        x: -690,
+        y: 1800
+    },
+    image: decrease
+})
 
 // ------------------------- TIMER --------------------------------- 
 
@@ -602,18 +657,31 @@ function spawnPlayer() {
     document.getElementById('tasklist').style.display = 'block'
     audio.sBijou.play()
 }
+function openPatchNotes() {
+    document.getElementById('main-menu').style.display = 'none'
+    document.getElementById('testimage').style.display = 'none'
+    document.getElementById('patch-notes').style.display = 'block'
+    document.getElementById('back-1').style.display = 'block'
+}
+function closePatchNotes() {
+    document.getElementById('main-menu').style.display = 'block'
+    document.getElementById('testimage').style.display = 'block'
+    document.getElementById('end-screen').style.display = 'none'
+    document.getElementById('patch-notes').style.display = 'none'
+    document.getElementById('back-1').style.display = 'none'
+}
 function openInstructions() {
     document.getElementById('main-menu').style.display = 'none'
     document.getElementById('testimage').style.display = 'none'
     document.getElementById('instruction-screen').style.display = 'block'
-    document.getElementById('back').style.display = 'block'
+    document.getElementById('back-2').style.display = 'block'
 }
 function closeInstructions() {
     document.getElementById('main-menu').style.display = 'block'
     document.getElementById('testimage').style.display = 'block'
     document.getElementById('end-screen').style.display = 'none'
     document.getElementById('instruction-screen').style.display = 'none'
-    document.getElementById('back').style.display = 'none'
+    document.getElementById('back-2').style.display = 'none'
 }
 function openCharacterSelection() {
     document.getElementById('main-menu').style.display = 'none'
@@ -671,13 +739,19 @@ document.getElementById('start-game').addEventListener('click', () => {
         } if (characterSelected === 5) {
             npcState.niki.isPlayer = true
         }
-    }, 5000)
+    }, 0)
 
+})
+document.getElementById('patch-notes-button').addEventListener('click', () => {
+    openPatchNotes()
 })
 document.getElementById('instructions').addEventListener('click', () => {
     openInstructions()
 })
-document.getElementById('back').addEventListener('click', () => {
+document.getElementById('back-1').addEventListener('click', () => {
+    closePatchNotes()
+})
+document.getElementById('back-2').addEventListener('click', () => {
     closeInstructions()
 })
 document.getElementById('restart').addEventListener('click', () => {
@@ -873,15 +947,18 @@ progressImage.src = progressbar[trashProgress]
 const players = [
     linus, kevin, zeri, gian, simon, niki
 ]
-const npcs = [
+const playerDetection = [
+    floorIncrease, floorDecrease
+]
+const npcsEG = [
     linusNPC, zeriNPC, kevinNPC, gianNPC, simonNPC, nikiNPC
 ]
-const stoicObjects = [
+const stoicObjectsEG = [
     christineTable, edoTable, jokiTable, karinTable, rosaTable, ursTable,
     glassTable1, glassTable2, glassTable3,
     adminSchrank,
 ]
-const interactables = [
+const interactablesEG = [
     adminTable, adminDesk, sink, adminBell,
     plcTable1, plcTable2, plcTable3, plcTable4, plcTable5, plcTable6,
     plcTable7, plcTable8, plcTable9, plcTable10, plcTable11, plcTable12, plcTable13,
@@ -890,9 +967,10 @@ const interactables = [
     trashbinAdmin, trashbinChristine, trashbinRosa, trashbinCutter,
 ]
 const movables = [
-    background, ...boundaries,
-    ...interactables, ...stoicObjects,
-    ...npcs
+    backgroundEG, backgroundOG, ...boundariesEG, ...boundariesOG,
+    ...interactablesEG, ...stoicObjectsEG,
+    ...npcsEG, 
+    ...playerDetection,
 ]
 
 let objectState = {
@@ -1096,7 +1174,7 @@ const imageConstants = [
     gianDown, gianLeft, gianRight, gianUp,
     simonDown, simonLeft, simonRight, simonUp,
     nikiDown, nikiLeft, nikiRight, nikiUp,
-    image,
+    EG, OG,
     npcLinus, npcKevin, npcZeri, npcGian, npcSimon, npcNiki,
     adminTableInitial, adminTableHighlighted, adminTableInteracted,
     plcTable1Initial, plcTable1Highlighted, plcTable1Interacted,
@@ -1283,12 +1361,75 @@ const keys = {
 }
 
 function animate() {
-    // ------------------------- IMAGE PLACEMENT ---------------------------------
     window.requestAnimationFrame(animate);
-    background.draw()
-    boundaries.forEach(boundaries => {
-        boundaries.draw()
-    })
+
+    // ------------------------- FLOOR DETECTION ---------------------------------
+
+    if (currentFloor === 0) {
+        floors.EG.current = true
+        floors.OG.current = false
+    } if (currentFloor === 1) {
+        floors.EG.current = false
+        floors.OG.current = true
+    }
+
+    if (
+        linus.position.y > floorIncrease.position.y && 
+        floorIncrease.position.y < 275 &&
+        linus.position.x > floorIncrease.position.x &&
+        linus.position.x < (floorIncrease.position.x + 240) &&
+        !floors.OG.current
+    ) {
+        currentFloor++
+    } if (
+        linus.position.y < floorIncrease.position.y && 
+        floorIncrease.position.y < 275 &&
+        linus.position.x > floorIncrease.position.x &&
+        linus.position.x < (floorIncrease.position.x + 240) &&
+        !floors.EG.current
+    ) {
+        currentFloor--
+    }
+
+    if (floors.EG.current) {
+        playerDetection.forEach(playerDetection => {
+            playerDetection.draw()
+        })
+        backgroundEG.draw()
+        boundariesEG.forEach(boundariesEG => {
+            boundariesEG.draw()
+        })
+        stoicObjectsEG.forEach(stoicObjectsEG => {
+            stoicObjectsEG.draw()
+        })
+        interactablesEG.forEach(interactablesEG => {
+            interactablesEG.draw()
+        })
+
+        if (!npcState.linus.isPlayer) {
+            linusNPC.draw()
+        } if (!npcState.kevin.isPlayer) {
+            kevinNPC.draw()
+        } if (!npcState.zeri.isPlayer) {
+            zeriNPC.draw()
+        } if (!npcState.gian.isPlayer) {
+            gianNPC.draw()
+        } if (!npcState.simon.isPlayer) {
+            simonNPC.draw()
+        } if (!npcState.niki.isPlayer) {
+            nikiNPC.draw()
+        }
+    } if (floors.OG.current) {
+        playerDetection.forEach(playerDetection => {
+            playerDetection.draw()
+        })
+        backgroundOG.draw()
+        boundariesOG.forEach(boundariesOG => {
+            boundariesOG.draw()
+        })
+    }
+
+    // ------------------------- PLAYER CHARACTER DETECTION ---------------------------------
 
     if (npcState.linus.isPlayer) {
         linus.draw()
@@ -1412,27 +1553,6 @@ function animate() {
         }
     }
 
-
-    stoicObjects.forEach(stoicObjects => {
-        stoicObjects.draw()
-    })
-    interactables.forEach(interactable => {
-        interactable.draw()
-    })
-    if (!npcState.linus.isPlayer) {
-        linusNPC.draw()
-    } if (!npcState.kevin.isPlayer) {
-        kevinNPC.draw()
-    } if (!npcState.zeri.isPlayer) {
-        zeriNPC.draw()
-    } if (!npcState.gian.isPlayer) {
-        gianNPC.draw()
-    } if (!npcState.simon.isPlayer) {
-        simonNPC.draw()
-    } if (!npcState.niki.isPlayer) {
-        nikiNPC.draw()
-    }
-
     // ------------------------- DISTANCE CALCULATION ---------------------------------
 
     const adminTableDistance = calculateFourtableVerticalDistance(linus, adminTable)
@@ -1476,121 +1596,241 @@ function animate() {
         if (npcState.linus.isPlayer) {
             linus.moving = true
             linus.image = linus.sprites.up
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: linus,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + 4
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.kevin.isPlayer) {
             kevin.moving = true
             kevin.image = kevin.sprites.up
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: kevin,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + 4
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.zeri.isPlayer) {
             zeri.moving = true
             zeri.image = zeri.sprites.up
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: zeri,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + 4
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.gian.isPlayer) {
             gian.moving = true
             gian.image = gian.sprites.up
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: gian,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + 4
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.simon.isPlayer) {
             simon.moving = true
             simon.image = simon.sprites.up
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: simon,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + 4
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.niki.isPlayer) {
             niki.moving = true
             niki.image = niki.sprites.up
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: niki,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + 4
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y + movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         }
@@ -1603,121 +1843,241 @@ function animate() {
         if (npcState.linus.isPlayer) {
             linus.moving = true
             linus.image = linus.sprites.left
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: linus,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x + movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.kevin.isPlayer) {
             kevin.moving = true
             kevin.image = kevin.sprites.left
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: kevin,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x + movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.zeri.isPlayer) {
             zeri.moving = true
             zeri.image = zeri.sprites.left
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: zeri,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x + movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.gian.isPlayer) {
             gian.moving = true
             gian.image = gian.sprites.left
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: gian,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x + movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.simon.isPlayer) {
             simon.moving = true
             simon.image = simon.sprites.left
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: simon,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x + movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.niki.isPlayer) {
             niki.moving = true
             niki.image = niki.sprites.left
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: niki,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x + movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x + movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         }
@@ -1730,127 +2090,211 @@ function animate() {
         if (npcState.linus.isPlayer) {
             linus.moving = true
             linus.image = linus.sprites.down
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: linus,
-                        rectangle2: {
-                            ...boundary,
-                            position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - movementSpeed
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.kevin.isPlayer) {
             kevin.moving = true
             kevin.image = kevin.sprites.down
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: kevin,
-                        rectangle2: {
-                            ...boundary,
-                            position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - movementSpeed
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.zeri.isPlayer) {
             zeri.moving = true
             zeri.image = zeri.sprites.down
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: zeri,
-                        rectangle2: {
-                            ...boundary,
-                            position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - movementSpeed
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.gian.isPlayer) {
             gian.moving = true
             gian.image = gian.sprites.down
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: gian,
-                        rectangle2: {
-                            ...boundary,
-                            position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - movementSpeed
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
-            }
-        } if (npcState.simon.isPlayer) {
-            simon.moving = true
-            simon.image = simon.sprites.down
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: simon,
-                        rectangle2: {
-                            ...boundary,
-                            position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - movementSpeed
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.niki.isPlayer) {
             niki.moving = true
             niki.image = niki.sprites.down
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: niki,
-                        rectangle2: {
-                            ...boundary,
-                            position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - movementSpeed
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary,
+                                position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y - movementSpeed
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         }
@@ -1863,121 +2307,241 @@ function animate() {
         if (npcState.linus.isPlayer) {
             linus.moving = true
             linus.image = linus.sprites.right
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: linus,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x - movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.kevin.isPlayer) {
             kevin.moving = true
             kevin.image = kevin.sprites.right
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: kevin,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x - movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.zeri.isPlayer) {
             zeri.moving = true
             zeri.image = zeri.sprites.right
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: zeri,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x - movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.gian.isPlayer) {
             gian.moving = true
             gian.image = gian.sprites.right
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: gian,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x - movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.simon.isPlayer) {
             simon.moving = true
             simon.image = simon.sprites.right
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: simon,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x - movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         } if (npcState.niki.isPlayer) {
             niki.moving = true
             niki.image = niki.sprites.right
-            for (let i = 0; i < boundaries.length; i++) {
-                const boundary = boundaries[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: niki,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x - movementSpeed,
-                                y: boundary.position.y
+            if (floors.EG.current) {
+                for (let i = 0; i < boundariesEG.length; i++) {
+                    const boundary = boundariesEG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
                             }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
+                }
+            } if (floors.OG.current) {
+                for (let i = 0; i < boundariesOG.length; i++) {
+                    const boundary = boundariesOG[i]
+                    if (
+                        rectangularCollision({
+                            rectangle1: linus,
+                            rectangle2: {
+                                ...boundary, position: {
+                                    x: boundary.position.x - movementSpeed,
+                                    y: boundary.position.y
+                                }
+                            }
+                        })
+                    ) {
+                        moving = false
+                        break
+                    }
                 }
             }
         }
@@ -1991,7 +2555,7 @@ function animate() {
     // ------------------------- INTERACTION LOGIC & AUTOMATIC AUDIO PLAYING ---------------------------------
 
     if (keys.f.pressed && !gameEnded) {
-          if (objectState.adminTable.highlighted) {
+        if (objectState.adminTable.highlighted) {
             objectState.adminTable.interacted = true
             objectState.adminTable.highlighted = false
             if (!objectState.adminTable.audioPlay) {
@@ -2463,9 +3027,9 @@ function animate() {
                 trashbinCutter.sprites.inter :
                 (objectState.trashbinCutter.highlighted ? trashbinCutter.sprites.high : trashbinCutter.sprites.init)
 
-    } 
+    }
 
-// ------------------------- PROGRESS COUNT ---------------------------------------
+    // ------------------------- PROGRESS COUNT ---------------------------------------
 
     if (objectState.adminTable.interacted && !objectState.adminTable.increased) {
         interactablesDone++
