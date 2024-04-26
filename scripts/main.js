@@ -969,7 +969,7 @@ const interactablesEG = [
 const movables = [
     backgroundEG, backgroundOG, ...boundariesEG, ...boundariesOG,
     ...interactablesEG, ...stoicObjectsEG,
-    ...npcsEG, 
+    ...npcsEG,
     ...playerDetection,
 ]
 
@@ -1374,7 +1374,7 @@ function animate() {
     }
 
     if (
-        linus.position.y > floorIncrease.position.y && 
+        linus.position.y > floorIncrease.position.y &&
         floorIncrease.position.y < 275 &&
         linus.position.x > floorIncrease.position.x &&
         linus.position.x < (floorIncrease.position.x + 240) &&
@@ -1382,7 +1382,7 @@ function animate() {
     ) {
         currentFloor++
     } if (
-        linus.position.y < floorIncrease.position.y && 
+        linus.position.y < floorIncrease.position.y &&
         floorIncrease.position.y < 275 &&
         linus.position.x > floorIncrease.position.x &&
         linus.position.x < (floorIncrease.position.x + 240) &&
@@ -1433,7 +1433,7 @@ function animate() {
 
     if (npcState.linus.isPlayer) {
         linus.draw()
-        if (interactablesDone === 25 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete && trashProgress === 0) {
             bijouComplete = true
             playerAudio.linusEnd.play()
         }
@@ -1453,7 +1453,7 @@ function animate() {
         }
     } if (npcState.kevin.isPlayer) {
         kevin.draw()
-        if (interactablesDone === 25 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete && trashProgress === 0) {
             bijouComplete = true
             playerAudio.kevinEnd.play()
         }
@@ -1473,7 +1473,7 @@ function animate() {
         }
     } if (npcState.zeri.isPlayer) {
         zeri.draw()
-        if (interactablesDone === 25 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete && trashProgress === 0) {
             bijouComplete = true
             playerAudio.zeriEnd.play()
         }
@@ -1493,7 +1493,7 @@ function animate() {
         }
     } if (npcState.gian.isPlayer) {
         gian.draw()
-        if (interactablesDone === 25 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete && trashProgress === 0) {
             bijouComplete = true
             playerAudio.gianEnd.play()
         }
@@ -1513,7 +1513,7 @@ function animate() {
         }
     } if (npcState.simon.isPlayer) {
         simon.draw()
-        if (interactablesDone === 25 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete && trashProgress === 0) {
             bijouComplete = true
             playerAudio.simonEnd.play()
         }
@@ -1533,7 +1533,7 @@ function animate() {
         }
     } if (npcState.niki.isPlayer) {
         niki.draw()
-        if (interactablesDone === 25 && !bijouComplete) {
+        if (interactablesDone === 25 && !bijouComplete && trashProgress === 0) {
             bijouComplete = true
             playerAudio.nikiEnd.play()
         }
@@ -2714,7 +2714,7 @@ function animate() {
                 audio.Gong.play()
                 objectState.gong.timerStarted = false
                 gameEnded = true
-                if (interactablesDone === 25) {
+                if (interactablesDone === 25 && trashProgress === 0) {
                     stopTimer()
                     goodEnding()
                 } else {
@@ -2861,11 +2861,11 @@ function animate() {
         }
     }
 
-    objectState.gong.highlighted = gongDistance <= 90;
-    gong.image =
-        (!objectState.gong.interacted && objectState.gong.highlighted) ?
-            gong.sprites.high : gong.sprites.init;
-
+        objectState.gong.highlighted = gongDistance <= 90;
+        gong.image =
+            (!objectState.gong.interacted && objectState.gong.highlighted) ?
+                gong.sprites.high : gong.sprites.init;
+    
     objectState.adminBell.highlighted = adminBellDistance <= 40;
     adminBell.image =
         (!objectState.adminBell.interacted && objectState.adminBell.highlighted) ?
