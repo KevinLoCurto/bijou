@@ -56,6 +56,7 @@ note: comments are excluded in this calculation.
 # refactoring results
 
 - total lines of code saved: 2'337
+  
 if you add up the following numbers, the result will be higher than 2'337. this is because i of course also added a lot of additional code. that only accounts for 300 to 400 lines of code though.
 
 - completely got rid of imageadder.js, 289 lines saved
