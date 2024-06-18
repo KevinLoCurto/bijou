@@ -69,7 +69,7 @@ function playRandomDialogueLinus() {
     var linusDialogue = new Audio(linusAudio[randomIndex])
 
     linusDialogue.play()
-}
+} 
 
 function playRandomDialogueZeri() {
     var randomIndex = Math.floor(Math.random() * zeriAudio.length)

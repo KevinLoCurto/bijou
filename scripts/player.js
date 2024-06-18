@@ -70,7 +70,7 @@ const playerStats = {
         largeMax: 14,
         mediumMax: 17,
         smallMax: 19,
-        petaluMax: 15
+        petaluMax: 15 
     }
 
 }

@@ -1012,13 +1012,13 @@ function animate() {
     // i thought it'd be a good quality of life addition if the player was able to see how much and/or which kind of trash they can still
     // pick up.
     if (largeTrashPossible && mediumTrashPossible && smallTrashPossible) {
-        document.getElementById('trash-counter').textContent = 'hesch no easy viel platz für Müll'
+        document.getElementById('trash-counter').textContent = 'hesch no easy viel platz für Müll, jetz gang aber a dSäck, sBijou mue gmacht werde!'
     } if (!largeTrashPossible && mediumTrashPossible && smallTrashPossible) {
         document.getElementById('trash-counter').textContent = 'do magsch aber kein 60-Liter Müllsack meh, suech dir viellicht no paar 30-Liter-Säck zeme'
     } if (!largeTrashPossible && !mediumTrashPossible && smallTrashPossible) {
         document.getElementById('trash-counter').textContent = 'jetz wär au en 30-Liter Müllsack zviel, bitzeli Gefötzel wör aber no goh'
     } if (!largeTrashPossible && !mediumTrashPossible && !smallTrashPossible) {
-        document.getElementById('trash-counter').textContent = 'jetze lieged au nödmol meh chlini Fötzel drin. Dis Müll-Inventar isch randvolle! Schnell de Müll go leere!!'
+        document.getElementById('trash-counter').textContent = 'jetze lieged au nödmol meh chlini Fötzel drin. Dis Inventar isch randvolle! Gangs schnell go leere!'
     }
 }
 animate()

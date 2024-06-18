@@ -2763,7 +2763,7 @@ function animate() {
                 largeTrashPickup()
             } if (!objectState.trashcanEingang.audioPlay) {
                 audio.Printer.play()
-                objectState.trashcanEingang.audioPlay = true
+                objectState.trashcanEingang.audioPlay = true 
             }
         } if (objectState.trashbinAdmin.highlighted) {
             keys.f.pressed = false
