@@ -34,10 +34,11 @@
         </div>
         <div class="col-md-3"></div>
       </div>
-      <p style="margin-top: 25px; text-align: left;">version 2.4 <br><br>
+      <p style="margin-top: 25px; text-align: left;">version 3.0 <br><br>
         neu im letzte Update: <br>
-        - wenn mer s'Bijou beendet aber no Müll im Inventar het, kriegt mer au en Zemeschiss vom Harry, egal öb mer
-        alles andere gmacht het<br><br>
+        - content mässig absolut gar nüt aber ey, i has endlich gschafft, dass alli bilder richtig glade sind wenn mer startet <br>
+        - absoluts und kompletts refactoring vom ganze s'Bijou code, das heisst de code isch jetz nüme so extrem lang
+        und mer checkt viellicht au mol was er macht<br>
       </p>
       <p id="patch-notes-button" style="color: #b4ff7a; font-size: 12pt;">
         patch notes
@@ -97,8 +98,19 @@
       </div>
 
       <div>
-        <img src="assets/user-interface/trashbag.png" style="margin-bottom: 20px; margin-right: 15px; scale: 150%;">
-        <img id="progressbar" src="" style="scale: 125%; margin-left: 30px;">
+        <img src="assets/user-interface/trash/trashbag.png"
+          style="margin-bottom: 25px; margin-right: 15px; scale: 150%;">
+        <img id="trashProgressbar" src="" style="scale: 125%; margin-left: 30px;">
+      </div>
+      <div>
+        <img src="assets/user-interface/pet/petsymbol.png"
+          style="margin-bottom: 20px; margin-right: 15px; scale: 100%;">
+        <img id="petProgressbar" src="" style="scale: 125%; margin-left: 20px;">
+      </div>
+      <div>
+        <img src="assets/user-interface/alu/alusymbol.png"
+          style="margin-bottom: 20px; margin-right: 15px; scale: 100%;">
+        <img id="aluProgressbar" src="" style="scale: 125%; margin-left: 20px;">
       </div>
     </div><br>
   </div>
@@ -124,13 +136,6 @@
         - Liste vo Sache wo mer no mache mues <br>
         - Ending Screen <br>
         - Bad Ending inklusive Harry-Zemeschiss falls mer s'Bijou nöd richtig gmacht het <br><br>
-      </p>
-
-      <h3>Update 1.1</h3>
-      <p>
-        Neui Features: <br>
-        - NPCs (Kevin, Zerii, Gian, Simon, Niki) <br>
-        - Voice Lines für jede NPC, wo spielt wenn mer a eimne verbi lauft <br><br>
       </p>
 
       <h3>Update 1.2</h3>
@@ -204,8 +209,9 @@
         - S OG isch mit Tiled Map Editor erstellt worde <br>
         - Wenn mer d Stege ufe lauft, wechslet de Hintergrund vom EG zum OG und umgekehrt wenn mer wieder abe lauft <br>
         - Mer chan sich jetz d Patch Notes uf dere Site do aluege <br>
+        - User Interface Element für PET und Alu, ähnlich wie d Müll-Progressbar. <br>
         Amerkig: im OG hets no nüt; Collisions und s Layout und alles funktioniert einwandfrei aber es het no kei Möbel
-        i dere Version<br><br>
+        i dere Version. Au PET- und Alu-Container gits no keini, eifach d Progress Bars.<br><br>
       </p>
 
       <h3>Update 2.4</h3>
@@ -213,6 +219,15 @@
         Neui Features: <br>
         - Wenn mer s'Bijou beendet aber no Müll im Inventar het, kriegt mer au en Zemeschiss vom Harry, egal öb mer
         alles andere gmacht het<br><br>
+      </p>
+
+      <h3>Update 3.0</h3>
+      <p>
+        Neui Features: <br>
+        - kompletts und gründlichs refactoring vom ganze code <br>
+        - grobi erklärig (uf englisch will da eifacher isch) vo so viel vom code wie möglich <br>
+        - ENDLICH lösig vom problem, dass mengisch nöd alles richtig grenderet het (i han btw kein plan wie oder wieso
+        sich das problem jetz glöst het lol)<br><br>
       </p>
     </div>
 
@@ -537,10 +552,12 @@
     crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
 
-  <script src="audio/audio.js"></script>
-  <script src="scripts/imageAdder.js"></script>
   <script src="scripts/classes.js"></script>
   <script src="scripts/utils.js"></script>
+  <script src="scripts/player.js"></script>
+  <script src="scripts/interactables.js"></script>
+  <script src="scripts/environment.js"></script>
+  <script src="scripts/audio.js"></script>
   <script src="scripts/collisions.js"></script>
   <script src="scripts/main.js"></script>
 

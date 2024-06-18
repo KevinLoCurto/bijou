@@ -8,8 +8,6 @@ class Boundary {
     }
 
     draw() {
-        // i can change the last value in rgba() which is opacity to make all the boundaries visible in-game. this is very useful for
-        // testing and debugging purposes.
         c.fillStyle = 'rgba(255, 0, 0, 0)'
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
@@ -29,10 +27,7 @@ class Sprite {
         this.sprites = sprites
     }
 
-    // this draw function is different from the more simple one used in the Boundary class. 
     draw() {
-        // the goal here is to animate the player's sprite whenever they're moving. by default the player images are one image containing 4 
-        // sprites for each direction, one for each animated frame. the code in the drawImage function crops the image to the size of just one sprite.
         c.drawImage(
             this.image,
             this.frames.val * this.width,
@@ -45,8 +40,6 @@ class Sprite {
             this.image.height
         )
 
-        // the rest of the code in the draw function is there to change the way the image is cropped to the next frame whenever the player is
-        // moving. it also makes sure that after getting to the 4th sprite, it changes back to the first one.
         if (!this.moving) return
         if (this.frames.max > 1) {
             this.frames.elapsed++
@@ -59,3 +52,25 @@ class Sprite {
     }
 }
 
+class Interactable {
+    constructor({ position, image, sprites = [] }) {
+        this.position = position
+        this.image = image
+
+        this.image.onload = () => {
+            this.width = this.image.width
+            this.height = this.image.height
+        }
+        this.highlighted = false
+        this.interacted = false
+        this.sprites = sprites
+    }
+
+    draw() {
+        c.drawImage(
+            this.image,
+            this.position.x,
+            this.position.y,
+        )
+    }
+}
