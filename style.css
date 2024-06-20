@@ -149,6 +149,11 @@ p {
     padding-left: 7px;
 }
 
+#linustext, #kevintext, #zeritext, 
+#giantext, #simontext, #nikitext {
+    color: #000000
+}
+
 #start-game:hover {
     background-color: #63953d;
 }

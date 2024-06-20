@@ -23,10 +23,15 @@ const keys = {
     }
 }
 
+const movementKeys = [
+    'w',
+    'a',
+    's',
+    'd'
+]
+
 // ------------------------- UNIVERSALLY USED VARIABLES --------------------------------- 
 
-// characterSelected lets the game know which player the user is currently viewing on the character selection screen and then plays that character's
-// selection audio. 
 let characterSelected = 0
 let movementSpeed = 0
 let trashCapacity = 0
@@ -86,43 +91,37 @@ let aluPossible = true
 // basically build the map 0 by 0 and 1 by 1 until it finally worked. later on i had to repeat the entire process with the upstairs boundaries as 
 // well of course. 
 
-const collisionsMapEG = []
-for (let i = 0; i < collisionsEG.length; i += 91) {
-    collisionsMapEG.push(collisionsEG.slice(i, 91 + i))
-}
 
 const boundariesEG = []
-collisionsMapEG.forEach((row, i) => {
-    row.forEach((symbol, j) => {
-        if (symbol === 1)
-            boundariesEG.push(
-                new Boundary({
-                    position: {
-                        x: j * Boundary.width + offset.x,
-                        y: i * Boundary.height + offset.y
-                    }
-                }))
-    })
-})
+const boundariesOG = []
 
-const collisionsMapOG = []
-for (let i = 0; i < collisionsOG.length; i += 91) {
-    collisionsMapOG.push(collisionsOG.slice(i, 91 + i))
+function createCollisionsMap(collisions) {
+    const collisionsMap = []
+    for (let i = 0; i < collisions.length; i += 91) {
+        collisionsMap.push(collisions.slice(i, 91 + i))
+    }
+    return collisionsMap
 }
 
-const boundariesOG = []
-collisionsMapOG.forEach((row, i) => {
-    row.forEach((symbol, j) => {
-        if (symbol === 1)
-            boundariesOG.push(
-                new Boundary({
-                    position: {
-                        x: j * Boundary.width + offset.x,
-                        y: i * Boundary.height + offset.y
-                    }
-                }))
+function pushBoundaries(array, collisionsMap) {
+    collisionsMap.forEach((row, i) => {
+        row.forEach((symbol, j) => {
+            if (symbol === 1)
+                array.push(
+                    new Boundary({
+                        position: {
+                            x: j * Boundary.width + offset.x,
+                            y: i * Boundary.height + offset.y
+                        }
+                    }))
+        })
     })
-})
+}
+
+const collisionsMapEG = createCollisionsMap(collisionsEG)
+const collisionsMapOG = createCollisionsMap(collisionsOG)
+pushBoundaries(boundariesEG, collisionsMapEG)
+pushBoundaries(boundariesOG, collisionsMapOG)
 
 // ------------------------- TIMER --------------------------------- 
 
@@ -358,65 +357,32 @@ document.getElementById('prev-character').addEventListener('click', () => {
     }
 })
 
-// all these do is simply change the character and character info that's displayed on the character selection screen depending on the current
+// all this does is simply change the character and character info that's displayed on the character selection screen depending on the current
 // value of characterSelected.
-function playerIsLinus() {
-    document.getElementById('linus').style.display = 'block'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsKevin() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'block'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsZeri() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'block'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsGian() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'block'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsSimon() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'block'
-    document.getElementById('niki').style.display = 'none'
-}
-function playerIsNiki() {
-    document.getElementById('linus').style.display = 'none'
-    document.getElementById('zeri').style.display = 'none'
-    document.getElementById('kevin').style.display = 'none'
-    document.getElementById('gian').style.display = 'none'
-    document.getElementById('simon').style.display = 'none'
-    document.getElementById('niki').style.display = 'block'
+
+function setPlayer(name) {
+    players.forEach(player => {
+        document.getElementById(player).style.display = player === name ? 'block' : 'none'
+    })
 }
 
-// this here ensures that once the 
 function resetSelection() {
     npcsEG.forEach(npc => {
         npc.isSelected = false
     })
 }
 
-// ------------------------- OBJECT GROUPING --------------------------------- 
+// ------------------------- IMAGE DRAWING & MOVING SETUP --------------------------------- 
+
+// to ensure that i won't have to type out an entire drawImage function each time i want to render something on screen, i created this simple 
+// function. drawImage is a preset function that comes with javascript.
+function draw(object) {
+    c.drawImage(
+        object.image,
+        object.position.x,
+        object.position.y
+    )
+}
 
 // to ensure that all the objects will actually be able to move, i added them all to one central array so that i wouldn't have to apply the logic to
 // each one of these individually.
@@ -426,6 +392,56 @@ const movables = [
     ...npcsEG,
     ...floorIncreasers, ...floorDecreasers
 ]
+
+// ------------------------- PLAYER MOVEMENT LOGIC --------------------------------- 
+
+function checkCollision(dx, dy) {
+    function selectArray(array) {
+        for (let i = 0; i < array.length; i++) {
+            const boundary = array[i]
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {
+                        ...boundary, position: {
+                            x: boundary.position.x + dx,
+                            y: boundary.position.y + dy
+                        }
+                    }
+                })
+            ) {
+                return true
+            }
+        }
+        return false
+    }
+
+    if (currentFloor === 'EG') {
+        return selectArray(boundariesEG)
+    } else if (currentFloor === 'OG') {
+        return selectArray(boundariesOG)
+    } else {
+        return false
+    }
+}
+
+function movePlayer(direction) {
+    let dx = 0, dy = 0
+    if (direction === 'Up') {dy = movementSpeed}
+    if (direction === 'Down') {dy = -movementSpeed}
+    if (direction === 'Left') {dx = movementSpeed}
+    if (direction === 'Right') {dx = -movementSpeed}
+
+    if (!checkCollision(dx, dy)) {
+        movables.forEach(movable => {
+            movable.position.x += dx
+            movable.position.y += dy
+        })
+        player.moving = true
+        facing = direction
+    }
+}
+
 
 // ------------------------- GAME LOOP --------------------------------- 
 
@@ -442,32 +458,16 @@ function animate() {
 
     // from here on, characterSelected isn't used anymore and it's instead transferred to currentPlayer, which as the name says just tracks the
     // character the player is currently playing as. 
-    if (characterSelected === 0) {
-        currentPlayer = 'linus'
-        playerIsLinus()
-        document.getElementById('start-text').textContent = 'ey perfekt, lets go'
-    } if (characterSelected === 1) {
-        currentPlayer = 'kevin'
-        playerIsKevin()
-        document.getElementById('start-text').textContent = "s'Bijou!!"
-    } if (characterSelected === 2) {
-        currentPlayer = 'zeri'
-        playerIsZeri()
-        document.getElementById('start-text').textContent = 'lecteurgo!'
-    } if (characterSelected === 3) {
-        currentPlayer = 'gian'
-        playerIsGian()
-        document.getElementById('start-text').textContent = 'ja denn easy'
-    } if (characterSelected === 4) {
-        currentPlayer = 'simon'
-        playerIsSimon()
-        document.getElementById('start-text').textContent = 'lets-a go!'
-    } if (characterSelected === 5) {
-        currentPlayer = 'niki'
-        playerIsNiki()
-        document.getElementById('start-text').textContent = 'zit zum bijouniere'
-    }
 
+    players.forEach((player, index) => {
+        if (characterSelected === index) {
+            currentPlayer = `${player}`
+            setPlayer(player)
+            document.getElementById(`${player}text`).style.display = 'block'
+        } else { 
+            document.getElementById(`${player}text`).style.display = 'none'
+        }
+    })
     // each player has their own stats, which you can see in the player.js file. as you can see, i'm still using the npcsEG array to apply these 
     // even though this code isn't actually dealing with NPCs anymore but rather with players. this is because in that array, each NPC and therefore
     // automatically also each player is present as an object that i can interact with through forEach loops. there is a constant that's just called
@@ -552,46 +552,43 @@ function animate() {
         })
     }
 
-    // ------------------------- IMAGE RENDERING & PLAYER MOVEMENT ---------------------------------
+    // ------------------------- PLAYER MOVEMENT ---------------------------------
+    if (!gameEnded) {
+        let moving = false
+        movementKeys.forEach(key => {
+            if (keys[key].pressed) {
+                movePlayer(
+                    key === 'w' ? 'Up' :
+                    key === 's' ? 'Down' :
+                    key === 'a' ? 'Left' : 'Right'
+                )
+                moving = true
+            }
+        })
+        if (!moving) {
+            player.moving = false
+        }
+    }
 
-    let moving = true
-    player.moving = false
+    // ------------------------- IMAGE RENDERING ---------------------------------
 
     if (currentFloor === 'EG') {
-        // here, all the images are drawn on screen using the drawImage function which is a preset function in javascript. in the future i'll be
-        // refactoring this further, creating my own function that defines how drawImage should work with my objects so that i can just execute
-        // said function instead of having to type out the entire drawImage code block for each and every one.
-        c.drawImage(
-            backgroundEG.image,
-            backgroundEG.position.x,
-            backgroundEG.position.y
-        )
+        // using the previously defined draw function, i'm now rendering the images on screen.
+        draw(backgroundEG)
 
         stoicObjectsEG.forEach((object) => {
-            c.drawImage(
-                object.image,
-                object.position.x,
-                object.position.y
-            )
+            draw(object)
         })
 
         interactablesEG.forEach(object => {
-            c.drawImage(
-                object.image,
-                object.position.x,
-                object.position.y
-            )
+            draw(object)
         })
 
         npcsEG.forEach(npc => {
             // here i'm making sure that all NPCs are rendered except for the one that is already the player character. after all it wouldn't 
             // make sense for a Niki NPC to be standing around when the player is playing as Niki already.
             if (!npc.isPlayer) {
-                c.drawImage(
-                    npc.image,
-                    npc.position.x,
-                    npc.position.y
-                )
+                draw(npc)
             }
 
             // using a simple distance calculation that i created in utils.js, the game detects if the player is near an NPC and if they are,
@@ -611,224 +608,12 @@ function animate() {
             boundary.draw()
         })
 
-        // this is probably the longest block of code that handles one single thing. unfortunately it's in here twice as well due to it having to 
-        // access a different set of map boundaries for each of the floors. 
-        if (keys.w.pressed && !gameEnded) {
-            player.moving = true
-            // as usual in pretty much any game that lets you move in at least 4 directions, W makes you go forward, A makes you go left, S backwards
-            // and D to the right. based on this, it will change the value of facing to the direction the player is moving in.
-            facing = 'Up'
-
-            // this is the logic that handles map boundary collision. rectangularCollision is another function i declared in utils.js that also
-            // measures distance between two objects, just in a different way to calculateDistance. this detects if the player is colliding with 
-            // a boundary and stops the player's movement if this is the case. 
-            for (let i = 0; i < boundariesEG.length; i++) {
-                const boundary = boundariesEG[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + movementSpeed
-                            }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
-                }
-            }
-
-            // this is how we create the effect of the player moving through the map. as you can probably tell, everything EXCEPT the player itself
-            // is actually in the movables array, meaning that in reality the player never really does move and it's actually everything else that 
-            // does. 
-            if (moving)
-                movables.forEach((movables) => {
-                    movables.position.y += movementSpeed
-                })
-        } if (keys.a.pressed && !gameEnded) {
-            player.moving = true
-            facing = 'Left'
-
-            for (let i = 0; i < boundariesEG.length; i++) {
-                const boundary = boundariesEG[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x + movementSpeed,
-                                y: boundary.position.y
-                            }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
-                }
-            } if (moving)
-                movables.forEach((movables) => {
-                    movables.position.x += movementSpeed
-                })
-        } if (keys.s.pressed && !gameEnded) {
-            player.moving = true
-            facing = 'Down'
-
-            for (let i = 0; i < boundariesEG.length; i++) {
-                const boundary = boundariesEG[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - movementSpeed
-                            }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
-                }
-            } if (moving)
-                movables.forEach((movables) => {
-                    movables.position.y -= movementSpeed
-                })
-        } if (keys.d.pressed && !gameEnded) {
-            player.moving = true
-            facing = 'Right'
-
-            for (let i = 0; i < boundariesEG.length; i++) {
-                const boundary = boundariesEG[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x - movementSpeed,
-                                y: boundary.position.y
-                            }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
-                }
-            } if (moving)
-                movables.forEach((movables) => {
-                    movables.position.x -= movementSpeed
-                })
-        }
-
     } if (currentFloor === 'OG') {
-        c.drawImage(
-            backgroundOG.image,
-            backgroundOG.position.x,
-            backgroundOG.position.y
-        )
+        draw(backgroundOG)
 
         boundariesOG.forEach(boundary => {
             boundary.draw()
         })
-
-        if (keys.w.pressed && !gameEnded) {
-            player.moving = true
-            facing = 'Up'
-
-            for (let i = 0; i < boundariesOG.length; i++) {
-                const boundary = boundariesOG[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + movementSpeed
-                            }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
-                }
-            } if (moving)
-                movables.forEach((movables) => {
-                    movables.position.y += movementSpeed
-                })
-        } if (keys.a.pressed && !gameEnded) {
-            player.moving = true
-            facing = 'Left'
-
-            for (let i = 0; i < boundariesOG.length; i++) {
-                const boundary = boundariesOG[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x + movementSpeed,
-                                y: boundary.position.y
-                            }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
-                }
-            } if (moving)
-                movables.forEach((movables) => {
-                    movables.position.x += movementSpeed
-                })
-        } if (keys.s.pressed && !gameEnded) {
-            player.moving = true
-            facing = 'Down'
-
-            for (let i = 0; i < boundariesOG.length; i++) {
-                const boundary = boundariesOG[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - movementSpeed
-                            }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
-                }
-            } if (moving)
-                movables.forEach((movables) => {
-                    movables.position.y -= movementSpeed
-                })
-        } if (keys.d.pressed && !gameEnded) {
-            player.moving = true
-            facing = 'Right'
-
-            for (let i = 0; i < boundariesOG.length; i++) {
-                const boundary = boundariesOG[i]
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {
-                            ...boundary, position: {
-                                x: boundary.position.x - movementSpeed,
-                                y: boundary.position.y
-                            }
-                        }
-                    })
-                ) {
-                    moving = false
-                    break
-                }
-            } if (moving)
-                movables.forEach((movables) => {
-                    movables.position.x -= movementSpeed
-                })
-        }
     }
 
     player.draw()
