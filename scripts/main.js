@@ -190,12 +190,12 @@ function openCharacterSelection() {
     if (selectionAudioUnplayable) {
         const playerAudio = new Audio(playerAudios.linus.select)
         playerAudio.play()
-        selectionAudioUnplayable = false
+        selectionAudioUnplayable = false 
     }
 }
 // this function is actually not used, at least not yet. initially, the player was able to click on a button on the end screen that would restart
 // the game, basically just executing spawnPlayer() again. all the interactables however were still interacted, meaning i'd have to set up some 
-// logic to reset everything back to how it was but i was just too lazy to do this. i'm sure i'll implement this in the future
+// logic to reset everything back to how it was but i was just too lazy to do this. i'm sure i'll implement this in the future.
 function restartGame() {
     document.getElementById('main-menu').style.display = 'block'
     document.getElementById('testimage').style.display = 'block'

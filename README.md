@@ -56,7 +56,11 @@ note: comments are excluded in this calculation.
 # refactoring results
 
 - total lines of code saved: 2'337
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 75eea9307164c0164489684517b7f4b676f00451
 if you add up the following numbers, the result will be higher than 2'337. this is because i of course also added a lot of additional code. that only accounts for 300 to 400 lines of code though.
 
 - completely got rid of imageadder.js, 289 lines saved
@@ -76,7 +80,6 @@ if you add up the following numbers, the result will be higher than 2'337. this 
 - removal of Interactable class: 23 lines saved
 - audio storage: 22 lines saved
 - plus remaining savings from a wide range of various random sources
-
 
 
 
