@@ -45,10 +45,8 @@ p {
 
 #timer {
     color: #f12321;
-    font-size: 64pt;
+    font-size: 48pt;
     font-family: 'vcr', sans-serif;
-    margin-left: 25px;
-    margin-top: -100px;
 }
 
 #tasklist {
